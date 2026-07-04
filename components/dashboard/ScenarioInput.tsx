@@ -224,8 +224,8 @@ export default function ScenarioInput({
           {quotaLoaded && !quota.signedIn && quota.remaining !== null && (
             <span className="text-[13px] text-steel">
               {quota.remaining > 0
-                ? `무료 실행 ${quota.remaining}회 남음 · 로그인하면 제한 없이 사용할 수 있어요`
-                : "오늘의 무료 실행을 모두 사용했어요. 로그인하면 계속할 수 있습니다"}
+                ? `비회원 체험 ${quota.remaining}회 남음 · 로그인하면 계속 검토할 수 있어요`
+                : "오늘의 비회원 체험을 모두 사용했어요. 로그인하면 계속 검토할 수 있습니다"}
             </span>
           )}
           {quota.signedIn && <span className="text-[13px] text-steel">로그인됨 · 실행 제한 없음</span>}

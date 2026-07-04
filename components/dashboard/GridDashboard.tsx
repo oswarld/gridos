@@ -145,7 +145,7 @@ export default function GridDashboard({ data }: { data: GridData }) {
           <div className="ml-auto flex items-center gap-2">
             {quotaLoaded && !quota.signedIn && quota.remaining !== null && (
               <span className="hidden rounded-full bg-surface px-3 py-1 text-[13px] font-medium text-steel sm:inline">
-                무료 실행 {quota.remaining}회 남음
+                비회원 체험 {quota.remaining}회 남음
               </span>
             )}
             {quota.signedIn ? (
@@ -177,7 +177,7 @@ export default function GridDashboard({ data }: { data: GridData }) {
         {/* ── 히어로 ── */}
         <section className="mx-auto max-w-6xl px-6 pb-16 pt-16 md:pt-24">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-yellow px-3 py-1 text-[13px] font-semibold text-ink">
-            제14회 산업통상부 공공데이터 활용 아이디어 공모전
+            제14회 산업통상부 공공데이터 활용 아이디어 공모전 · 제품 및 서비스
           </span>
           <h1 className="mt-6 max-w-3xl text-[36px] font-medium leading-[1.1] tracking-[-1px] text-ink md:text-[52px]">
             신규 전력수요,
@@ -185,9 +185,10 @@ export default function GridDashboard({ data }: { data: GridData }) {
             어느 지역에 어떤 조건으로 배분할까
           </h1>
           <p className="mt-5 max-w-2xl text-[17px] leading-[1.6] text-slate2">
-            정부는 서남권 800조 원 반도체 팹과 총 18.4GW 규모 AI 데이터센터를 추진하고 있습니다.
             K-GRID는 산업단지 · 가스 · 석유 · 전력 · 재생에너지 공공데이터를 결합해 데이터센터,
-            철강, 첨단제조 신규 수요의 지역별 입지 적합도를 계산하고 승인 조건까지 제시합니다.
+            철강, 첨단제조 신규 수요를 어느 지역에 어떤 조건으로 배치해야 하는지 계산합니다.
+            3대 메가프로젝트와 전력 인프라 논의를 지역 갈등이 아니라 정책 타당성과 전력 공백 대응
+            관점에서 설명할 수 있도록 정부·지자체·기업 입지선정팀에 정량 근거를 제공합니다.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
@@ -261,7 +262,8 @@ export default function GridDashboard({ data }: { data: GridData }) {
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-[15px] leading-[1.6] text-white/60">
               모든 점수와 판정은 공공데이터에서만 계산되며 근거와 기준일이 함께 표시됩니다.
-              지자체, 산업단지 운영기관, 전력 다소비 기업의 사전 검토에 활용할 수 있습니다.
+              정부 부처, 지자체, 산업단지 운영기관, 기업 입지선정팀이 사전 검토와 이해관계자 설득에
+              바로 활용할 수 있습니다.
             </p>
             <a
               href="#scenario"
@@ -282,8 +284,9 @@ export default function GridDashboard({ data }: { data: GridData }) {
               <span className="text-[15px] font-semibold text-white">K-GRID</span>
             </div>
             <p className="mt-4 text-[13px] leading-[1.6] text-white/50">
-              산업 전력 배분 의사결정 플랫폼. 정책 의사결정과 사전 검토용 시뮬레이션 도구이며
-              실시간 전력계통 운영을 대체하지 않습니다. 원천에 없는 값은 추정하지 않습니다.
+              산업 전력 배분 의사결정 플랫폼. 정책 타당성과 입지 조건을 공공데이터로 설명하는 사전
+              검토 도구이며 실시간 전력계통 운영을 대체하지 않습니다. 원천에 없는 값은 추정하지
+              않습니다.
             </p>
           </div>
           <div>

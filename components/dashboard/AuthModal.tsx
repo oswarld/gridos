@@ -60,11 +60,11 @@ export default function AuthModal({
           이메일 로그인
         </div>
         <h3 className="mt-4 text-[22px] font-medium leading-[1.3] text-ink">
-          {reason === "quota" ? "무료 실행 3회를 모두 사용했어요" : "로그인"}
+          {reason === "quota" ? "비회원 체험 3회를 모두 사용했어요" : "로그인"}
         </h3>
         <p className="mt-2 text-[14px] leading-[1.5] text-slate2">
-          이메일 주소로 로그인 링크를 보내드립니다. 별도 비밀번호 없이 메일의 링크를 누르면
-          로그인되고, 시나리오를 제한 없이 실행할 수 있습니다.
+          이메일 주소로 로그인 링크를 보내드립니다. 비회원은 하루 3회까지 체험할 수 있고,
+          로그인하면 별도 비밀번호 없이 계속 시나리오를 검토할 수 있습니다.
         </p>
 
         {state === "sent" ? (
