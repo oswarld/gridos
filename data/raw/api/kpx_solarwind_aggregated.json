@@ -1,0 +1,122 @@
+{
+  "sourceTotalCount": 166440,
+  "aggregatedAt": "2026-07-04T12:08:22.076Z",
+  "baseDate": "2025-12-31",
+  "note": "지역별 시간별 태양광 및 풍력 발전량(2025) 전체 166440행을 지역x연료원 연간 합계로 집계",
+  "rows": [
+    {
+      "region": "강원도",
+      "fuel": "태양광",
+      "annualMwh": 912118.9465159978,
+      "hourRows": 8760
+    },
+    {
+      "region": "경기도",
+      "fuel": "태양광",
+      "annualMwh": 552054.6861540008,
+      "hourRows": 8760
+    },
+    {
+      "region": "경상남도",
+      "fuel": "태양광",
+      "annualMwh": 831512.7577720004,
+      "hourRows": 8760
+    },
+    {
+      "region": "경상북도",
+      "fuel": "태양광",
+      "annualMwh": 1176286.5714360035,
+      "hourRows": 8760
+    },
+    {
+      "region": "광주시",
+      "fuel": "태양광",
+      "annualMwh": 93336.18749400003,
+      "hourRows": 8760
+    },
+    {
+      "region": "대구시",
+      "fuel": "태양광",
+      "annualMwh": 150718.1048649998,
+      "hourRows": 8760
+    },
+    {
+      "region": "대전시",
+      "fuel": "태양광",
+      "annualMwh": 21662.680903000026,
+      "hourRows": 8760
+    },
+    {
+      "region": "부산시",
+      "fuel": "태양광",
+      "annualMwh": 205912.8828850004,
+      "hourRows": 8760
+    },
+    {
+      "region": "서울시",
+      "fuel": "태양광",
+      "annualMwh": 21906.636037000066,
+      "hourRows": 8760
+    },
+    {
+      "region": "세종시",
+      "fuel": "태양광",
+      "annualMwh": 43087.42620099995,
+      "hourRows": 8760
+    },
+    {
+      "region": "울산시",
+      "fuel": "태양광",
+      "annualMwh": 91139.63573700012,
+      "hourRows": 8760
+    },
+    {
+      "region": "인천시",
+      "fuel": "태양광",
+      "annualMwh": 79444.43784999984,
+      "hourRows": 8760
+    },
+    {
+      "region": "전라남도",
+      "fuel": "태양광",
+      "annualMwh": 4213860.744437981,
+      "hourRows": 8760
+    },
+    {
+      "region": "전라북도",
+      "fuel": "태양광",
+      "annualMwh": 1177633.496563001,
+      "hourRows": 8760
+    },
+    {
+      "region": "제주도",
+      "fuel": "태양광",
+      "annualMwh": 466001.179181004,
+      "hourRows": 8760
+    },
+    {
+      "region": "충청남도",
+      "fuel": "태양광",
+      "annualMwh": 1975030.169935994,
+      "hourRows": 8760
+    },
+    {
+      "region": "충청북도",
+      "fuel": "태양광",
+      "annualMwh": 510602.527887999,
+      "hourRows": 8760
+    },
+    {
+      "region": "육지",
+      "fuel": "풍력",
+      "annualMwh": 3570905.6132970094,
+      "hourRows": 8760
+    },
+    {
+      "region": "제주도",
+      "fuel": "풍력",
+      "annualMwh": 75510.9949819997,
+      "hourRows": 8760
+    }
+  ]
+}

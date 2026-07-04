@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+:root {
+  --gridos-bg: #f6f7f9;
+  --gridos-ink: #17202b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--gridos-bg);
+  color: var(--gridos-ink);
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}

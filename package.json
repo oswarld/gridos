@@ -1,0 +1,31 @@
+{
+  "name": "gridos",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run data:validate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "data:build": "tsx scripts/build-dataset.ts",
+    "data:validate": "tsx scripts/validate-data.ts",
+    "data:seed": "tsx scripts/seed-supabase.ts",
+    "map:fetch": "tsx scripts/fetch-boundaries.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
+    "next": "^15.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4.1.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "xlsx": "^0.18.5"
+  }
+}

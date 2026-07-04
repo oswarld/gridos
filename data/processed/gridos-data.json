@@ -1,0 +1,2752 @@
+{
+  "generatedAt": "2026-07-04T12:16:30.907Z",
+  "sources": [
+    {
+      "id": "kicox_status",
+      "provider": "산업통상부(한국산업단지공단)",
+      "title": "한국산업단지공단_전국산업단지현황통계",
+      "url": "https://www.data.go.kr/data/3041272/fileData.do",
+      "baseDate": "2025-09-30",
+      "updateCycle": "분기",
+      "accessMethod": "data_go_kr_file",
+      "rowCount": 17,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "kicox_trend",
+      "provider": "산업통상부(한국산업단지공단)",
+      "title": "한국산업단지공단_국가산업단지 산업동향정보",
+      "url": "https://www.data.go.kr/data/3042071/fileData.do",
+      "baseDate": "2026-03-31",
+      "updateCycle": "분기",
+      "accessMethod": "data_go_kr_file",
+      "rowCount": 136,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "kea_energy_users",
+      "provider": "한국에너지공단",
+      "title": "한국에너지공단_에너지다소비사업자 에너지 사용 현황(통합)",
+      "url": "https://www.data.go.kr/data/15127341/fileData.do",
+      "baseDate": "2024-12-31",
+      "updateCycle": "연간",
+      "accessMethod": "data_go_kr_file",
+      "rowCount": 54,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "epsis_util_solar",
+      "provider": "한국전력거래소(EPSIS)",
+      "title": "전력통계정보시스템 이용률(태양광)",
+      "url": "https://epsis.kpx.or.kr/",
+      "baseDate": "2025-12-31",
+      "updateCycle": "연간",
+      "accessMethod": "manual_web_download",
+      "licenseNote": "EPSIS 웹 조회 화면에서 수동 다운로드한 스냅샷",
+      "rowCount": 136,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "epsis_util_wind",
+      "provider": "한국전력거래소(EPSIS)",
+      "title": "전력통계정보시스템 이용률(풍력)",
+      "url": "https://epsis.kpx.or.kr/",
+      "baseDate": "2025-12-31",
+      "updateCycle": "연간",
+      "accessMethod": "manual_web_download",
+      "licenseNote": "EPSIS 웹 조회 화면에서 수동 다운로드한 스냅샷",
+      "rowCount": 64,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "kogas_supply",
+      "provider": "산업통상부(한국가스공사)",
+      "title": "한국가스공사_월별 지역본부별 천연가스 공급량",
+      "url": "https://www.data.go.kr/data/15049904/fileData.do",
+      "baseDate": "2026-06-30",
+      "updateCycle": "분기",
+      "accessMethod": "data_go_kr_openapi",
+      "rowCount": 126,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "kogas_peak",
+      "provider": "산업통상부(한국가스공사)",
+      "title": "한국가스공사_월별 시간당 최대 총 공급량 현황",
+      "url": "https://www.data.go.kr/data/15066501/fileData.do",
+      "baseDate": "2026-06-19",
+      "updateCycle": "월간",
+      "accessMethod": "data_go_kr_openapi",
+      "rowCount": 78,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "knoc_petroleum",
+      "provider": "산업통상부(한국석유공사)",
+      "title": "한국석유공사_국내 석유제품 지역별 소비현황",
+      "url": "https://www.data.go.kr/data/15054602/fileData.do",
+      "baseDate": "2024-12-31",
+      "updateCycle": "연간",
+      "accessMethod": "data_go_kr_openapi",
+      "rowCount": 28,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "kgs_citygas",
+      "provider": "산업통상부(한국가스안전공사)",
+      "title": "한국가스안전공사_전국 도시가스사별 가스공급 정보",
+      "url": "https://www.data.go.kr/data/15020493/fileData.do",
+      "baseDate": "2025-09-19",
+      "updateCycle": "연간",
+      "accessMethod": "data_go_kr_openapi",
+      "rowCount": 34,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "knrec_renewable",
+      "provider": "한국에너지공단",
+      "title": "한국에너지공단_기초지자체별 신재생에너지 보급 현황",
+      "url": "https://www.data.go.kr/data/15086292/fileData.do",
+      "baseDate": "2024-12-31",
+      "updateCycle": "연간",
+      "accessMethod": "data_go_kr_openapi",
+      "rowCount": 3654,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    },
+    {
+      "id": "kpx_solarwind",
+      "provider": "한국전력거래소",
+      "title": "한국전력거래소_지역별 시간별 태양광 및 풍력 발전량",
+      "url": "https://www.data.go.kr/data/15065269/fileData.do",
+      "baseDate": "2025-12-31",
+      "updateCycle": "연간",
+      "accessMethod": "data_go_kr_openapi",
+      "rowCount": 166440,
+      "collectedAt": "2026-07-04T12:16:30.907Z"
+    }
+  ],
+  "regions": [
+    {
+      "regionCode": "seoul",
+      "regionName": "서울",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 4,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "서울소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 15630,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "서울소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 14294,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "서울소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 43189.48017300196,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(서울) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 685.0876619042494,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(서울) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 137824,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(서울) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 80.13832334472526,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (서울)"
+        },
+        "electricity_use_mwh": {
+          "value": 12536796,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 2467143,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 13.5,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 8256031,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 서울본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 27074,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 7098215,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(코원ES, 예스코, 서울, 귀뚜라미, 대륜)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 14322260.643000001,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(코원ES, 예스코, 서울, 귀뚜라미, 대륜)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 1027442,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 431413,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 21906.636037000066,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "busan",
+      "regionName": "부산",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 39,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "부산소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 8353,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "부산소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 7766,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "부산소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 36600.15074623267,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(녹산) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 1082.547,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(녹산) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 27024,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(녹산) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 75.67902244861715,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (녹산)"
+        },
+        "electricity_use_mwh": {
+          "value": 5621155,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 1158858,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 14.5,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 4734796,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 부산본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 21077,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 1612139,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(부산)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 2842367,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(부산)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 777639,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 457748,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 205912.8828850004,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "daegu",
+      "regionName": "대구",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 24,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "대구소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 10326,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "대구소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 10104,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "대구소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 16636.053333333333,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(대구) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 895.3046666666667,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(대구) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 6775,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(대구) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 95.61704870192818,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (대구)"
+        },
+        "electricity_use_mwh": {
+          "value": 3527406,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 1234019,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 14.2,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 4587677,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 대구본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 13011,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 1234946,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(대성)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 3144873.85,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(대성)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 680242,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 571075,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 150718.1048649998,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "incheon",
+      "regionName": "인천",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 19,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "인천소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 14765,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "인천소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 14245,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "인천소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 105773.63839918413,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(남동, 부평, 주안) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 2005.6125211829838,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(남동, 부평, 주안) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 120447,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(남동, 부평, 주안) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 74.42738474559876,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (남동, 부평, 주안)"
+        },
+        "electricity_use_mwh": {
+          "value": 9605281,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 4824269,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 13.2,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "wind_capacity_factor": {
+          "value": 6.1,
+          "unit": "%",
+          "sourceId": "epsis_util_wind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 풍력 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 4962995,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 인천본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 76849,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 829991,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(인천)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 1657713.78,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(인천)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 2268863,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 867668,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 79444.43784999984,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "gwangju",
+      "regionName": "광주",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 14,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "광주소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 5375,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "광주소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 4791,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "광주소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 12669.82,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(광주첨단, 빛그린) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 383.9345,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(광주첨단, 빛그린) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 22322,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(광주첨단, 빛그린) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 82.27538127463316,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (광주첨단, 빛그린)"
+        },
+        "electricity_use_mwh": {
+          "value": 2052737,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 411148,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 13.2,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 2909297,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 광주본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 7319,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 792008,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(해양)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 2573766,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(해양)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 679248,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 489029,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 93336.18749400003,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "daejeon",
+      "regionName": "대전",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 6,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "대전소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 3015,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "대전소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 2784,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "대전소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": null,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_export": {
+          "value": null,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_employment": {
+          "value": null,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_utilization": {
+          "value": null,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "electricity_use_mwh": {
+          "value": 5818832,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 843672,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 12.1,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": null,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "missing",
+          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+        },
+        "petroleum_consumption": {
+          "value": 6429,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 665866,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(CNCITY)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 1786261.36,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(CNCITY)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 253281,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 175728,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 21662.680903000026,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "ulsan",
+      "regionName": "울산",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 33,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "울산소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 2509,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "울산소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 1911,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "울산소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 673308.020537498,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(온산, 울산ㆍ미포) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 21654.18823266983,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(온산, 울산ㆍ미포) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 117666,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(온산, 울산ㆍ미포) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 92.23384781962079,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (온산, 울산ㆍ미포)"
+        },
+        "electricity_use_mwh": {
+          "value": 35680776,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 12891141,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 14.9,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": null,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "missing",
+          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+        },
+        "petroleum_consumption": {
+          "value": 185164,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 653808,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(경동)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 2585168.1,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(경동)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 750478,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 289518,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 91139.63573700012,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "sejong",
+      "regionName": "세종",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 19,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "세종소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 197,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "세종소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 182,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "세종소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": null,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_export": {
+          "value": null,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_employment": {
+          "value": null,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_utilization": {
+          "value": null,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "electricity_use_mwh": {
+          "value": 1808308,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 231587,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 13,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": null,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "missing",
+          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+        },
+        "petroleum_consumption": {
+          "value": 1814,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": null,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "missing",
+          "evidence": "주 공급권역이 해당 시도로 확인되는 도시가스사 없음"
+        },
+        "citygas_pipeline_m": {
+          "value": null,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "missing",
+          "evidence": "주 공급권역이 해당 시도로 확인되는 도시가스사 없음"
+        },
+        "renewable_generation_mwh": {
+          "value": 199884,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 142841,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 43087.42620099995,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "gyeonggi",
+      "regionName": "경기",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 205,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경기소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 37871,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경기소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 36058,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경기소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 185322.099300366,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(반월, 시화, 시화MTV, 파주탄현) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 2787.991731110555,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(반월, 시화, 시화MTV, 파주탄현) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 244247,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(반월, 시화, 시화MTV, 파주탄현) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 78.26362791275234,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (반월, 시화, 시화MTV, 파주탄현)"
+        },
+        "electricity_use_mwh": {
+          "value": 62794976,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 21469600,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 13.1,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "wind_capacity_factor": {
+          "value": 5.8,
+          "unit": "%",
+          "sourceId": "epsis_util_wind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 풍력 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 9939688,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 경기본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 87483,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 3376522,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(삼천리, 참빛)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 8330731.9,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(삼천리, 참빛)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 6357149,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 3577256,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 552054.6861540008,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "gangwon",
+      "regionName": "강원",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 83,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "강원소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 2187,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "강원소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 1945,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "강원소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 108.588,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(북평) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 0.105,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(북평) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 841,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(북평) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 66.47241028905839,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (북평)"
+        },
+        "electricity_use_mwh": {
+          "value": 4935308,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 4782673,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 13.3,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "wind_capacity_factor": {
+          "value": 23.8,
+          "unit": "%",
+          "sourceId": "epsis_util_wind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 풍력 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 1289589,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 강원본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 16118,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 421704,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(강원, 참빛원주, 참빛영동)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 1395099.43,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(강원, 참빛원주, 참빛영동)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 7215283,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 3982677,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 912118.9465159978,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "chungbuk",
+      "regionName": "충북",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 150,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "충북소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 3411,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "충북소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 2972,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "충북소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 9230.398000000001,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(오송생명과학) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 179.782,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(오송생명과학) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 6305,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(오송생명과학) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 82.77087731374083,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (오송생명과학)"
+        },
+        "electricity_use_mwh": {
+          "value": 15348057,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 3230283,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 13.2,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 2870180,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "partial",
+          "evidence": "가스공사 충청본부 2025-07-31~2026-06-30 공급량 합계 (충청본부 값을 충북·충남에 동일 표시)"
+        },
+        "petroleum_consumption": {
+          "value": 18410,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 86691,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(참빛충북)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 391487.69,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(참빛충북)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 3574387,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 2499824,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 510602.527887999,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "chungnam",
+      "regionName": "충남",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 181,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "충남소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 3301,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "충남소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 2869,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "충남소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 49529.4785,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(석문, 아산, 장항생태) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 817.8074,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(석문, 아산, 장항생태) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 24251,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(석문, 아산, 장항생태) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 81.59390588918427,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (석문, 아산, 장항생태)"
+        },
+        "electricity_use_mwh": {
+          "value": 63252606,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 23576184,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 13.8,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 2870180,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "partial",
+          "evidence": "가스공사 충청본부 2025-07-31~2026-06-30 공급량 합계 (충청본부 값을 충북·충남에 동일 표시)"
+        },
+        "petroleum_consumption": {
+          "value": 217096,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 1401202,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(충청ES, JB, 서해)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 4875600.86,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(충청ES, JB, 서해)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 10356301,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 5336810,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 1975030.169935994,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "jeonbuk",
+      "regionName": "전북",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 91,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "전북소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 4215,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "전북소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 3828,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "전북소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 26973.573423809525,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(국가식품클러스터, 군산, 군산2, 익산) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 550.26962,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(국가식품클러스터, 군산, 군산2, 익산) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 18787,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(국가식품클러스터, 군산, 군산2, 익산) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 78.99804891777488,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (국가식품클러스터, 군산, 군산2, 익산)"
+        },
+        "electricity_use_mwh": {
+          "value": 8706698,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 2947957,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 14.8,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "wind_capacity_factor": {
+          "value": 21.3,
+          "unit": "%",
+          "sourceId": "epsis_util_wind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 풍력 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 3038759,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 전북본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 16899,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 647507,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(전북, 군산, 전북ES)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 2589761.7,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(전북, 군산, 전북ES)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 11370487,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 5755170,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 1177633.496563001,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "jeonnam",
+      "regionName": "전남",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 109,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "전남소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 4070,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "전남소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 3438,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "전남소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 286238.96219047613,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(광양, 대불, 대불(외), 여수) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 9365.238064285715,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(광양, 대불, 대불(외), 여수) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 42349,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(광양, 대불, 대불(외), 여수) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 81.77808714717813,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (광양, 대불, 대불(외), 여수)"
+        },
+        "electricity_use_mwh": {
+          "value": 21117301,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 23109563,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 14.6,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "wind_capacity_factor": {
+          "value": 17.3,
+          "unit": "%",
+          "sourceId": "epsis_util_wind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 풍력 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": null,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "missing",
+          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+        },
+        "petroleum_consumption": {
+          "value": 198171,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 349353,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(목포, 전남)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 1233952,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(목포, 전남)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 9176871,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 7177114,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 4213860.744437981,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "gyeongbuk",
+      "regionName": "경북",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 159,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경북소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 6495,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경북소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 5502,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경북소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 156770.77705962732,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(구미, 구미(외), 포항, 포항블루밸리) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 5474.733036459627,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(구미, 구미(외), 포항, 포항블루밸리) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 90632,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(구미, 구미(외), 포항, 포항블루밸리) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 69.18101663814913,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (구미, 구미(외), 포항, 포항블루밸리)"
+        },
+        "electricity_use_mwh": {
+          "value": 19976778,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 9974160,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 14,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "wind_capacity_factor": {
+          "value": 24.1,
+          "unit": "%",
+          "sourceId": "epsis_util_wind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 풍력 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": null,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "missing",
+          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+        },
+        "petroleum_consumption": {
+          "value": 27187,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 797395,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(영남ES(구미), 영남ES(포항), 대성청정, 서라벌)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 2924338.89,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(영남ES(구미), 영남ES(포항), 대성청정, 서라벌)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 6864780,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 5048428,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 1176286.5714360035,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "gyeongnam",
+      "regionName": "경남",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 211,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경남소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 7927,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경남소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 7316,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "경남소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": 161951.09140808083,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(밀양나노, 안정, 창원) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_export": {
+          "value": 4559.459444571041,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(밀양나노, 안정, 창원) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_employment": {
+          "value": 121255,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "국가산단(밀양나노, 안정, 창원) 2026년 1분기 합계. 국가산단 미소재 시도는 데이터 부족."
+        },
+        "natl_complex_utilization": {
+          "value": 80.36342661049218,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "partial",
+          "evidence": "생산액 가중 평균 가동률 (밀양나노, 안정, 창원)"
+        },
+        "electricity_use_mwh": {
+          "value": 11673001,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 4367557,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 14,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "wind_capacity_factor": {
+          "value": 19.9,
+          "unit": "%",
+          "sourceId": "epsis_util_wind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 풍력 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": null,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "missing",
+          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+        },
+        "petroleum_consumption": {
+          "value": 31152,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 1151883,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(경남, 지에스이)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 3454932,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(경남, 지에스이)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": 3722944,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": 3053526,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 831512.7577720004,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "missing",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    },
+    {
+      "regionCode": "jeju",
+      "regionName": "제주",
+      "metrics": {
+        "industrial_complex_count": {
+          "value": 6,
+          "unit": "개",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "제주소계 산업단지 수"
+        },
+        "industrial_tenants": {
+          "value": 275,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "제주소계 입주업체 수"
+        },
+        "industrial_operating": {
+          "value": 271,
+          "unit": "개사",
+          "sourceId": "kicox_status",
+          "baseDate": "2025-09-30",
+          "quality": "ok",
+          "evidence": "제주소계 가동업체 수"
+        },
+        "natl_complex_production": {
+          "value": null,
+          "unit": "억원/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_export": {
+          "value": null,
+          "unit": "백만달러/분기",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_employment": {
+          "value": null,
+          "unit": "명",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "natl_complex_utilization": {
+          "value": null,
+          "unit": "%",
+          "sourceId": "kicox_trend",
+          "baseDate": "2026-03-31",
+          "quality": "missing",
+          "evidence": "해당 시도에 한국산업단지공단 관할 국가산업단지 동향 데이터 없음"
+        },
+        "electricity_use_mwh": {
+          "value": 438254,
+          "unit": "MWh/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 수전 전력(2024년, 산업·건물·수송 부문 합계)"
+        },
+        "energy_use_toe": {
+          "value": 89467,
+          "unit": "toe/년",
+          "sourceId": "kea_energy_users",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "에너지다소비사업자 에너지 사용량(2024년, 전 부문 합계)"
+        },
+        "solar_capacity_factor": {
+          "value": 12.4,
+          "unit": "%",
+          "sourceId": "epsis_util_solar",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 태양광 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "wind_capacity_factor": {
+          "value": 17.4,
+          "unit": "%",
+          "sourceId": "epsis_util_wind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 풍력 설비 이용률(EPSIS 웹 조회 스냅샷)"
+        },
+        "gas_supply_annual": {
+          "value": 232017,
+          "unit": "천㎥ (최근 12개월 합)",
+          "sourceId": "kogas_supply",
+          "baseDate": "2026-06-30",
+          "quality": "ok",
+          "evidence": "가스공사 제주본부 2025-07-31~2026-06-30 공급량 합계"
+        },
+        "petroleum_consumption": {
+          "value": 7144,
+          "unit": "천배럴/년",
+          "sourceId": "knoc_petroleum",
+          "baseDate": "2024-12-31",
+          "quality": "ok",
+          "evidence": "2024년 석유제품 소비량"
+        },
+        "citygas_customers": {
+          "value": 56257,
+          "unit": "개(수요자)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(제주)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "citygas_pipeline_m": {
+          "value": 184642,
+          "unit": "m(배관)",
+          "sourceId": "kgs_citygas",
+          "baseDate": "2025-09-19",
+          "quality": "partial",
+          "evidence": "도시가스사(제주)의 주 공급권역 기준 배분. 복수 시도 공급 사업자는 주 권역 1곳에 배분(partial). 권역 미확인 사업자 제외: 명성, 대화"
+        },
+        "renewable_generation_mwh": {
+          "value": null,
+          "unit": "MWh/년",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "missing",
+          "evidence": "기초지자체별 신·재생에너지 발전량의 광역 합계 행"
+        },
+        "renewable_capacity_kw": {
+          "value": null,
+          "unit": "kW(누적)",
+          "sourceId": "knrec_renewable",
+          "baseDate": "2024-12-31",
+          "quality": "missing",
+          "evidence": "기초지자체별 신·재생에너지 보급용량(발전, 누적)의 광역 합계 행"
+        },
+        "solar_generation_mwh": {
+          "value": 466001.179181004,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 태양광 전력거래량 166,440행의 연간 합계"
+        },
+        "wind_generation_mwh": {
+          "value": 75510.9949819997,
+          "unit": "MWh/년(전력시장 거래량)",
+          "sourceId": "kpx_solarwind",
+          "baseDate": "2025-12-31",
+          "quality": "ok",
+          "evidence": "2025년 시간별 풍력 전력거래량 166,440행의 연간 합계"
+        }
+      }
+    }
+  ],
+  "national": {
+    "gasPeakSupplyLatest": {
+      "value": 6033,
+      "unit": "천㎥/시간 (전국)",
+      "date": "2026-06-19",
+      "sourceId": "kogas_peak"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# files
+/docs
+/resources
+
+# env files (secrets)
+.env
+.env.local
+.env*.local
+
+# dependencies / build
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
