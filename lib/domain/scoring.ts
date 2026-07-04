@@ -163,7 +163,7 @@ export function computeScores(data: GridData, scenario: DemandScenario): RegionS
                 FLEX_FACTOR[scenario.flexibility] * 100
               )}%) 연간 환산 수요가 에너지다소비사업자 수전 전력(2024) 대비 ${(
                 (burdens[i] ?? 0) * 100
-              ).toFixed(1)}% — 부담률 0%=100점, ${BURDEN_CAP * 100}% 이상=0점 절대 스케일`,
+              ).toFixed(1)}% 수준입니다. 부담률 0%는 100점, ${BURDEN_CAP * 100}% 이상은 0점인 절대 스케일로 환산`,
         sourceIds: metricSource(r, "electricity_use_mwh"),
       };
 

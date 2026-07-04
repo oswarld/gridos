@@ -14,14 +14,14 @@ type SidoGeo = {
 
 const geo = sidoGeo as unknown as SidoGeo;
 
-/** 점수 → 채색 (rose→amber→emerald), null → 회색 */
+/** 점수별 채색 (K-GRID 팔레트: 성공 그린 → 브랜드 옐로 → 코럴), 데이터 부족은 회색 */
 function fillColor(score: number | null): string {
-  if (score === null) return "#e2e8f0";
-  if (score >= 70) return "#10b981";
-  if (score >= 60) return "#6ee7b7";
-  if (score >= 50) return "#fbbf24";
-  if (score >= 40) return "#fb923c";
-  return "#f43f5e";
+  if (score === null) return "#eef0f3";
+  if (score >= 70) return "#00b473";
+  if (score >= 60) return "#7fd7bb";
+  if (score >= 50) return "#ffd02f";
+  if (score >= 40) return "#ffab66";
+  return "#ff9999";
 }
 
 export default function RegionMap({
@@ -65,13 +65,28 @@ export default function RegionMap({
       d: r.rings
         .map((ring) => "M" + ring.map((p) => project(p).map((v) => v.toFixed(1)).join(",")).join("L") + "Z")
         .join(" "),
-      // 라벨 위치: 가장 큰 링의 무게중심 근사
+      // 라벨 위치: 가장 큰 링의 bbox 중심 + 겹침 지역 수동 보정
       label: (() => {
         const biggest = [...r.rings].sort((a, b) => b.length - a.length)[0] ?? [];
         if (!biggest.length) return null;
-        const cx = biggest.reduce((s, p) => s + p[0], 0) / biggest.length;
-        const cy = biggest.reduce((s, p) => s + p[1], 0) / biggest.length;
-        return project([cx, cy]);
+        let bMinX = Infinity, bMinY = Infinity, bMaxX = -Infinity, bMaxY = -Infinity;
+        for (const [x, y] of biggest) {
+          if (x < bMinX) bMinX = x;
+          if (x > bMaxX) bMaxX = x;
+          if (y < bMinY) bMinY = y;
+          if (y > bMaxY) bMaxY = y;
+        }
+        // 서울을 감싸는 경기, 대구를 감싸는 경북 등은 중심이 다른 시도 위에
+        // 떨어지므로 경위도 기준으로 라벨을 이동한다.
+        const nudge: Record<string, [number, number]> = {
+          gyeonggi: [0.25, 0.35],   // 북동쪽(포천 방면)
+          gyeongbuk: [0.15, 0.35],  // 북쪽(안동 방면)
+          gyeongnam: [-0.25, 0.1],
+          chungnam: [-0.15, -0.1],
+          incheon: [-0.05, -0.12],
+        };
+        const [nx, ny] = nudge[r.code] ?? [0, 0];
+        return project([(bMinX + bMaxX) / 2 + nx, (bMinY + bMaxY) / 2 + ny]);
       })(),
     }));
     return { W, H, paths };
@@ -102,6 +117,11 @@ export default function RegionMap({
           const s = byCode.get(p.code);
           const active = selectedCode === p.code;
           const inScope = !!s;
+          // React 19의 <title>은 단일 문자열 자식만 허용 — 복수 텍스트 노드는
+          // SSR/클라이언트 하이드레이션 불일치를 일으킨다.
+          const tooltip = s
+            ? `${p.name} · ${s.totalScore === null ? "데이터 부족" : s.totalScore.toFixed(1) + "점"} · ${DECISION_LABELS[s.decision]}${s.rank ? ` · ${s.rank}위` : ""}`
+            : `${p.name} · 비교 대상에서 제외됨`;
           return (
             <path
               key={p.code}
@@ -112,13 +132,9 @@ export default function RegionMap({
               opacity={inScope ? 1 : 0.5}
               className="cursor-pointer transition-opacity hover:opacity-80"
               onClick={() => onSelect(p.code)}
+              aria-label={tooltip}
             >
-              <title>
-                {p.name}
-                {s
-                  ? ` — ${s.totalScore === null ? "데이터 부족" : s.totalScore.toFixed(1) + "점"} · ${DECISION_LABELS[s.decision]}${s.rank ? ` · ${s.rank}위` : ""}`
-                  : " — 비교 대상에서 제외됨"}
-              </title>
+              <title>{tooltip}</title>
             </path>
           );
         })}
@@ -142,25 +158,25 @@ export default function RegionMap({
           );
         })}
       </svg>
-      <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-slate-500">
-        <span className="font-semibold text-slate-600">종합 점수</span>
+      <div className="mt-3 flex flex-wrap items-center gap-3 text-[12px] text-steel">
+        <span className="font-semibold text-ink">종합 점수</span>
         {[
-          ["70+", "#10b981"],
-          ["60+", "#6ee7b7"],
-          ["50+", "#fbbf24"],
-          ["40+", "#fb923c"],
-          ["<40", "#f43f5e"],
-          ["데이터 부족", "#e2e8f0"],
+          ["70 이상", "#00b473"],
+          ["60 이상", "#7fd7bb"],
+          ["50 이상", "#ffd02f"],
+          ["40 이상", "#ffab66"],
+          ["40 미만", "#ff9999"],
+          ["데이터 부족", "#eef0f3"],
         ].map(([label, color]) => (
-          <span key={label} className="inline-flex items-center gap-1">
-            <span className="h-3 w-3 rounded-sm" style={{ background: color }} />
+          <span key={label} className="inline-flex items-center gap-1.5">
+            <span className="h-3 w-3 rounded-full" style={{ background: color }} />
             {label}
           </span>
         ))}
       </div>
       {geo.source && (
-        <p className="mt-1 text-[10px] text-slate-400">
-          행정경계: {geo.source.title} ({geo.source.fetchedAt.slice(0, 10)} 수집, 표시용 단순화)
+        <p className="mt-2 text-[11px] text-stone2">
+          행정경계: VWorld 시도 경계 데이터 · {geo.source.fetchedAt.slice(0, 10)} 수집 · 표시용 단순화
         </p>
       )}
     </div>

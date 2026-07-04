@@ -56,16 +56,16 @@ function counterfactual(
 
   let deltaText: string;
   if (altTop.regionCode !== baseTop.regionCode) {
-    deltaText = `1위가 ${baseTop.regionName} → ${altTop.regionName}로 바뀜 (${altTop.totalScore!.toFixed(1)}점)`;
+    deltaText = `1위가 ${baseTop.regionName}에서 ${altTop.regionName}(${altTop.totalScore!.toFixed(1)}점)으로 바뀝니다`;
   } else if (Math.abs(delta) < 0.05) {
-    deltaText = `1위 ${baseTop.regionName} 총점 변화 없음`;
+    deltaText = `1위 ${baseTop.regionName}의 총점은 변하지 않습니다`;
   } else {
-    deltaText = `1위 ${baseTop.regionName} 총점 ${delta > 0 ? "+" : ""}${delta.toFixed(1)}점 (${(
-      sameRegionAlt!.totalScore!
-    ).toFixed(1)}점)`;
+    deltaText = `1위 ${baseTop.regionName} 총점이 ${Math.abs(delta).toFixed(1)}점 ${
+      delta > 0 ? "오릅니다" : "내립니다"
+    } (${sameRegionAlt!.totalScore!.toFixed(1)}점)`;
     const altDecision = sameRegionAlt!.decision;
     if (altDecision !== baseTop.decision) {
-      deltaText += `, 판정 ${DECISION_LABELS[baseTop.decision]} → ${DECISION_LABELS[altDecision]}`;
+      deltaText += `. 판정도 ${DECISION_LABELS[baseTop.decision]}에서 ${DECISION_LABELS[altDecision]}으로 바뀝니다`;
     }
   }
   return { label, detail, deltaText, positive: Math.abs(delta) < 0.05 ? null : delta > 0 };
@@ -92,7 +92,7 @@ export function computeScenarioAnalysis(
     const pct = (demandMwh / nationalElec) * 100;
     demandContext.push(
       `이는 전국 에너지다소비사업자 수전 전력(2024, ${(nationalElec / 1_000_000).toFixed(1)}TWh)의 ` +
-        `${pct.toFixed(2)}% 규모입니다${pct > 3 ? " — 단일 사업으로는 매우 큰 수요로, 단계적 증설 검토가 필요합니다" : ""}.`
+        `${pct.toFixed(2)}% 규모입니다${pct > 3 ? ". 단일 사업으로는 매우 큰 수요이므로 단계적 증설 검토가 필요합니다" : ""}.`
     );
   }
   const t1 = top1(scores);

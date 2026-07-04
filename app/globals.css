@@ -1,8 +1,33 @@
 @import "tailwindcss";
 
-:root {
-  --gridos-bg: #f6f7f9;
-  --gridos-ink: #17202b;
+/* K-GRID 디자인 토큰 (docs/DESIGN.md) */
+@theme {
+  --color-ink: #1c1c1e;
+  --color-ink-deep: #050038;
+  --color-charcoal: #2c2c34;
+  --color-slate2: #555a6a;
+  --color-steel: #6b6f7e;
+  --color-stone2: #8e91a0;
+  --color-muted2: #a5a8b5;
+
+  --color-canvas: #ffffff;
+  --color-surface: #f7f8fa;
+  --color-surface-soft: #fafbfc;
+  --color-surface-yellow: #fff8e0;
+  --color-hairline: #e0e2e8;
+  --color-hairline-soft: #eef0f3;
+  --color-hairline-strong: #c7cad5;
+
+  --color-brand-yellow: #ffd02f;
+  --color-yellow-light: #fff4c4;
+  --color-yellow-dark: #746019;
+  --color-brand-blue: #4262ff;
+  --color-teal-light: #c3faf5;
+  --color-moss: #187574;
+  --color-coral-light: #ffc6c6;
+  --color-coral-dark: #600000;
+  --color-rose-light: #fde0f0;
+  --color-success: #00b473;
 }
 
 html {
@@ -10,9 +35,10 @@ html {
 }
 
 body {
-  background: var(--gridos-bg);
-  color: var(--gridos-ink);
-  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
-    "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+  background: #ffffff;
+  color: #1c1c1e;
+  font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
 }

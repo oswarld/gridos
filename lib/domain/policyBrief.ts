@@ -35,7 +35,7 @@ export function buildRuleBasedBrief(
       .map(([k]) => DIMENSION_LABELS[k as keyof typeof DIMENSION_LABELS]);
 
     lines.push(
-      `${s.rank}위 ${s.regionName} — 종합 ${s.totalScore!.toFixed(1)}점, 판정: ${DECISION_LABELS[s.decision]}`
+      `${s.rank}위 ${s.regionName} · 종합 ${s.totalScore!.toFixed(1)}점, 판정: ${DECISION_LABELS[s.decision]}`
     );
     if (strong.length) lines.push(`   강점: ${strong.join(", ")}`);
     if (weak.length) lines.push(`   약점: ${weak.join(", ")}`);

@@ -353,7 +353,7 @@ function setMetric(regionCode: string, key: MetricKey, v: RegionMetricValue) {
       quality: hit ? (hit.shared ? "partial" : "ok") : "missing",
       evidence: hit
         ? `가스공사 ${hit.branch}본부 ${from}~${to} 공급량 합계${hit.shared ? " (충청본부 값을 충북·충남에 동일 표시)" : ""}`
-        : "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음",
+        : "한국가스공사 지역본부가 없는 시도로, 원천에 값이 없습니다",
     });
   }
   addSource({

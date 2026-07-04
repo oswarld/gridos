@@ -55,6 +55,31 @@ function rdp(points: Ring, epsilon: number): Ring {
   return [points[0], points[points.length - 1]];
 }
 
+/**
+ * 닫힌 링 단순화: 첫 점=끝 점인 링은 RDP 기준선이 길이 0으로 퇴화하므로,
+ * 시작점에서 가장 먼 점을 기준으로 두 체인으로 나눠 각각 RDP 후 다시 잇는다.
+ */
+function simplifyClosedRing(ring: Ring, epsilon: number): Ring {
+  let pts = ring;
+  const [fx, fy] = pts[0];
+  const [lx, ly] = pts[pts.length - 1];
+  if (fx === lx && fy === ly) pts = pts.slice(0, -1);
+  if (pts.length < 4) return [...pts, pts[0]];
+
+  let farIdx = 1;
+  let farDist = 0;
+  for (let i = 1; i < pts.length; i++) {
+    const d = Math.hypot(pts[i][0] - pts[0][0], pts[i][1] - pts[0][1]);
+    if (d > farDist) {
+      farDist = d;
+      farIdx = i;
+    }
+  }
+  const chainA = rdp(pts.slice(0, farIdx + 1), epsilon);
+  const chainB = rdp([...pts.slice(farIdx), pts[0]], epsilon);
+  return [...chainA.slice(0, -1), ...chainB];
+}
+
 function ringArea(ring: Ring): number {
   let area = 0;
   for (let i = 0; i < ring.length; i++) {
@@ -65,10 +90,15 @@ function ringArea(ring: Ring): number {
   return Math.abs(area / 2);
 }
 
+// VWorld 발급 키에 등록된 서비스 도메인 (도메인 검증 통과용)
+const DOMAIN = process.env.VWORLD_DOMAIN ?? "k-grid.site";
+
 async function fetchPage(page: number) {
   const url =
     `https://api.vworld.kr/req/data?service=data&request=GetFeature&data=LT_C_ADSIDO_INFO` +
-    `&key=${encodeURIComponent(KEY!)}&format=json&geometry=true&crs=EPSG:4326&size=20&page=${page}`;
+    `&key=${encodeURIComponent(KEY!)}&domain=${encodeURIComponent(DOMAIN)}` +
+    `&geomFilter=BOX(124,33,132,39)` +
+    `&format=json&geometry=true&crs=EPSG:4326&size=20&page=${page}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`VWorld HTTP ${res.status}`);
   const j = (await res.json()) as any;
@@ -101,13 +131,13 @@ async function main() {
     for (const poly of polys) {
       const outer = poly[0] as Ring; // 외곽 링만 사용 (구멍 무시 — 표시용)
       if (ringArea(outer) < MIN_AREA) continue;
-      const simplified = rdp(outer, EPS);
+      const simplified = simplifyClosedRing(outer, EPS);
       if (simplified.length >= 4) rings.push(simplified);
     }
     // 링이 모두 면적 기준에서 탈락하면 가장 큰 링 하나는 유지
     if (rings.length === 0 && polys.length > 0) {
       const biggest = polys.map((p) => p[0] as Ring).sort((a, b) => ringArea(b) - ringArea(a))[0];
-      rings.push(rdp(biggest, EPS));
+      rings.push(simplifyClosedRing(biggest, EPS));
     }
     regions.push({ code, name, rings });
     console.log(`  - ${name} → ${code}: 링 ${rings.length}개, 점 ${rings.reduce((s, r) => s + r.length, 0)}개`);

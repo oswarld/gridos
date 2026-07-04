@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-04T12:16:30.907Z",
+  "generatedAt": "2026-07-04T13:36:29.548Z",
   "sources": [
     {
       "id": "kicox_status",
@@ -10,7 +10,7 @@
       "updateCycle": "분기",
       "accessMethod": "data_go_kr_file",
       "rowCount": 17,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "kicox_trend",
@@ -21,7 +21,7 @@
       "updateCycle": "분기",
       "accessMethod": "data_go_kr_file",
       "rowCount": 136,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "kea_energy_users",
@@ -32,7 +32,7 @@
       "updateCycle": "연간",
       "accessMethod": "data_go_kr_file",
       "rowCount": 54,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "epsis_util_solar",
@@ -44,7 +44,7 @@
       "accessMethod": "manual_web_download",
       "licenseNote": "EPSIS 웹 조회 화면에서 수동 다운로드한 스냅샷",
       "rowCount": 136,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "epsis_util_wind",
@@ -56,7 +56,7 @@
       "accessMethod": "manual_web_download",
       "licenseNote": "EPSIS 웹 조회 화면에서 수동 다운로드한 스냅샷",
       "rowCount": 64,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "kogas_supply",
@@ -67,7 +67,7 @@
       "updateCycle": "분기",
       "accessMethod": "data_go_kr_openapi",
       "rowCount": 126,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "kogas_peak",
@@ -78,7 +78,7 @@
       "updateCycle": "월간",
       "accessMethod": "data_go_kr_openapi",
       "rowCount": 78,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "knoc_petroleum",
@@ -89,7 +89,7 @@
       "updateCycle": "연간",
       "accessMethod": "data_go_kr_openapi",
       "rowCount": 28,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "kgs_citygas",
@@ -100,7 +100,7 @@
       "updateCycle": "연간",
       "accessMethod": "data_go_kr_openapi",
       "rowCount": 34,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "knrec_renewable",
@@ -111,7 +111,7 @@
       "updateCycle": "연간",
       "accessMethod": "data_go_kr_openapi",
       "rowCount": 3654,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     },
     {
       "id": "kpx_solarwind",
@@ -122,7 +122,7 @@
       "updateCycle": "연간",
       "accessMethod": "data_go_kr_openapi",
       "rowCount": 166440,
-      "collectedAt": "2026-07-04T12:16:30.907Z"
+      "collectedAt": "2026-07-04T13:36:29.548Z"
     }
   ],
   "regions": [
@@ -974,7 +974,7 @@
           "sourceId": "kogas_supply",
           "baseDate": "2026-06-30",
           "quality": "missing",
-          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+          "evidence": "한국가스공사 지역본부가 없는 시도로, 원천에 값이 없습니다"
         },
         "petroleum_consumption": {
           "value": 6429,
@@ -1124,7 +1124,7 @@
           "sourceId": "kogas_supply",
           "baseDate": "2026-06-30",
           "quality": "missing",
-          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+          "evidence": "한국가스공사 지역본부가 없는 시도로, 원천에 값이 없습니다"
         },
         "petroleum_consumption": {
           "value": 185164,
@@ -1274,7 +1274,7 @@
           "sourceId": "kogas_supply",
           "baseDate": "2026-06-30",
           "quality": "missing",
-          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+          "evidence": "한국가스공사 지역본부가 없는 시도로, 원천에 값이 없습니다"
         },
         "petroleum_consumption": {
           "value": 1814,
@@ -2206,7 +2206,7 @@
           "sourceId": "kogas_supply",
           "baseDate": "2026-06-30",
           "quality": "missing",
-          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+          "evidence": "한국가스공사 지역본부가 없는 시도로, 원천에 값이 없습니다"
         },
         "petroleum_consumption": {
           "value": 198171,
@@ -2364,7 +2364,7 @@
           "sourceId": "kogas_supply",
           "baseDate": "2026-06-30",
           "quality": "missing",
-          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+          "evidence": "한국가스공사 지역본부가 없는 시도로, 원천에 값이 없습니다"
         },
         "petroleum_consumption": {
           "value": 27187,
@@ -2522,7 +2522,7 @@
           "sourceId": "kogas_supply",
           "baseDate": "2026-06-30",
           "quality": "missing",
-          "evidence": "한국가스공사 지역본부가 없는 시도 — 원천에 값 없음"
+          "evidence": "한국가스공사 지역본부가 없는 시도로, 원천에 값이 없습니다"
         },
         "petroleum_consumption": {
           "value": 31152,

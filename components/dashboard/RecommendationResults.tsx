@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type {
   DemandScenario,
   GridData,
@@ -9,14 +9,15 @@ import type {
   ScoreDimensionKey,
 } from "@/lib/types";
 import { DECISION_LABELS, DIMENSION_LABELS } from "@/lib/types";
+import { humanizeTitle } from "@/lib/format";
 import RegionMap from "./RegionMap";
 import ScenarioAnalysis from "./ScenarioAnalysis";
 
 const DECISION_CLS: Record<RegionScore["decision"], string> = {
-  approve: "bg-emerald-100 text-emerald-800",
-  conditional: "bg-amber-100 text-amber-800",
-  hold: "bg-rose-100 text-rose-800",
-  insufficient_data: "bg-slate-200 text-slate-600",
+  approve: "bg-teal-light text-moss",
+  conditional: "bg-surface-yellow text-yellow-dark",
+  hold: "bg-coral-light text-coral-dark",
+  insufficient_data: "bg-surface text-steel",
 };
 
 const DIMENSION_ORDER: ScoreDimensionKey[] = [
@@ -28,83 +29,85 @@ const DIMENSION_ORDER: ScoreDimensionKey[] = [
   "safetyRisk",
 ];
 
-function sourceTitle(data: GridData, id: string): string {
-  return data.sources.find((s) => s.id === id)?.title ?? id;
-}
-
-function baseDateOf(data: GridData, id: string): string {
-  return data.sources.find((s) => s.id === id)?.baseDate ?? "기준일 미상";
+function sourceLabel(data: GridData, id: string): string {
+  const s = data.sources.find((x) => x.id === id);
+  return s ? `${humanizeTitle(s.title)} (${s.baseDate ?? "기준일 미상"})` : id;
 }
 
 function ScoreBar({ score }: { score: number | null }) {
   if (score === null) {
-    return (
-      <div className="flex h-2.5 w-full items-center rounded-full bg-slate-100">
-        <span className="w-full text-center text-[10px] leading-none text-slate-400">데이터 부족</span>
-      </div>
-    );
+    return <div className="h-2 w-full rounded-full bg-hairline-soft" aria-label="데이터 부족" />;
   }
-  const hue = score >= 70 ? "bg-emerald-500" : score >= 40 ? "bg-amber-500" : "bg-rose-500";
+  const hue = score >= 70 ? "bg-success" : score >= 40 ? "bg-brand-yellow" : "bg-coral-light";
   return (
-    <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+    <div className="h-2 w-full overflow-hidden rounded-full bg-hairline-soft">
       <div className={`h-full rounded-full ${hue}`} style={{ width: `${Math.max(2, score)}%` }} />
     </div>
   );
 }
 
-function RegionCard({ s, data, expanded, onToggle }: {
+function RegionCard({
+  s,
+  data,
+  expanded,
+  onToggle,
+}: {
   s: RegionScore;
   data: GridData;
   expanded: boolean;
   onToggle: () => void;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white">
-      <button onClick={onToggle} className="flex w-full items-center gap-3 px-4 py-3 text-left">
-        <span className="w-8 text-center text-lg font-bold tabular-nums text-slate-400">
-          {s.rank ?? "—"}
+    <div className={`rounded-2xl border bg-canvas transition ${expanded ? "border-hairline-strong" : "border-hairline-soft"}`}>
+      <button onClick={onToggle} className="flex w-full items-center gap-3 px-5 py-3.5 text-left">
+        <span className="w-7 text-center text-[17px] font-medium tabular-nums text-stone2">
+          {s.rank ?? "·"}
         </span>
-        <span className="w-14 text-base font-bold text-slate-900">{s.regionName}</span>
-        <span className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-semibold ${DECISION_CLS[s.decision]}`}>
+        <span className="w-14 text-[16px] font-medium text-ink">{s.regionName}</span>
+        <span className={`whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold ${DECISION_CLS[s.decision]}`}>
           {DECISION_LABELS[s.decision]}
         </span>
         <div className="mx-3 hidden flex-1 sm:block">
           <ScoreBar score={s.totalScore} />
         </div>
-        <span className="ml-auto w-16 text-right text-lg font-bold tabular-nums text-slate-900">
-          {s.totalScore === null ? "—" : s.totalScore.toFixed(1)}
+        <span className="ml-auto w-14 text-right text-[17px] font-medium tabular-nums text-ink">
+          {s.totalScore === null ? "·" : s.totalScore.toFixed(1)}
         </span>
-        <span className="text-slate-400">{expanded ? "▴" : "▾"}</span>
+        <svg
+          className={`h-4 w-4 text-stone2 transition-transform ${expanded ? "rotate-180" : ""}`}
+          viewBox="0 0 16 16"
+          fill="none"
+          aria-hidden
+        >
+          <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </button>
 
       {expanded && (
-        <div className="border-t border-slate-100 px-4 py-4">
+        <div className="border-t border-hairline-soft px-5 py-5">
           <div className="grid gap-3 md:grid-cols-2">
             {DIMENSION_ORDER.map((k) => {
               const d = s.dimensions[k];
               return (
-                <div key={k} className="rounded-lg bg-slate-50 p-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-semibold text-slate-700">
+                <div key={k} className="rounded-xl bg-surface p-4">
+                  <div className="flex items-center justify-between text-[14px]">
+                    <span className="font-medium text-ink">
                       {DIMENSION_LABELS[k]}
-                      <span className="ml-1 text-xs font-normal text-slate-400">
+                      <span className="ml-1.5 text-[12px] font-normal text-stone2">
                         가중치 {(d.weight * 100).toFixed(0)}%
                       </span>
                     </span>
-                    <span className="tabular-nums font-bold text-slate-900">
+                    <span className="tabular-nums font-medium text-ink">
                       {d.score === null ? "데이터 부족" : d.score.toFixed(1)}
                     </span>
                   </div>
-                  <div className="mt-2">
+                  <div className="mt-2.5">
                     <ScoreBar score={d.score} />
                   </div>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-500">{d.evidence}</p>
+                  <p className="mt-2.5 text-[12px] leading-[1.5] text-slate2">{d.evidence}</p>
                   {d.sourceIds.length > 0 && (
-                    <p className="mt-1 text-[11px] text-slate-400">
-                      출처:{" "}
-                      {[...new Set(d.sourceIds)]
-                        .map((id) => `${sourceTitle(data, id)} (${baseDateOf(data, id)})`)
-                        .join(" · ")}
+                    <p className="mt-1.5 text-[11px] leading-[1.5] text-stone2">
+                      출처: {[...new Set(d.sourceIds)].map((id) => sourceLabel(data, id)).join(" · ")}
                     </p>
                   )}
                 </div>
@@ -113,9 +116,9 @@ function RegionCard({ s, data, expanded, onToggle }: {
           </div>
 
           {s.conditions.length > 0 && (
-            <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
-              <p className="text-sm font-semibold text-amber-900">조건부 승인안</p>
-              <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-amber-900/90">
+            <div className="mt-4 rounded-xl bg-surface-yellow p-4">
+              <p className="text-[13px] font-semibold text-yellow-dark">조건부 승인안</p>
+              <ul className="mt-1.5 list-disc space-y-1 pl-5 text-[14px] leading-[1.5] text-ink">
                 {s.conditions.map((c, i) => (
                   <li key={i}>{c}</li>
                 ))}
@@ -123,8 +126,8 @@ function RegionCard({ s, data, expanded, onToggle }: {
             </div>
           )}
           {s.missingData.length > 0 && (
-            <p className="mt-3 text-xs text-slate-500">
-              데이터 부족 축(총점 계산에서 제외, 가중치 재정규화 방식): {s.missingData.join(", ")}
+            <p className="mt-3 text-[12px] text-stone2">
+              데이터 부족 축: {s.missingData.join(", ")} · 총점에서 제외하고 가중치를 재정규화했습니다
             </p>
           )}
         </div>
@@ -147,6 +150,11 @@ export default function RecommendationResults({
   const [briefLoading, setBriefLoading] = useState(false);
   const [briefError, setBriefError] = useState<string | null>(null);
 
+  // 시나리오가 바뀌면 이전 브리프는 무효
+  useEffect(() => {
+    setBrief(null);
+  }, [scenario]);
+
   const generateBrief = async () => {
     setBriefLoading(true);
     setBriefError(null);
@@ -160,44 +168,44 @@ export default function RecommendationResults({
           sourceIds: data.sources.map((s) => s.id),
         }),
       });
-      if (!res.ok) throw new Error(`요청 실패 (${res.status})`);
+      if (!res.ok) throw new Error(`브리프 생성 요청이 실패했습니다 (${res.status})`);
       setBrief((await res.json()) as PolicyBriefResponse);
     } catch (e) {
-      setBriefError(e instanceof Error ? e.message : "브리프 생성 실패");
+      setBriefError(e instanceof Error ? e.message : "브리프 생성에 실패했습니다");
     } finally {
       setBriefLoading(false);
     }
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+    <div>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.5px] text-stone2">Step 4</p>
+      <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-lg font-bold text-slate-900">④ 배분·입지 추천 결과</h2>
-          <p className="mt-1 text-sm text-slate-500">
-            공공데이터 지표(전국 정규화)와 사용자 입력 시나리오를 결합한{" "}
-            <b>시뮬레이션 결과</b>입니다. 지역 카드를 열면 축별 근거와 출처·기준일을 확인할 수
-            있습니다.
+          <h2 className="text-[28px] font-medium leading-[1.25] text-ink">배분과 입지 추천 결과</h2>
+          <p className="mt-1.5 max-w-xl text-[15px] leading-[1.5] text-slate2">
+            전국 기준으로 정규화한 공공데이터 지표와 시나리오 조건을 결합한 시뮬레이션
+            결과입니다. 지역 카드를 열면 축별 근거와 출처, 기준일을 볼 수 있습니다.
           </p>
         </div>
         <button
           onClick={generateBrief}
           disabled={briefLoading || scores.length === 0}
-          className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50"
+          className="rounded-full bg-ink px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-charcoal disabled:bg-hairline disabled:text-muted2"
         >
-          {briefLoading ? "정책 브리프 생성 중…" : "정책 브리프 생성"}
+          {briefLoading ? "브리프 생성 중..." : "정책 브리프 생성"}
         </button>
       </div>
 
       {scores.length === 0 ? (
-        <p className="mt-6 rounded-lg bg-slate-50 p-6 text-center text-sm text-slate-500">
-          선택된 지역이 없습니다. ① 지역 선택에서 비교할 지역을 선택하세요.
+        <p className="mt-6 rounded-2xl bg-surface p-8 text-center text-[14px] text-steel">
+          선택된 지역이 없습니다. 지역 선택에서 비교할 시도를 골라 주세요.
         </p>
       ) : (
         <>
-          <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,400px)_1fr]">
-            <div className="rounded-xl border border-slate-200 p-4">
-              <p className="mb-2 text-sm font-semibold text-slate-700">시도별 적합도 지도</p>
+          <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,400px)_1fr]">
+            <div className="rounded-2xl border border-hairline-soft bg-canvas p-5">
+              <p className="mb-3 text-[14px] font-medium text-ink">시도별 적합도 지도</p>
               <RegionMap
                 scores={scores}
                 selectedCode={expanded}
@@ -221,17 +229,17 @@ export default function RecommendationResults({
       )}
 
       {briefError && (
-        <p className="mt-4 rounded-lg bg-rose-50 p-3 text-sm text-rose-700">{briefError}</p>
+        <p className="mt-4 rounded-xl bg-coral-light/40 p-4 text-[14px] text-coral-dark">{briefError}</p>
       )}
       {brief && (
-        <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
-          <div className="flex items-center gap-2">
-            <h3 className="text-base font-bold text-slate-900">정책 브리프</h3>
-            <span className="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-600">
-              {brief.generator === "llm" ? "LLM 문장 생성 (수치는 계산 결과)" : "규칙 기반 생성"}
+        <div className="mt-6 rounded-[28px] border border-hairline-soft bg-canvas p-6 md:p-8">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <h3 className="text-[22px] font-medium text-ink">정책 브리프</h3>
+            <span className="rounded-full bg-surface px-2.5 py-1 text-[12px] font-semibold text-steel">
+              {brief.generator === "llm" ? "AI가 문장 작성 · 수치는 계산 결과만 인용" : "규칙 기반 자동 작성"}
             </span>
           </div>
-          <pre className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-slate-700">
+          <pre className="mt-4 whitespace-pre-wrap font-sans text-[14px] leading-[1.7] text-charcoal">
             {brief.content}
           </pre>
         </div>

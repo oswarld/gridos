@@ -27,13 +27,14 @@ export async function POST(req: Request) {
     try {
       const client = new Anthropic();
       const response = await client.messages.create({
-        model: "claude-opus-4-8",
+        model: process.env.MODEL || "claude-sonnet-5",
         max_tokens: 2048,
         thinking: { type: "adaptive" },
         system:
           "당신은 산업통상부 전력 정책 브리프 편집자입니다. 아래 계산 결과를 바탕으로 정책 담당자용 브리프를 한국어로 작성하세요. " +
           "규칙: (1) 입력에 없는 숫자, 점수, 순위, 지역명을 절대 만들지 마세요. (2) 입력의 수치는 그대로 인용하세요. " +
-          "(3) '사용자 입력 시나리오'와 '공공데이터 기반 계산 결과'를 구분해 표기하세요. (4) 근거 데이터 목록은 유지하세요.",
+          "(3) '사용자 입력 시나리오'와 '공공데이터 기반 계산 결과'를 구분해 표기하세요. (4) 근거 데이터 목록은 유지하세요. " +
+          "(5) 마크다운 문법(#, |, *, ---)을 쓰지 말고 ■, - 기호와 줄바꿈만 사용하는 일반 텍스트로 작성하세요.",
         messages: [{ role: "user", content: ruleBased }],
       });
       if (response.stop_reason !== "refusal") {
