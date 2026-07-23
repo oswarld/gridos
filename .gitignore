@@ -18,4 +18,5 @@ next-env.d.ts
 /data/raw/official/
 /data/raw/osm-atlas/
 /data/raw/atlas-public/
+/data/raw/country-detail/
 /data/normalized/kr-official-atlas-staging.json

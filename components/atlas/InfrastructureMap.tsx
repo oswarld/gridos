@@ -13,6 +13,11 @@ import type {
   InfrastructureLayer,
 } from "@/lib/atlas-types";
 import type { Locale } from "@/lib/i18n";
+import type {
+  DetailedInfrastructureLine,
+  DetailedInfrastructurePoint,
+  DetailMapFilters,
+} from "@/lib/map-detail-types";
 
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
 const FACILITY_SOURCE = "gridos-facilities";
@@ -22,6 +27,7 @@ const FACILITY_HALO_LAYER = "gridos-facility-halo";
 const TRANSMISSION_LAYER = "gridos-transmission";
 const PIPELINE_LAYER = "gridos-pipeline";
 const SELECTED_LINE_LAYER = "gridos-selected-line";
+const DENSITY_LAYER = "gridos-density";
 
 const COUNTRY_BOUNDS: Record<
   CountryCode,
@@ -51,7 +57,8 @@ type GeoFeatureCollection = {
     type: "Feature";
     geometry:
       | { type: "Point"; coordinates: [number, number] }
-      | { type: "LineString"; coordinates: [number, number][] };
+      | { type: "LineString"; coordinates: [number, number][] }
+      | { type: "MultiLineString"; coordinates: [number, number][][] };
     properties: {
       id: string;
       country: CountryCode;
@@ -60,6 +67,12 @@ type GeoFeatureCollection = {
       selected: number;
       operator?: string;
       detail?: string;
+      capacityMw?: number;
+      fuel?: string;
+      networkCount?: number;
+      ixCount?: number;
+      sourceLabel?: string;
+      sourceUrl?: string;
     };
   }>;
 };
@@ -69,10 +82,34 @@ function facilityCollection(
   countryFilter: CountryCode | "ALL",
   activeLayers: Set<InfrastructureLayer>,
   selectedId: string | null,
+  detailPoints: DetailedInfrastructurePoint[],
+  filters: DetailMapFilters,
 ): GeoFeatureCollection {
+  const detailed = detailPoints.filter((point) => {
+    if (!activeLayers.has(point.kind)) return false;
+    if (point.kind === "power_plant") {
+      if (
+        filters.minimumCapacityMw > 0 &&
+        (point.capacityMw === undefined || point.capacityMw < filters.minimumCapacityMw)
+      ) {
+        return false;
+      }
+      if (filters.generationFuel !== "all" && point.fuel !== filters.generationFuel) {
+        return false;
+      }
+      if (!filters.includePlanned && point.planned) return false;
+    }
+    if (point.kind === "data_center" || point.kind === "network_hub") {
+      if (filters.networkMode === "ix" && (point.ixCount ?? 0) < 1) return false;
+      if (filters.networkMode === "net50" && (point.networkCount ?? 0) < 50) return false;
+      if (filters.networkMode === "net200" && (point.networkCount ?? 0) < 200) return false;
+    }
+    return true;
+  });
   return {
     type: "FeatureCollection",
-    features: facilities
+    features: [
+      ...facilities
       .filter(
         (facility) =>
           activeLayers.has(facility.kind) &&
@@ -92,6 +129,32 @@ function facilityCollection(
           selected: facility.id === selectedId ? 1 : 0,
         },
       })),
+      ...detailed.map((point) => ({
+        type: "Feature" as const,
+        geometry: {
+          type: "Point" as const,
+          coordinates: point.coordinates,
+        },
+        properties: {
+          id: point.id,
+          country: point.country,
+          kind: point.kind,
+          name: point.name,
+          selected: point.id === selectedId ? 1 : 0,
+          operator: point.operator,
+          detail:
+            point.kind === "power_plant"
+              ? `${point.capacityMw ?? "—"} MW · ${point.fuel ?? "other"}`
+              : `${point.networkCount ?? 0} networks · ${point.ixCount ?? 0} IX`,
+          capacityMw: point.capacityMw,
+          fuel: point.fuel,
+          networkCount: point.networkCount,
+          ixCount: point.ixCount,
+          sourceLabel: point.sourceLabel,
+          sourceUrl: point.sourceUrl,
+        },
+      })),
+    ],
   };
 }
 
@@ -100,10 +163,13 @@ function lineCollection(
   countryFilter: CountryCode | "ALL",
   activeLayers: Set<InfrastructureLayer>,
   selectedId: string | null,
+  detailLines: DetailedInfrastructureLine[],
+  includePlanned: boolean,
 ): GeoFeatureCollection {
   return {
     type: "FeatureCollection",
-    features: lines
+    features: [
+      ...lines
       .filter(
         (line) =>
           activeLayers.has(line.kind) &&
@@ -129,6 +195,37 @@ function lineCollection(
               : undefined,
         },
       })),
+      ...detailLines
+        .filter(
+          (line) =>
+            activeLayers.has(line.kind) && (includePlanned || !line.planned),
+        )
+        .map((line) => ({
+          type: "Feature" as const,
+          geometry: line.segments?.length
+            ? {
+                type: "MultiLineString" as const,
+                coordinates: line.segments,
+              }
+            : {
+                type: "LineString" as const,
+                coordinates: line.coordinates,
+              },
+          properties: {
+            id: line.id,
+            country: line.country,
+            kind: line.kind,
+            name: line.name,
+            selected: line.id === selectedId ? 1 : 0,
+            operator: line.operator,
+            detail: line.voltageKv
+              ? `${line.voltageKv} kV`
+              : line.substance,
+            sourceLabel: line.sourceLabel,
+            sourceUrl: line.sourceUrl,
+          },
+        })),
+    ],
   };
 }
 
@@ -164,14 +261,53 @@ function addAtlasLayers(map: MapLibreMap, facilities: GeoFeatureCollection, line
   });
 
   map.addLayer({
+    id: DENSITY_LAYER,
+    type: "heatmap",
+    source: FACILITY_SOURCE,
+    maxzoom: 8,
+    layout: { visibility: "none" },
+    paint: {
+      "heatmap-weight": [
+        "interpolate",
+        ["linear"],
+        ["coalesce", ["get", "capacityMw"], ["get", "networkCount"], 1],
+        0,
+        0.15,
+        100,
+        0.5,
+        1000,
+        1,
+      ],
+      "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 1, 0.45, 7, 1.5],
+      "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 1, 9, 7, 30],
+      "heatmap-opacity": 0.52,
+      "heatmap-color": [
+        "interpolate",
+        ["linear"],
+        ["heatmap-density"],
+        0,
+        "rgba(37,99,235,0)",
+        0.25,
+        "rgba(59,130,246,.38)",
+        0.55,
+        "rgba(20,184,166,.58)",
+        0.78,
+        "rgba(245,158,11,.68)",
+        1,
+        "rgba(220,38,38,.78)",
+      ],
+    },
+  });
+
+  map.addLayer({
     id: TRANSMISSION_LAYER,
     type: "line",
     source: LINE_SOURCE,
     filter: ["==", ["get", "kind"], "transmission"],
     paint: {
       "line-color": "#3979bd",
-      "line-width": ["interpolate", ["linear"], ["zoom"], 2, 1.2, 8, 3.5],
-      "line-opacity": 0.82,
+      "line-width": ["interpolate", ["linear"], ["zoom"], 2, 0.65, 8, 2.8],
+      "line-opacity": 0.68,
     },
   });
   map.addLayer({
@@ -181,8 +317,8 @@ function addAtlasLayers(map: MapLibreMap, facilities: GeoFeatureCollection, line
     filter: ["==", ["get", "kind"], "pipeline"],
     paint: {
       "line-color": "#dc6b42",
-      "line-width": ["interpolate", ["linear"], ["zoom"], 2, 1.5, 8, 4],
-      "line-opacity": 0.9,
+      "line-width": ["interpolate", ["linear"], ["zoom"], 2, 0.8, 8, 3],
+      "line-opacity": 0.78,
       "line-dasharray": [2.2, 1.5],
     },
   });
@@ -220,7 +356,7 @@ function addAtlasLayers(map: MapLibreMap, facilities: GeoFeatureCollection, line
         ["linear"],
         ["zoom"],
         2,
-        ["match", ["get", "kind"], "network_hub", 6, "data_center", 5.5, 6.5],
+        ["match", ["get", "kind"], "network_hub", 3.4, "data_center", 2.8, 3],
         8,
         ["match", ["get", "kind"], "network_hub", 10, "data_center", 9, 11],
       ],
@@ -253,6 +389,9 @@ export default function InfrastructureMap({
   locale,
   countryName,
   labels,
+  detailPoints = [],
+  detailLines = [],
+  detailFilters,
 }: {
   facilities: AtlasFacility[];
   linearFeatures: AtlasLinearFeature[];
@@ -271,6 +410,9 @@ export default function InfrastructureMap({
     zoomOut: string;
     resetView: string;
   };
+  detailPoints?: DetailedInfrastructurePoint[];
+  detailLines?: DetailedInfrastructureLine[];
+  detailFilters: DetailMapFilters;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -287,12 +429,35 @@ export default function InfrastructureMap({
   const [failed, setFailed] = useState(false);
 
   const facilityData = useMemo(
-    () => facilityCollection(facilities, countryFilter, activeLayers, selectedId),
-    [activeLayers, countryFilter, facilities, selectedId],
+    () =>
+      facilityCollection(
+        facilities,
+        countryFilter,
+        activeLayers,
+        selectedId,
+        detailPoints,
+        detailFilters,
+      ),
+    [activeLayers, countryFilter, detailFilters, detailPoints, facilities, selectedId],
   );
   const lineData = useMemo(
-    () => lineCollection(linearFeatures, countryFilter, activeLayers, selectedId),
-    [activeLayers, countryFilter, linearFeatures, selectedId],
+    () =>
+      lineCollection(
+        linearFeatures,
+        countryFilter,
+        activeLayers,
+        selectedId,
+        detailLines,
+        detailFilters.includePlanned,
+      ),
+    [
+      activeLayers,
+      countryFilter,
+      detailFilters.includePlanned,
+      detailLines,
+      linearFeatures,
+      selectedId,
+    ],
   );
   facilityDataRef.current = facilityData;
   lineDataRef.current = lineData;
@@ -369,6 +534,16 @@ export default function InfrastructureMap({
 
   useEffect(() => {
     const map = mapRef.current;
+    if (!map || !ready || !map.getLayer(DENSITY_LAYER)) return;
+    map.setLayoutProperty(
+      DENSITY_LAYER,
+      "visibility",
+      detailFilters.showDensity ? "visible" : "none",
+    );
+  }, [detailFilters.showDensity, ready]);
+
+  useEffect(() => {
+    const map = mapRef.current;
     if (!map || !ready) return;
     moveToCountry(map, countryFilter, true);
   }, [countryFilter, ready]);
@@ -381,7 +556,7 @@ export default function InfrastructureMap({
       className="relative overflow-hidden rounded-[22px] border border-[#102231]/10 bg-[#e8ebe7]"
       aria-label={ariaLabel}
     >
-      <div ref={containerRef} className="h-[480px] w-full md:h-[570px]" />
+      <div ref={containerRef} className="h-[620px] w-full md:h-[720px]" />
       <div className="pointer-events-none absolute left-3 top-3 z-10 max-w-[calc(100%-8rem)] rounded-full border border-[#102231]/10 bg-white/90 px-3 py-2 shadow-sm backdrop-blur">
         <p className="truncate text-[10px] font-bold uppercase tracking-[0.12em] text-[#43535d]">
           {currentLabel}

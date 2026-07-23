@@ -221,7 +221,77 @@ if (!fs.existsSync(atlasPath) || !fs.existsSync(boundariesPath)) {
   }
 }
 
-// ─── 3. 더미데이터 키워드 검사 ───
+// ─── 3. 국가 상세 지도 레이어 ───
+console.log("[validate] 국가 상세 지도 레이어 검사");
+const detailMinimums: Record<string, { points: number; lines: number }> = {
+  KR: { points: 1000, lines: 1000 },
+  JP: { points: 5000, lines: 5000 },
+  TW: { points: 200, lines: 500 },
+  US: { points: 10000, lines: 3000 },
+};
+for (const [country, minimum] of Object.entries(detailMinimums)) {
+  const detailPath = path.join(
+    ROOT,
+    "public",
+    "data",
+    "detail",
+    `${country.toLowerCase()}.json`,
+  );
+  if (!fs.existsSync(detailPath)) {
+    fail(`${country} 상세 지도 없음 — pnpm data:build:detail 먼저 실행`);
+    continue;
+  }
+  const detail = JSON.parse(fs.readFileSync(detailPath, "utf8"));
+  const points: any[] = detail.points ?? [];
+  const lines: any[] = detail.lines ?? [];
+  if (detail.country !== country) fail(`${country} 상세 지도 국가 코드 불일치`);
+  if (points.length < minimum.points || lines.length < minimum.lines) {
+    fail(
+      `${country} 상세 범위 부족: points=${points.length}, lines=${lines.length}`,
+    );
+  } else {
+    ok(`${country}: 상세 포인트 ${points.length}, 선형 그룹 ${lines.length}`);
+  }
+  const ids = [...points, ...lines].map((row) => row.id);
+  if (new Set(ids).size !== ids.length) fail(`${country} 상세 레이어 ID 중복`);
+
+  let invalidDetailCoordinates = 0;
+  const finiteCoordinates = (value: unknown): boolean => {
+    if (typeof value === "number") return Number.isFinite(value);
+    if (!Array.isArray(value) || value.length === 0) return false;
+    return value.every(finiteCoordinates);
+  };
+  for (const point of points) {
+    if (
+      !Array.isArray(point.coordinates) ||
+      point.coordinates.length !== 2 ||
+      !finiteCoordinates(point.coordinates)
+    ) {
+      invalidDetailCoordinates++;
+    }
+    if (!point.sourceLabel || !String(point.sourceUrl ?? "").startsWith("https://")) {
+      fail(`${country} 상세 포인트 출처 누락: ${point.id}`);
+    }
+  }
+  for (const line of lines) {
+    if (
+      !finiteCoordinates(line.coordinates) ||
+      (line.segments && !finiteCoordinates(line.segments))
+    ) {
+      invalidDetailCoordinates++;
+    }
+    if (!line.sourceLabel || !String(line.sourceUrl ?? "").startsWith("https://")) {
+      fail(`${country} 상세 선형 출처 누락: ${line.id}`);
+    }
+  }
+  if (invalidDetailCoordinates) {
+    fail(`${country} 상세 레이어 유효하지 않은 좌표 ${invalidDetailCoordinates}개`);
+  } else {
+    ok(`${country} 상세 좌표 및 공개 출처 정상`);
+  }
+}
+
+// ─── 4. 더미데이터 키워드 검사 ───
 console.log("[validate] 더미데이터 키워드 검사 (app/, components/, lib/)");
 // 키워드를 문자열 결합으로 만들어 이 파일 자체가 검사에 걸리지 않게 한다.
 const BANNED = [

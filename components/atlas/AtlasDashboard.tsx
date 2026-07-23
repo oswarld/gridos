@@ -15,6 +15,13 @@ import {
   type PublicAtlas,
 } from "@/lib/atlas-types";
 import { DICTIONARIES, LOCALES, numberLocale, type Locale } from "@/lib/i18n";
+import type {
+  CountryInfrastructureDetail,
+  DetailedInfrastructureLine,
+  DetailedInfrastructurePoint,
+  DetailMapFilters,
+  GenerationFuel,
+} from "@/lib/map-detail-types";
 import InfrastructureMap from "./InfrastructureMap";
 
 const atlas = atlasJson as PublicAtlas;
@@ -30,9 +37,173 @@ const LAYER_STYLES: Record<
   pipeline: { color: "#d66a43", marker: "dash" },
 };
 
+const GENERATION_FUELS: GenerationFuel[] = [
+  "solar",
+  "gas",
+  "hydro",
+  "wind",
+  "oil",
+  "biomass",
+  "storage",
+  "coal",
+  "geothermal",
+  "nuclear",
+  "other",
+];
+
+const DETAIL_COPY: Record<
+  Locale,
+  {
+    controls: string;
+    controlsHint: string;
+    capacity: string;
+    all: string;
+    network: string;
+    ixOnly: string;
+    networks50: string;
+    networks200: string;
+    includePlanned: string;
+    density: string;
+    loading: string;
+    loadFailed: string;
+    publicRecords: string;
+    exactSource: string;
+    networks: string;
+    exchanges: string;
+    fuels: Record<GenerationFuel, string>;
+  }
+> = {
+  ko: {
+    controls: "지도 레이어 & 필터 제어",
+    controlsHint: "원하는 레이어를 켜거나 발전·네트워크 조건을 조절하세요.",
+    capacity: "발전 용량",
+    all: "전체",
+    network: "데이터센터",
+    ixOnly: "IX 연결",
+    networks50: "네트워크 50+",
+    networks200: "네트워크 200+",
+    includePlanned: "계획 시설 포함",
+    density: "밀도 음영",
+    loading: "국가 상세 데이터를 불러오는 중",
+    loadFailed: "상세 데이터를 불러오지 못해 대표 스냅샷을 표시합니다.",
+    publicRecords: "공개 상세 레코드",
+    exactSource: "원문 공개 위치",
+    networks: "연결 네트워크",
+    exchanges: "IX 수",
+    fuels: {
+      solar: "태양광",
+      gas: "가스",
+      hydro: "수력",
+      wind: "풍력",
+      oil: "석유",
+      biomass: "바이오매스",
+      storage: "저장",
+      coal: "석탄",
+      geothermal: "지열",
+      nuclear: "원자력",
+      other: "기타",
+    },
+  },
+  en: {
+    controls: "Map layers & filters",
+    controlsHint: "Combine layers and refine generation or network conditions.",
+    capacity: "Generation capacity",
+    all: "All",
+    network: "Data centers",
+    ixOnly: "IX connected",
+    networks50: "50+ networks",
+    networks200: "200+ networks",
+    includePlanned: "Include planned",
+    density: "Density heatmap",
+    loading: "Loading national detail records",
+    loadFailed: "Detail data is unavailable; showing the representative snapshot.",
+    publicRecords: "public detail records",
+    exactSource: "Source-published location",
+    networks: "Networks",
+    exchanges: "IX count",
+    fuels: {
+      solar: "Solar",
+      gas: "Gas",
+      hydro: "Hydro",
+      wind: "Wind",
+      oil: "Oil",
+      biomass: "Biomass",
+      storage: "Storage",
+      coal: "Coal",
+      geothermal: "Geothermal",
+      nuclear: "Nuclear",
+      other: "Other",
+    },
+  },
+  "zh-CN": {
+    controls: "地图图层与筛选",
+    controlsHint: "组合图层，并调整发电或网络条件。",
+    capacity: "发电容量",
+    all: "全部",
+    network: "数据中心",
+    ixOnly: "已连接 IX",
+    networks50: "网络 50+",
+    networks200: "网络 200+",
+    includePlanned: "包含规划设施",
+    density: "密度热图",
+    loading: "正在加载全国详细记录",
+    loadFailed: "详细数据不可用，正在显示代表性快照。",
+    publicRecords: "条公开详细记录",
+    exactSource: "来源公开位置",
+    networks: "连接网络",
+    exchanges: "IX 数量",
+    fuels: {
+      solar: "太阳能",
+      gas: "燃气",
+      hydro: "水电",
+      wind: "风电",
+      oil: "石油",
+      biomass: "生物质",
+      storage: "储能",
+      coal: "煤炭",
+      geothermal: "地热",
+      nuclear: "核电",
+      other: "其他",
+    },
+  },
+  ja: {
+    controls: "地図レイヤーとフィルター",
+    controlsHint: "レイヤーを組み合わせ、発電・ネットワーク条件を調整します。",
+    capacity: "発電容量",
+    all: "すべて",
+    network: "データセンター",
+    ixOnly: "IX 接続",
+    networks50: "ネットワーク 50+",
+    networks200: "ネットワーク 200+",
+    includePlanned: "計画施設を含む",
+    density: "密度ヒートマップ",
+    loading: "全国詳細データを読み込み中",
+    loadFailed: "詳細データを取得できないため代表スナップショットを表示します。",
+    publicRecords: "件の公開詳細レコード",
+    exactSource: "原典公開位置",
+    networks: "接続ネットワーク",
+    exchanges: "IX 数",
+    fuels: {
+      solar: "太陽光",
+      gas: "ガス",
+      hydro: "水力",
+      wind: "風力",
+      oil: "石油",
+      biomass: "バイオマス",
+      storage: "蓄電",
+      coal: "石炭",
+      geothermal: "地熱",
+      nuclear: "原子力",
+      other: "その他",
+    },
+  },
+};
+
 type SelectedRecord =
   | { type: "facility"; record: AtlasFacility }
   | { type: "linear"; record: AtlasLinearFeature }
+  | { type: "detail-point"; record: DetailedInfrastructurePoint }
+  | { type: "detail-line"; record: DetailedInfrastructureLine }
   | null;
 
 function uniqueSecurities(
@@ -100,6 +271,7 @@ function externalTickerUrl(security: ListedSecurity): string {
 export default function AtlasDashboard({ locale }: { locale: Locale }) {
   const dictionary = DICTIONARIES[locale];
   const copy = ATLAS_UI[locale];
+  const detailCopy = DETAIL_COPY[locale];
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const [countryFilter, setCountryFilter] = useState<CountryCode | "ALL">("ALL");
   const [balanceCountry, setBalanceCountry] = useState<CountryCode>("KR");
@@ -109,6 +281,20 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
   const [selectedId, setSelectedId] = useState<string | null>(
     atlas.facilities[0]?.id ?? null,
   );
+  const [detailByCountry, setDetailByCountry] = useState<
+    Partial<Record<CountryCode, CountryInfrastructureDetail>>
+  >({});
+  const [detailLoading, setDetailLoading] = useState<CountryCode | null>(null);
+  const [detailError, setDetailError] = useState<CountryCode | null>(null);
+  const [detailFilters, setDetailFilters] = useState<DetailMapFilters>({
+    minimumCapacityMw: 100,
+    generationFuel: "all",
+    networkMode: "all",
+    includePlanned: false,
+    showDensity: false,
+  });
+  const detailData =
+    countryFilter === "ALL" ? undefined : detailByCountry[countryFilter];
   const formatter = useMemo(
     () =>
       new Intl.NumberFormat(numberLocale(locale), {
@@ -136,18 +322,58 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
     () => new Map(atlas.sources.map((source) => [source.id, source])),
     [],
   );
+  const detailPointById = useMemo(
+    () => new Map((detailData?.points ?? []).map((point) => [point.id, point])),
+    [detailData],
+  );
+  const detailLineById = useMemo(
+    () => new Map((detailData?.lines ?? []).map((line) => [line.id, line])),
+    [detailData],
+  );
 
   useEffect(() => {
     document.documentElement.lang = dictionary.htmlLang;
   }, [dictionary.htmlLang]);
+
+  useEffect(() => {
+    if (countryFilter === "ALL" || detailByCountry[countryFilter]) return;
+    const country = countryFilter;
+    const controller = new AbortController();
+    setDetailLoading(country);
+    setDetailError(null);
+    fetch(`${basePath}/data/detail/${country.toLowerCase()}.json`, {
+      signal: controller.signal,
+      cache: "force-cache",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(`detail ${response.status}`);
+        return response.json() as Promise<CountryInfrastructureDetail>;
+      })
+      .then((dataset) => {
+        if (dataset.country !== country) throw new Error("detail country mismatch");
+        setDetailByCountry((current) => ({ ...current, [country]: dataset }));
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setDetailError(country);
+      })
+      .finally(() => {
+        setDetailLoading((current) => (current === country ? null : current));
+      });
+    return () => controller.abort();
+  }, [basePath, countryFilter, detailByCountry]);
 
   const selected: SelectedRecord = useMemo(() => {
     if (!selectedId) return null;
     const facility = facilityById.get(selectedId);
     if (facility) return { type: "facility", record: facility };
     const linear = atlas.linearFeatures.find((feature) => feature.id === selectedId);
-    return linear ? { type: "linear", record: linear } : null;
-  }, [facilityById, selectedId]);
+    if (linear) return { type: "linear", record: linear };
+    const detailPoint = detailPointById.get(selectedId);
+    if (detailPoint) return { type: "detail-point", record: detailPoint };
+    const detailLine = detailLineById.get(selectedId);
+    return detailLine ? { type: "detail-line", record: detailLine } : null;
+  }, [detailLineById, detailPointById, facilityById, selectedId]);
 
   const selectedEntities =
     selected?.type === "facility"
@@ -158,9 +384,11 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
       : [];
   const linkedSecurities = uniqueSecurities(selectedEntities, entityById);
   const selectedSources = selected
-    ? selected.record.sourceIds
+    ? selected.type === "facility" || selected.type === "linear"
+      ? selected.record.sourceIds
         .map((id) => sourceById.get(id))
         .filter((source) => source !== undefined)
+      : []
     : [];
   const regionalRows = useMemo(
     () =>
@@ -175,6 +403,73 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
         }),
     [balanceCountry],
   );
+
+  const visibleDetailPoints = useMemo(
+    () =>
+      (detailData?.points ?? []).filter((point) => {
+        if (point.kind === "power_plant") {
+          if (
+            detailFilters.minimumCapacityMw > 0 &&
+            (point.capacityMw === undefined ||
+              point.capacityMw < detailFilters.minimumCapacityMw)
+          ) {
+            return false;
+          }
+          if (
+            detailFilters.generationFuel !== "all" &&
+            point.fuel !== detailFilters.generationFuel
+          ) {
+            return false;
+          }
+          if (!detailFilters.includePlanned && point.planned) return false;
+        }
+        if (point.kind === "data_center" || point.kind === "network_hub") {
+          if (detailFilters.networkMode === "ix" && (point.ixCount ?? 0) < 1) {
+            return false;
+          }
+          if (
+            detailFilters.networkMode === "net50" &&
+            (point.networkCount ?? 0) < 50
+          ) {
+            return false;
+          }
+          if (
+            detailFilters.networkMode === "net200" &&
+            (point.networkCount ?? 0) < 200
+          ) {
+            return false;
+          }
+        }
+        return true;
+      }),
+    [detailData, detailFilters],
+  );
+
+  const layerCount = (layer: InfrastructureLayer) => {
+    const representative =
+      atlas.facilities.filter(
+        (facility) =>
+          facility.kind === layer &&
+          (countryFilter === "ALL" || facility.country === countryFilter),
+      ).length +
+      atlas.linearFeatures.filter(
+        (feature) =>
+          feature.kind === layer &&
+          (countryFilter === "ALL" || feature.country === countryFilter),
+      ).length;
+    if (!detailData) return representative;
+    if (layer === "power_plant" || layer === "data_center" || layer === "network_hub") {
+      return visibleDetailPoints.filter((point) => point.kind === layer).length;
+    }
+    return detailData.lines.filter(
+      (line) =>
+        line.kind === layer && (detailFilters.includePlanned || !line.planned),
+    ).length;
+  };
+
+  const updateDetailFilters = (patch: Partial<DetailMapFilters>) => {
+    setDetailFilters((current) => ({ ...current, ...patch }));
+  };
 
   const toggleLayer = (layer: InfrastructureLayer) => {
     setActiveLayers((current) => {
@@ -270,28 +565,23 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
       </header>
 
       <section id="top" className="border-b border-[#102231]/10">
-        <div className="mx-auto grid max-w-[1640px] gap-7 px-5 py-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:py-10">
-          <div>
+        <div className="mx-auto flex max-w-[1640px] flex-col gap-3 px-5 py-5 lg:flex-row lg:items-end lg:justify-between lg:px-8">
+          <div className="max-w-5xl">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#277167]">
               {dictionary.eyebrow}
             </p>
-            <h1 className="mt-3 max-w-5xl text-[clamp(2.15rem,4vw,3.8rem)] font-medium leading-[1.02] tracking-[-0.05em]">
+            <h1 className="mt-2 text-[clamp(1.75rem,3vw,2.8rem)] font-semibold leading-[1.05] tracking-[-0.045em]">
               {dictionary.headline}
             </h1>
-            <p className="mt-4 max-w-4xl text-sm leading-6 text-[#50606a] md:text-base">
+            <p className="mt-2 max-w-4xl text-xs leading-5 text-[#50606a] md:text-sm">
               {dictionary.intro}
             </p>
           </div>
-          <div className="self-end rounded-3xl border border-[#102231]/10 bg-[#102231] p-5 text-white shadow-[0_18px_40px_rgba(16,34,49,.1)]">
-            <div className="flex items-center justify-between text-xs uppercase tracking-[0.12em] text-white/55">
-              <span>Release {atlas.version}</span>
-              <span>{copy.releaseSummary}</span>
-            </div>
-            <p className="mt-5 text-lg font-semibold">{copy.currentRelease}</p>
-            <p className="mt-2 text-sm text-[#8ed1c4]">{copy.allLayersLive}</p>
-            <p className="mt-4 border-t border-white/15 pt-4 text-[11px] leading-5 text-white/60">
-              {copy.releaseScope}
-            </p>
+          <div className="flex shrink-0 items-center gap-3 rounded-full border border-[#102231]/10 bg-white/70 px-4 py-2 text-[11px] text-[#5f6d76]">
+            <span className="h-2 w-2 rounded-full bg-[#25a36f]" />
+            <span className="font-semibold text-[#102231]">Release {atlas.version}</span>
+            <span>·</span>
+            <span>{copy.currentRelease}</span>
           </div>
         </div>
       </section>
@@ -315,6 +605,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
             </button>
             {COUNTRY_CODES.map((country) => {
               const coverage = atlas.coverage.find((row) => row.country === country);
+              const countryDetail = detailByCountry[country];
               const active = countryFilter === country;
               return (
                 <button
@@ -329,15 +620,174 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                 >
                   <span className="block text-sm font-semibold">{dictionary.countries[country]}</span>
                   <span className={`mt-1 block text-[10px] ${active ? "text-white/55" : "text-[#75808a]"}`}>
-                    {coverage?.facilityCount ?? 0} facilities · {coverage?.linearFeatureCount ?? 0} ways
+                    {countryDetail
+                      ? `${formatter.format(countryDetail.points.length + countryDetail.lines.length)} ${detailCopy.publicRecords}`
+                      : `${coverage?.facilityCount ?? 0} facilities · ${coverage?.linearFeatureCount ?? 0} ways`}
                   </span>
                 </button>
               );
             })}
           </div>
 
-          <div className="mt-6 grid overflow-hidden rounded-[30px] border border-[#102231]/10 bg-[#f9f8f4] shadow-[0_24px_60px_rgba(16,34,49,.08)] xl:grid-cols-[260px_minmax(0,1fr)_350px]">
-            <aside className="border-b border-[#102231]/10 p-5 xl:border-b-0 xl:border-r">
+          <div className="mt-4 rounded-2xl border border-[#102231]/10 bg-white/75 p-4 shadow-sm">
+            <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+              <h2 className="text-sm font-semibold">{detailCopy.controls}</h2>
+              <p className="text-[11px] text-[#78838b]">{detailCopy.controlsHint}</p>
+              {detailLoading === countryFilter && (
+                <span className="ml-auto flex items-center gap-2 text-[11px] font-semibold text-[#277167]">
+                  <span className="h-3 w-3 animate-spin rounded-full border-2 border-[#277167]/20 border-t-[#277167]" />
+                  {detailCopy.loading}
+                </span>
+              )}
+            </div>
+
+            <div className="mt-3 flex flex-wrap gap-2 border-t border-[#102231]/8 pt-3">
+              {INFRASTRUCTURE_LAYERS.map((layer) => {
+                const enabled = activeLayers.has(layer);
+                return (
+                  <button
+                    key={layer}
+                    type="button"
+                    aria-pressed={enabled}
+                    onClick={() => toggleLayer(layer)}
+                    className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
+                      enabled
+                        ? "border-[#277167]/30 bg-[#e3efea] text-[#153e39]"
+                        : "border-[#102231]/10 bg-[#f6f6f3] text-[#859098]"
+                    }`}
+                  >
+                    <LayerMarker layer={layer} />
+                    <span>{copy.layers[layer]}</span>
+                    <span className="rounded-full bg-white/80 px-1.5 py-0.5 text-[9px] tabular-nums text-[#66747d]">
+                      {formatter.format(layerCount(layer))}
+                    </span>
+                  </button>
+                );
+              })}
+              <button
+                type="button"
+                aria-pressed={detailFilters.showDensity}
+                onClick={() =>
+                  updateDetailFilters({ showDensity: !detailFilters.showDensity })
+                }
+                className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
+                  detailFilters.showDensity
+                    ? "border-[#1c5e8f]/30 bg-[#e1edf5] text-[#194c70]"
+                    : "border-[#102231]/10 bg-[#f6f6f3] text-[#859098]"
+                }`}
+              >
+                <span className="h-3 w-3 rounded-full bg-[radial-gradient(circle,#ef4444_0,#f59e0b_35%,#3b82f6_70%,transparent_72%)]" />
+                {detailCopy.density}
+              </button>
+            </div>
+
+            <div className="mt-3 space-y-2 border-t border-[#102231]/8 pt-3 text-[11px]">
+              {activeLayers.has("power_plant") && (
+                <>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="mr-1 font-semibold text-[#607079]">
+                      {detailCopy.capacity}:
+                    </span>
+                    {([100, 50, 0] as const).map((capacity) => (
+                      <button
+                        key={capacity}
+                        type="button"
+                        onClick={() =>
+                          updateDetailFilters({ minimumCapacityMw: capacity })
+                        }
+                        className={`rounded-lg border px-2.5 py-1.5 font-semibold ${
+                          detailFilters.minimumCapacityMw === capacity
+                            ? "border-[#1c5e8f] bg-[#1c5e8f] text-white"
+                            : "border-[#102231]/10 bg-[#f6f6f3] text-[#66747d]"
+                        }`}
+                      >
+                        {capacity === 0 ? detailCopy.all : `≥${capacity}MW`}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="mr-1 font-semibold text-[#607079]">
+                      {copy.layers.power_plant}:
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => updateDetailFilters({ generationFuel: "all" })}
+                      className={`rounded-full border px-2.5 py-1 ${
+                        detailFilters.generationFuel === "all"
+                          ? "border-[#1c5e8f] bg-[#e4eef5] font-semibold text-[#1c5e8f]"
+                          : "border-[#102231]/8 bg-[#f7f7f4] text-[#727e86]"
+                      }`}
+                    >
+                      {detailCopy.all}
+                    </button>
+                    {GENERATION_FUELS.map((fuel) => (
+                      <button
+                        key={fuel}
+                        type="button"
+                        onClick={() => updateDetailFilters({ generationFuel: fuel })}
+                        className={`rounded-full border px-2.5 py-1 ${
+                          detailFilters.generationFuel === fuel
+                            ? "border-[#1c5e8f] bg-[#e4eef5] font-semibold text-[#1c5e8f]"
+                            : "border-[#102231]/8 bg-[#f7f7f4] text-[#727e86]"
+                        }`}
+                      >
+                        {detailCopy.fuels[fuel]}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {(activeLayers.has("data_center") || activeLayers.has("network_hub")) && (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="mr-1 font-semibold text-[#607079]">
+                    {detailCopy.network}:
+                  </span>
+                  {(
+                    [
+                      ["all", detailCopy.all],
+                      ["ix", detailCopy.ixOnly],
+                      ["net50", detailCopy.networks50],
+                      ["net200", detailCopy.networks200],
+                    ] as const
+                  ).map(([mode, label]) => (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => updateDetailFilters({ networkMode: mode })}
+                      className={`rounded-full border px-2.5 py-1 ${
+                        detailFilters.networkMode === mode
+                          ? "border-[#1c5e8f] bg-[#e4eef5] font-semibold text-[#1c5e8f]"
+                          : "border-[#102231]/8 bg-[#f7f7f4] text-[#727e86]"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <label className="inline-flex cursor-pointer items-center gap-2 text-[#66747d]">
+                <input
+                  type="checkbox"
+                  checked={detailFilters.includePlanned}
+                  onChange={(event) =>
+                    updateDetailFilters({ includePlanned: event.target.checked })
+                  }
+                  className="h-3.5 w-3.5 rounded border-[#102231]/20 accent-[#1c5e8f]"
+                />
+                <span className="font-semibold">{detailCopy.includePlanned}</span>
+              </label>
+            </div>
+
+            {detailError === countryFilter && (
+              <p className="mt-3 rounded-lg bg-[#fff3df] px-3 py-2 text-[11px] text-[#8a5b19]">
+                {detailCopy.loadFailed}
+              </p>
+            )}
+          </div>
+
+          <div className="mt-4 grid overflow-hidden rounded-[24px] border border-[#102231]/10 bg-[#f9f8f4] shadow-[0_24px_60px_rgba(16,34,49,.08)] xl:grid-cols-[minmax(0,1fr)_360px]">
+            <aside className="hidden">
               <h2 className="text-lg font-semibold">{dictionary.layerTitle}</h2>
               <p className="mt-1 text-xs leading-5 text-[#6d7880]">{copy.publicSnapshot}</p>
               <div className="mt-5 space-y-2">
@@ -400,7 +850,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
               </div>
             </aside>
 
-            <div className="min-h-[650px] border-b border-[#102231]/10 p-4 md:p-7 xl:border-b-0 xl:border-r">
+            <div className="min-h-[650px] border-b border-[#102231]/10 p-3 md:p-5 xl:border-b-0 xl:border-r">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#277167]">
                 {countryFilter === "ALL"
                   ? copy.allCountries
@@ -411,13 +861,20 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                   ? copy.mapTitle
                   : `${dictionary.countries[countryFilter]} · ${copy.countryDetail}`}
               </h2>
-              <p className="mt-2 max-w-3xl text-xs leading-5 text-[#6d7880]">{copy.mapIntro}</p>
+              <p className="mt-2 max-w-3xl text-xs leading-5 text-[#6d7880]">
+                {detailData
+                  ? `${formatter.format(detailData.points.length + detailData.lines.length)} ${detailCopy.publicRecords} · ${detailData.generatedAt.slice(0, 10)}`
+                  : copy.mapIntro}
+              </p>
               <div className="mt-5">
                 <InfrastructureMap
                   facilities={atlas.facilities}
                   linearFeatures={atlas.linearFeatures}
                   countryFilter={countryFilter}
                   activeLayers={activeLayers}
+                  detailPoints={detailData?.points}
+                  detailLines={detailData?.lines}
+                  detailFilters={detailFilters}
                   selectedId={selectedId}
                   onSelect={setSelectedId}
                   ariaLabel={copy.mapAria}
@@ -467,24 +924,28 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                     </div>
                   </div>
 
-                  {selected.type === "facility" ? (
+                  {selected.type === "facility" || selected.type === "detail-point" ? (
                     <>
                       <dl className="mt-6 space-y-3 rounded-2xl border border-[#102231]/10 bg-white p-4 text-xs">
                         <div className="flex items-start justify-between gap-4">
                           <dt className="text-[#75808a]">{copy.operator}</dt>
                           <dd className="text-right font-semibold">
-                            {selected.record.operatorEntityId
-                              ? entityById.get(selected.record.operatorEntityId)?.name
-                              : copy.noPublicRecord}
+                            {selected.type === "facility"
+                              ? selected.record.operatorEntityId
+                                ? entityById.get(selected.record.operatorEntityId)?.name
+                                : copy.noPublicRecord
+                              : selected.record.operator ?? copy.noPublicRecord}
                           </dd>
                         </div>
                         <div className="flex items-start justify-between gap-4">
                           <dt className="text-[#75808a]">{copy.owner}</dt>
                           <dd className="text-right font-semibold">
-                            {(selected.record.ownerEntityIds ?? [])
-                              .map((id) => entityById.get(id)?.name)
-                              .filter(Boolean)
-                              .join(", ") || copy.noPublicRecord}
+                            {selected.type === "facility"
+                              ? (selected.record.ownerEntityIds ?? [])
+                                  .map((id) => entityById.get(id)?.name)
+                                  .filter(Boolean)
+                                  .join(", ") || copy.noPublicRecord
+                              : selected.record.owner ?? copy.noPublicRecord}
                           </dd>
                         </div>
                         {selected.record.capacityMw !== undefined && (
@@ -498,38 +959,63 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                         <div className="flex items-start justify-between gap-4">
                           <dt className="text-[#75808a]">{copy.locationPrecision}</dt>
                           <dd className="max-w-[190px] text-right font-semibold">
-                            {selected.record.disclosureLevel === "exact_public"
-                              ? copy.exactPublic
-                              : copy.generalizedPublic}
+                            {selected.type === "facility"
+                              ? selected.record.disclosureLevel === "exact_public"
+                                ? copy.exactPublic
+                                : copy.generalizedPublic
+                              : detailCopy.exactSource}
                           </dd>
                         </div>
-                      </dl>
-                      <p className="mt-3 text-[11px] leading-5 text-[#75808a]">
-                        {selected.record.locationNote[locale]}
-                      </p>
-
-                      <div className="mt-6">
-                        <h3 className="text-xs font-semibold">{copy.connections}</h3>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {(selected.record.connectionIds ?? []).length ? (
-                            selected.record.connectionIds?.map((id) => {
-                              const connected = facilityById.get(id);
-                              return connected ? (
-                                <button
-                                  key={id}
-                                  type="button"
-                                  onClick={() => setSelectedId(id)}
-                                  className="rounded-full border border-[#102231]/10 bg-white px-3 py-1.5 text-[11px] font-semibold hover:border-[#277167]"
-                                >
-                                  {connected.name} →
-                                </button>
-                              ) : null;
-                            })
-                          ) : (
-                            <span className="text-[11px] text-[#75808a]">{copy.noPublicRecord}</span>
+                        {selected.type === "detail-point" &&
+                          selected.record.kind !== "power_plant" && (
+                            <>
+                              <div className="flex items-start justify-between gap-4">
+                                <dt className="text-[#75808a]">{detailCopy.networks}</dt>
+                                <dd className="text-right font-semibold">
+                                  {formatter.format(selected.record.networkCount ?? 0)}
+                                </dd>
+                              </div>
+                              <div className="flex items-start justify-between gap-4">
+                                <dt className="text-[#75808a]">{detailCopy.exchanges}</dt>
+                                <dd className="text-right font-semibold">
+                                  {formatter.format(selected.record.ixCount ?? 0)}
+                                </dd>
+                              </div>
+                            </>
                           )}
+                      </dl>
+                      {selected.type === "facility" && (
+                        <p className="mt-3 text-[11px] leading-5 text-[#75808a]">
+                          {selected.record.locationNote[locale]}
+                        </p>
+                      )}
+
+                      {selected.type === "facility" && (
+                        <div className="mt-6">
+                          <h3 className="text-xs font-semibold">{copy.connections}</h3>
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {(selected.record.connectionIds ?? []).length ? (
+                              selected.record.connectionIds?.map((id) => {
+                                const connected = facilityById.get(id);
+                                return connected ? (
+                                  <button
+                                    key={id}
+                                    type="button"
+                                    onClick={() => setSelectedId(id)}
+                                    className="rounded-full border border-[#102231]/10 bg-white px-3 py-1.5 text-[11px] font-semibold hover:border-[#277167]"
+                                  >
+                                    {connected.name} →
+                                  </button>
+                                ) : null;
+                              })
+                            ) : (
+                              <span className="text-[11px] text-[#75808a]">
+                                {copy.noPublicRecord}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                       <div className="mt-6">
                         <h3 className="text-xs font-semibold">{copy.listedCompany}</h3>
@@ -583,10 +1069,16 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                           {selected.record.owner ?? copy.noPublicRecord}
                         </dd>
                       </div>
-                      {selected.record.voltage && (
+                      {((selected.type === "linear" && selected.record.voltage) ||
+                        (selected.type === "detail-line" &&
+                          selected.record.voltageKv !== undefined)) && (
                         <div className="flex items-start justify-between gap-4">
                           <dt className="text-[#75808a]">Voltage</dt>
-                          <dd className="text-right font-semibold">{selected.record.voltage} V</dd>
+                          <dd className="text-right font-semibold">
+                            {selected.type === "linear"
+                              ? `${selected.record.voltage} V`
+                              : `${selected.record.voltageKv} kV`}
+                          </dd>
                         </div>
                       )}
                       {selected.record.substance && (
@@ -613,6 +1105,20 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                           <span className="mt-0.5 block text-[#66747d]">{source.title} ↗</span>
                         </a>
                       ))}
+                      {(selected.type === "detail-point" ||
+                        selected.type === "detail-line") && (
+                        <a
+                          href={selected.record.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="block rounded-xl bg-[#e9ece8] p-3 text-[11px] leading-4 hover:bg-[#dde4df]"
+                        >
+                          <span className="font-semibold">{selected.record.sourceLabel}</span>
+                          <span className="mt-0.5 block text-[#66747d]">
+                            {selected.record.name} ↗
+                          </span>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </>
