@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const basePath = process.env.PAGES_BASE_PATH?.replace(/\/$/, "") ?? "";
+
 export const metadata: Metadata = {
-  title: "K-GRID · 산업 전력 배분 의사결정 플랫폼",
+  title: "GridOS · Public Infrastructure Atlas",
   description:
-    "공공데이터를 바탕으로 신규 전력수요의 입지 적합도와 승인 조건을 계산해 정책 타당성과 입지 검토 근거를 제공하는 의사결정 플랫폼",
-  icons: { icon: "/high-voltage.webp", apple: "/high-voltage.webp" },
+    "대한민국·일본·대만·미국의 산업, 에너지, 데이터센터와 네트워크 인프라를 공개 근거와 함께 탐색하는 공익 지도",
+  icons: {
+    icon: `${basePath}/high-voltage.webp`,
+    apple: `${basePath}/high-voltage.webp`,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

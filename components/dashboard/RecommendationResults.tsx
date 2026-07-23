@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type {
   DemandScenario,
   GridData,
-  PolicyBriefResponse,
   RegionScore,
   ScoreDimensionKey,
 } from "@/lib/types";
@@ -146,41 +145,11 @@ export default function RecommendationResults({
   scores: RegionScore[];
 }) {
   const [expanded, setExpanded] = useState<string | null>(scores[0]?.regionCode ?? null);
-  const [brief, setBrief] = useState<PolicyBriefResponse | null>(null);
-  const [briefLoading, setBriefLoading] = useState(false);
-  const [briefError, setBriefError] = useState<string | null>(null);
-
-  // 시나리오가 바뀌면 이전 브리프는 무효
-  useEffect(() => {
-    setBrief(null);
-  }, [scenario]);
-
-  const generateBrief = async () => {
-    setBriefLoading(true);
-    setBriefError(null);
-    try {
-      const res = await fetch("/api/policy-brief", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          scenario,
-          topRegions: scores.slice(0, 3),
-          sourceIds: data.sources.map((s) => s.id),
-        }),
-      });
-      if (!res.ok) throw new Error(`브리프 생성 요청이 실패했습니다 (${res.status})`);
-      setBrief((await res.json()) as PolicyBriefResponse);
-    } catch (e) {
-      setBriefError(e instanceof Error ? e.message : "브리프 생성에 실패했습니다");
-    } finally {
-      setBriefLoading(false);
-    }
-  };
 
   return (
     <div>
       <p className="text-[11px] font-semibold uppercase tracking-[0.5px] text-stone2">Step 4</p>
-      <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
+      <div className="mt-2">
         <div>
           <h2 className="text-[28px] font-medium leading-[1.25] text-ink">배분과 입지 추천 결과</h2>
           <p className="mt-1.5 max-w-xl text-[15px] leading-[1.5] text-slate2">
@@ -188,13 +157,6 @@ export default function RecommendationResults({
             결과입니다. 지역 카드를 열면 축별 근거와 출처, 기준일을 볼 수 있습니다.
           </p>
         </div>
-        <button
-          onClick={generateBrief}
-          disabled={briefLoading || scores.length === 0}
-          className="rounded-full bg-ink px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-charcoal disabled:bg-hairline disabled:text-muted2"
-        >
-          {briefLoading ? "브리프 생성 중..." : "정책 브리프 생성"}
-        </button>
       </div>
 
       {scores.length === 0 ? (
@@ -228,22 +190,6 @@ export default function RecommendationResults({
         </>
       )}
 
-      {briefError && (
-        <p className="mt-4 rounded-xl bg-coral-light/40 p-4 text-[14px] text-coral-dark">{briefError}</p>
-      )}
-      {brief && (
-        <div className="mt-6 rounded-[28px] border border-hairline-soft bg-canvas p-6 md:p-8">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <h3 className="text-[22px] font-medium text-ink">정책 브리프</h3>
-            <span className="rounded-full bg-surface px-2.5 py-1 text-[12px] font-semibold text-steel">
-              {brief.generator === "llm" ? "AI가 문장 작성 · 수치는 계산 결과만 인용" : "규칙 기반 자동 작성"}
-            </span>
-          </div>
-          <pre className="mt-4 whitespace-pre-wrap font-sans text-[14px] leading-[1.7] text-charcoal">
-            {brief.content}
-          </pre>
-        </div>
-      )}
     </div>
   );
 }

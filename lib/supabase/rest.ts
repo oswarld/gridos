@@ -16,8 +16,8 @@ export function restConfigFromEnv(): RestConfig | null {
 export async function restSelect<T>(cfg: RestConfig, table: string, query = ""): Promise<T[]> {
   const res = await fetch(`${cfg.url}/rest/v1/${table}?${query}`, {
     headers: { apikey: cfg.key, Authorization: `Bearer ${cfg.key}` },
-    // 공공데이터는 시드 시점에만 바뀌므로 요청 단위 캐시 허용
-    next: { revalidate: 300 },
+    // GitHub Pages 정적 내보내기에서 빌드 시점 스냅샷으로 고정한다.
+    cache: "force-cache",
   });
   if (!res.ok) throw new Error(`Supabase select ${table} 실패: ${res.status} ${await res.text()}`);
   return (await res.json()) as T[];

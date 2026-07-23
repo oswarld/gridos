@@ -1,14 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { DemandScenario, GridData } from "@/lib/types";
 import { computeScores } from "@/lib/domain/scoring";
-import { getSupabaseBrowser } from "@/lib/auth/browserClient";
 import RegionSelector from "./RegionSelector";
 import DataStatusPanel from "./DataStatusPanel";
 import ScenarioInput from "./ScenarioInput";
 import RecommendationResults from "./RecommendationResults";
-import AuthModal from "./AuthModal";
 
 const DEFAULT_SCENARIO: DemandScenario = {
   sector: "data_center",
@@ -36,12 +34,8 @@ export default function GridDashboard({ data }: { data: GridData }) {
   // draft: 편집 중인 조건, applied: 결과에 반영된 조건 (실행 버튼으로만 반영)
   const [draft, setDraft] = useState<DemandScenario>(DEFAULT_SCENARIO);
   const [applied, setApplied] = useState<DemandScenario>(DEFAULT_SCENARIO);
-  const [quota, setQuota] = useState<QuotaState>({ remaining: null, signedIn: false, email: null });
-  const [quotaLoaded, setQuotaLoaded] = useState(false);
-  const [authOpen, setAuthOpen] = useState(false);
-  const [authReason, setAuthReason] = useState<"quota" | "manual">("manual");
   const [running, setRunning] = useState(false);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const quota: QuotaState = { remaining: null, signedIn: false, email: null };
 
   const allScores = useMemo(() => computeScores(data, applied), [data, applied]);
   const scores = useMemo(
@@ -50,74 +44,12 @@ export default function GridDashboard({ data }: { data: GridData }) {
   );
   const isDirty = useMemo(() => JSON.stringify(draft) !== JSON.stringify(applied), [draft, applied]);
 
-  const fetchQuota = useCallback(async (token: string | null) => {
-    try {
-      const res = await fetch("/api/scenario-run", {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-      });
-      const j = await res.json();
-      setQuota((q) => ({ ...q, remaining: j.remaining, signedIn: j.signedIn }));
-    } catch {
-      /* 쿼터 조회 실패는 UI를 막지 않는다 */
-    } finally {
-      setQuotaLoaded(true);
-    }
-  }, []);
-
-  // 세션 초기화 + 매직링크 복귀 처리
-  useEffect(() => {
-    let unsub: (() => void) | undefined;
-    (async () => {
-      const supabase = await getSupabaseBrowser();
-      if (!supabase) {
-        fetchQuota(null);
-        return;
-      }
-      const { data: s } = await supabase.auth.getSession();
-      const token = s.session?.access_token ?? null;
-      setAccessToken(token);
-      setQuota((q) => ({ ...q, email: s.session?.user?.email ?? null, signedIn: !!s.session }));
-      fetchQuota(token);
-      const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-        const t = session?.access_token ?? null;
-        setAccessToken(t);
-        setQuota((q) => ({ ...q, email: session?.user?.email ?? null, signedIn: !!session }));
-        if (session) setAuthOpen(false);
-        fetchQuota(t);
-      });
-      unsub = () => sub.subscription.unsubscribe();
-    })();
-    return () => unsub?.();
-  }, [fetchQuota]);
-
-  const runScenario = useCallback(async () => {
+  const runScenario = useCallback(() => {
     setRunning(true);
-    try {
-      const res = await fetch("/api/scenario-run", {
-        method: "POST",
-        headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-      });
-      const j = await res.json();
-      setQuota((q) => ({ ...q, remaining: j.remaining, signedIn: j.signedIn }));
-      if (j.allowed) {
-        setApplied(draft);
-        document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
-      } else {
-        setAuthReason("quota");
-        setAuthOpen(true);
-      }
-    } catch {
-      // 네트워크 오류 시에도 데모가 멈추지 않게 로컬 반영
-      setApplied(draft);
-    } finally {
-      setRunning(false);
-    }
-  }, [accessToken, draft]);
-
-  const signOut = useCallback(async () => {
-    const supabase = await getSupabaseBrowser();
-    await supabase?.auth.signOut();
-  }, []);
+    setApplied(draft);
+    setRunning(false);
+    document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
+  }, [draft]);
 
   const totalRows = data.sources.reduce((s, x) => s + x.rowCount, 0);
 
@@ -142,34 +74,9 @@ export default function GridDashboard({ data }: { data: GridData }) {
               </a>
             ))}
           </nav>
-          <div className="ml-auto flex items-center gap-2">
-            {quotaLoaded && !quota.signedIn && quota.remaining !== null && (
-              <span className="hidden rounded-full bg-surface px-3 py-1 text-[13px] font-medium text-steel sm:inline">
-                비회원 체험 {quota.remaining}회 남음
-              </span>
-            )}
-            {quota.signedIn ? (
-              <>
-                <span className="hidden max-w-40 truncate text-[13px] text-slate2 sm:inline">{quota.email}</span>
-                <button
-                  onClick={signOut}
-                  className="rounded-full border border-hairline-strong px-4 py-1.5 text-[13px] font-medium text-ink transition hover:bg-surface"
-                >
-                  로그아웃
-                </button>
-              </>
-            ) : (
-              <button
-                onClick={() => {
-                  setAuthReason("manual");
-                  setAuthOpen(true);
-                }}
-                className="rounded-full bg-ink px-4 py-1.5 text-[13px] font-medium text-white transition hover:bg-charcoal"
-              >
-                로그인
-              </button>
-            )}
-          </div>
+          <span className="ml-auto rounded-full bg-surface px-3 py-1 text-[12px] font-medium text-steel">
+            로컬 연구 모듈
+          </span>
         </div>
       </header>
 
@@ -245,7 +152,7 @@ export default function GridDashboard({ data }: { data: GridData }) {
               running={running}
               isDirty={isDirty}
               quota={quota}
-              quotaLoaded={quotaLoaded}
+              quotaLoaded
             />
           </section>
 
@@ -315,7 +222,6 @@ export default function GridDashboard({ data }: { data: GridData }) {
         </div>
       </footer>
 
-      <AuthModal open={authOpen} reason={authReason} onClose={() => setAuthOpen(false)} />
     </div>
   );
 }

@@ -2,19 +2,22 @@
   "name": "gridos",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.12.4",
   "scripts": {
     "dev": "next dev",
-    "build": "npm run data:validate && next build",
+    "build": "npm run data:validate && next build && tsx scripts/postprocess-export.ts",
     "start": "next start",
     "lint": "next lint",
     "data:build": "tsx scripts/build-dataset.ts",
+    "data:build:atlas": "tsx scripts/build-public-atlas.ts",
     "data:validate": "tsx scripts/validate-data.ts",
     "data:seed": "tsx scripts/seed-supabase.ts",
+    "data:collect:official": "tsx scripts/collect-approved-kr.ts",
     "map:fetch": "tsx scripts/fetch-boundaries.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.110.0",
     "@supabase/supabase-js": "^2.110.0",
+    "maplibre-gl": "^5.24.0",
     "next": "^15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

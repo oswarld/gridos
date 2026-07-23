@@ -1,4 +1,4 @@
-# files
+# local reference material
 /docs
 /resources
 
@@ -13,3 +13,9 @@ node_modules/
 out/
 *.tsbuildinfo
 next-env.d.ts
+
+# fetched source snapshots are CI artifacts, not repository content
+/data/raw/official/
+/data/raw/osm-atlas/
+/data/raw/atlas-public/
+/data/normalized/kr-official-atlas-staging.json

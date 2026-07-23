@@ -148,14 +148,3 @@ export type RegionScore = {
   conditions: string[];
   missingData: string[];
 };
-
-export type PolicyBriefRequest = {
-  scenario: DemandScenario;
-  topRegions: RegionScore[];
-  sourceIds: string[];
-};
-
-export type PolicyBriefResponse = {
-  generator: "rule_based" | "llm";
-  content: string;
-};

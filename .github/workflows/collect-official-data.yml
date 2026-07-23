@@ -1,0 +1,36 @@
+name: Collect approved Korean official data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Collect without coordinate inference
+        run: pnpm data:collect:official
+        env:
+          PUBLIC_DATA_SERVICE_KEY: ${{ secrets.PUBLIC_DATA_SERVICE_KEY }}
+      - name: Preserve source and normalized snapshots for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: kr-official-infrastructure-${{ github.run_id }}
+          path: |
+            data/raw/official/
+            data/normalized/kr-official-atlas-staging.json
+          if-no-files-found: error
+          retention-days: 30
