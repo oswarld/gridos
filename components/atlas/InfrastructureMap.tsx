@@ -17,6 +17,7 @@ import type {
   DetailedInfrastructureLine,
   DetailedInfrastructurePoint,
   DetailMapFilters,
+  GenerationFuel,
 } from "@/lib/map-detail-types";
 
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
@@ -28,6 +29,34 @@ const TRANSMISSION_LAYER = "gridos-transmission";
 const PIPELINE_LAYER = "gridos-pipeline";
 const SELECTED_LINE_LAYER = "gridos-selected-line";
 const DENSITY_LAYER = "gridos-density";
+
+const FUEL_COLORS: Record<GenerationFuel, string> = {
+  solar: "#eab308",
+  gas: "#ef4444",
+  hydro: "#3b82f6",
+  wind: "#06b6d4",
+  oil: "#92400e",
+  biomass: "#65a30d",
+  storage: "#2dd4bf",
+  coal: "#52525b",
+  geothermal: "#f97316",
+  nuclear: "#9333ea",
+  other: "#9ca3af",
+};
+
+const FUEL_ORDER: GenerationFuel[] = [
+  "solar",
+  "gas",
+  "hydro",
+  "wind",
+  "oil",
+  "biomass",
+  "storage",
+  "coal",
+  "geothermal",
+  "nuclear",
+  "other",
+];
 
 const COUNTRY_BOUNDS: Record<
   CountryCode,
@@ -378,26 +407,26 @@ function addAtlasLayers(map: MapLibreMap, facilities: GeoFeatureCollection, line
           "match",
           ["get", "fuel"],
           "solar",
-          "#eab308",
+          FUEL_COLORS.solar,
           "gas",
-          "#ef4444",
+          FUEL_COLORS.gas,
           "hydro",
-          "#3b82f6",
+          FUEL_COLORS.hydro,
           "wind",
-          "#06b6d4",
+          FUEL_COLORS.wind,
           "oil",
-          "#92400e",
+          FUEL_COLORS.oil,
           "biomass",
-          "#65a30d",
+          FUEL_COLORS.biomass,
           "storage",
-          "#2dd4bf",
+          FUEL_COLORS.storage,
           "coal",
-          "#52525b",
+          FUEL_COLORS.coal,
           "geothermal",
-          "#f97316",
+          FUEL_COLORS.geothermal,
           "nuclear",
-          "#9333ea",
-          "#9ca3af",
+          FUEL_COLORS.nuclear,
+          FUEL_COLORS.other,
         ],
         ["==", ["get", "kind"], "data_center"],
         "#22b863",
@@ -410,6 +439,30 @@ function addAtlasLayers(map: MapLibreMap, facilities: GeoFeatureCollection, line
       "circle-opacity": 0.92,
     },
   });
+}
+
+function MapLegendSwatch({ layer }: { layer: InfrastructureLayer }) {
+  if (layer === "transmission") {
+    return <span className="block h-[3px] w-5 rounded-full bg-[#d92c71]" />;
+  }
+  if (layer === "pipeline") {
+    return (
+      <span className="block h-[3px] w-5 bg-[repeating-linear-gradient(90deg,#f59e0b_0_5px,transparent_5px_8px)]" />
+    );
+  }
+  if (layer === "power_plant") {
+    return (
+      <span className="block h-3 w-3 rounded-full bg-[conic-gradient(#eab308,#ef4444,#3b82f6,#06b6d4,#9333ea,#eab308)] ring-1 ring-white" />
+    );
+  }
+  return (
+    <span
+      className="block h-3 w-3 rounded-full ring-1 ring-white"
+      style={{
+        backgroundColor: layer === "data_center" ? "#22b863" : "#8b8df8",
+      }}
+    />
+  );
 }
 
 export default function InfrastructureMap({
@@ -440,6 +493,11 @@ export default function InfrastructureMap({
   labels: {
     countryDetail: string;
     allOverview: string;
+    mapLegend: string;
+    fuelLegend: string;
+    density: string;
+    layers: Record<InfrastructureLayer, string>;
+    fuels: Record<GenerationFuel, string>;
     zoomIn: string;
     zoomOut: string;
     resetView: string;
@@ -596,6 +654,56 @@ export default function InfrastructureMap({
           {currentLabel}
         </p>
       </div>
+      {ready && (
+        <aside
+          aria-label={labels.mapLegend}
+          className="pointer-events-none absolute bottom-10 left-3 z-10 max-w-[calc(100%-1.5rem)] rounded-xl border border-[#cfd3dc] bg-white/95 p-3 shadow-[0_4px_18px_rgba(5,0,56,.12)] backdrop-blur-md"
+        >
+          <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-[#555a6a]">
+            {labels.mapLegend}
+          </p>
+          <ul className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1.5 sm:flex sm:flex-wrap sm:items-center">
+            {Array.from(activeLayers).map((layer) => (
+              <li
+                key={layer}
+                className="flex items-center gap-1.5 whitespace-nowrap text-[10px] font-medium text-[#343744]"
+              >
+                <span className="grid h-4 w-5 shrink-0 place-items-center">
+                  <MapLegendSwatch layer={layer} />
+                </span>
+                {labels.layers[layer]}
+              </li>
+            ))}
+          </ul>
+          {activeLayers.has("power_plant") && (
+            <div className="mt-2 border-t border-[#e7e9ef] pt-2">
+              <p className="text-[9px] font-semibold text-[#6b6f7e]">
+                {labels.fuelLegend}
+              </p>
+              <ul className="mt-1.5 flex max-w-[38rem] flex-wrap gap-x-3 gap-y-1">
+                {FUEL_ORDER.map((fuel) => (
+                  <li
+                    key={fuel}
+                    className="flex items-center gap-1 whitespace-nowrap text-[9px] text-[#555a6a]"
+                  >
+                    <span
+                      className="h-2 w-2 shrink-0 rounded-full ring-1 ring-white"
+                      style={{ backgroundColor: FUEL_COLORS[fuel] }}
+                    />
+                    {labels.fuels[fuel]}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {detailFilters.showDensity && (
+            <div className="mt-2 flex items-center gap-2 border-t border-[#e7e9ef] pt-2 text-[9px] font-medium text-[#555a6a]">
+              <span className="h-2 w-20 rounded-full bg-[linear-gradient(90deg,#3b82f6,#14b8a6,#f59e0b,#dc2626)]" />
+              {labels.density}
+            </div>
+          )}
+        </aside>
+      )}
       {!ready && !failed && (
         <div className="absolute inset-0 grid place-items-center bg-[#edf0ec]">
           <div className="text-center">

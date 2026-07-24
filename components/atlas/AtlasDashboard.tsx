@@ -70,6 +70,8 @@ const DETAIL_COPY: Record<
     networks200: string;
     includePlanned: string;
     density: string;
+    mapLegend: string;
+    fuelLegend: string;
     loading: string;
     loadFailed: string;
     publicRecords: string;
@@ -90,6 +92,8 @@ const DETAIL_COPY: Record<
     networks200: "네트워크 200+",
     includePlanned: "계획 시설 포함",
     density: "밀도 음영",
+    mapLegend: "지도 범례",
+    fuelLegend: "발전소 연료",
     loading: "국가 상세 데이터를 불러오는 중",
     loadFailed: "상세 데이터를 불러오지 못해 대표 스냅샷을 표시합니다.",
     publicRecords: "공개 상세 레코드",
@@ -121,6 +125,8 @@ const DETAIL_COPY: Record<
     networks200: "200+ networks",
     includePlanned: "Include planned",
     density: "Density heatmap",
+    mapLegend: "Map legend",
+    fuelLegend: "Power plant fuel",
     loading: "Loading national detail records",
     loadFailed: "Detail data is unavailable; showing the representative snapshot.",
     publicRecords: "public detail records",
@@ -152,6 +158,8 @@ const DETAIL_COPY: Record<
     networks200: "网络 200+",
     includePlanned: "包含规划设施",
     density: "密度热图",
+    mapLegend: "地图图例",
+    fuelLegend: "发电燃料",
     loading: "正在加载全国详细记录",
     loadFailed: "详细数据不可用，正在显示代表性快照。",
     publicRecords: "条公开详细记录",
@@ -183,6 +191,8 @@ const DETAIL_COPY: Record<
     networks200: "ネットワーク 200+",
     includePlanned: "計画施設を含む",
     density: "密度ヒートマップ",
+    mapLegend: "地図凡例",
+    fuelLegend: "発電燃料",
     loading: "全国詳細データを読み込み中",
     loadFailed: "詳細データを取得できないため代表スナップショットを表示します。",
     publicRecords: "件の公開詳細レコード",
@@ -938,19 +948,16 @@ export default function AtlasDashboard({
                   labels={{
                     countryDetail: copy.countryDetail,
                     allOverview: copy.allOverview,
+                    mapLegend: detailCopy.mapLegend,
+                    fuelLegend: detailCopy.fuelLegend,
+                    density: detailCopy.density,
+                    layers: copy.layers,
+                    fuels: detailCopy.fuels,
                     zoomIn: copy.zoomIn,
                     zoomOut: copy.zoomOut,
                     resetView: copy.resetView,
                   }}
                 />
-              </div>
-              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-                {INFRASTRUCTURE_LAYERS.map((layer) => (
-                  <span key={layer} className="flex items-center gap-2 text-[11px] text-[#6b6f7e]">
-                    <LayerMarker layer={layer} />
-                    {copy.layers[layer]}
-                  </span>
-                ))}
               </div>
             </div>
 
