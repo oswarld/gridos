@@ -698,10 +698,6 @@ export default function AtlasDashboard({
               <p className="mt-3 max-w-3xl text-sm leading-6 text-[#555a6a] md:text-base">
                 {dictionary.intro}
               </p>
-              <p className="mt-4 inline-flex max-w-full items-center gap-2 rounded-full border border-[#ebc73b] bg-[#fff9dc] px-3.5 py-2 text-[11px] font-semibold leading-4 text-[#66530c] sm:text-xs">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#d7a900]" />
-                <span>{copy.contestEntry}</span>
-              </p>
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-3 rounded-full bg-[#1c1c1e] px-5 py-3 text-xs text-white">
@@ -1387,6 +1383,54 @@ export default function AtlasDashboard({
           </div>
         </div>
       </section>
+
+      <footer className="border-t border-[#e0e2e8] bg-[#f7f8fa]">
+        <div className="mx-auto max-w-[1280px] px-5 py-10 lg:px-8 lg:py-14">
+          <div className="grid overflow-hidden rounded-3xl border border-[#e0e2e8] bg-white shadow-[0_8px_32px_rgba(5,0,56,.06)] lg:grid-cols-[1fr_auto]">
+            <div className="p-6 sm:p-8 lg:p-10">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#277167]">
+                {copy.newsletterEyebrow}
+              </p>
+              <h2 className="mt-3 text-3xl font-medium tracking-[-0.045em] text-[#050038] sm:text-4xl">
+                {copy.newsletterTitle}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-[#555a6a]">
+                {copy.newsletterDescription}
+              </p>
+              <p className="mt-4 text-xs font-semibold text-[#8e91a0]">
+                {copy.newsletterLanguages}
+              </p>
+            </div>
+            <a
+              href={
+                locale === "ko"
+                  ? "https://oztalking.com/subscribe"
+                  : locale === "zh-CN"
+                    ? "https://oztalking.com/zh-cn/subscribe"
+                    : "https://oztalking.com/en/subscribe"
+              }
+              target="_blank"
+              rel="noreferrer"
+              className="group flex min-h-32 items-center justify-between gap-6 bg-[#ffd02f] px-6 py-7 text-[#1c1c1e] transition hover:bg-[#f5c51f] focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#050038] sm:px-8 lg:min-w-80 lg:px-10"
+            >
+              <span className="text-base font-semibold">{copy.newsletterCta}</span>
+              <span
+                aria-hidden="true"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#1c1c1e] text-xl text-white transition-transform group-hover:translate-x-1"
+              >
+                ↗
+              </span>
+            </a>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 border-t border-[#e0e2e8] pt-6 text-[11px] leading-5 text-[#6b6f7e] sm:flex-row sm:items-center sm:justify-between">
+            <p className="font-semibold text-[#454957]">{copy.contestEntry}</p>
+            <p>
+              © {new Date().getFullYear()} {dictionary.siteName}
+            </p>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
