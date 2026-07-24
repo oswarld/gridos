@@ -5,6 +5,8 @@
 
 **공개 사이트:** [oswarld.github.io/gridos](https://oswarld.github.io/gridos/)
 
+**현재 공개 버전:** `v1.0.0`
+
 ## 무엇을 볼 수 있나요?
 
 - 발전소, 송전망, 에너지 파이프라인, 데이터센터, 네트워크 허브의 조합 지도

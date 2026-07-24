@@ -11,6 +11,7 @@ import {
   type CountryCode,
 } from "../lib/atlas-types";
 import { pointBelongsToBoundary } from "../lib/geo-boundary";
+import { PUBLIC_RELEASE_VERSION } from "../lib/release";
 
 const ROOT = path.resolve(__dirname, "..");
 let failed = false;
@@ -84,6 +85,13 @@ if (!fs.existsSync(atlasPath) || !fs.existsSync(boundariesPath)) {
     ["linearFeature", atlasLinearFeatures],
     ["region", atlasRegions],
   ];
+  if (atlas.version !== PUBLIC_RELEASE_VERSION) {
+    fail(
+      `공개 아틀라스 버전 불일치: ${atlas.version} (expected ${PUBLIC_RELEASE_VERSION})`,
+    );
+  } else {
+    ok(`공개 아틀라스 버전 ${atlas.version}`);
+  }
 
   for (const [label, rows] of idGroups) {
     const ids = rows.map((row) => row.id);
@@ -264,6 +272,11 @@ for (const [country, minimum] of Object.entries(detailMinimums)) {
   const points: any[] = detail.points ?? [];
   const lines: any[] = detail.lines ?? [];
   if (detail.country !== country) fail(`${country} 상세 지도 국가 코드 불일치`);
+  if (detail.version !== PUBLIC_RELEASE_VERSION) {
+    fail(
+      `${country} 상세 지도 버전 불일치: ${detail.version} (expected ${PUBLIC_RELEASE_VERSION})`,
+    );
+  }
   const rowCountryMismatch = [...points, ...lines].filter(
     (row) => row.country !== country,
   );

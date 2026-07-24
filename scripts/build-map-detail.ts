@@ -20,6 +20,7 @@ import {
   type CountryCode,
 } from "../lib/atlas-types";
 import { pointBelongsToBoundary } from "../lib/geo-boundary";
+import { PUBLIC_RELEASE_VERSION } from "../lib/release";
 import type {
   CountryInfrastructureDetail,
   DetailedInfrastructureLine,
@@ -32,8 +33,8 @@ const RAW_DIR = path.join(ROOT, "data", "raw", "country-detail");
 const OUTPUT_DIR = path.join(ROOT, "public", "data", "detail");
 const BOUNDARIES_PATH = path.join(ROOT, "data", "processed", "atlas-boundaries.json");
 const GENERATED_AT = new Date().toISOString();
-const VERSION = GENERATED_AT.slice(0, 10);
-const USER_AGENT = "GridOS-public-infrastructure-atlas/1.0 (public-interest research)";
+const VERSION = PUBLIC_RELEASE_VERSION;
+const USER_AGENT = `GridOS-public-infrastructure-atlas/${PUBLIC_RELEASE_VERSION} (public-interest research)`;
 
 const EIA_860M_URL =
   "https://www.eia.gov/electricity/data/eia860m/xls/june_generator2026.xlsx";

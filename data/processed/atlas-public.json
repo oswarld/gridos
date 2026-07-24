@@ -1,6 +1,6 @@
 {
-  "version": "0.3.0",
-  "generatedAt": "2026-07-24T02:41:28.954Z",
+  "version": "1.0.0",
+  "generatedAt": "2026-07-24T06:31:38.160Z",
   "coverageNote": {
     "ko": "전체 개요는 대표 레코드, 국가 상세 지도는 원천 공개 레이어를 사용합니다. 국가 시설 완전목록이 아닙니다.",
     "en": "The overview uses representative records; country maps use source-published detail layers. This is not a complete national inventory.",
@@ -15,7 +15,7 @@
       "url": "https://www.openstreetmap.org/copyright",
       "kind": "open_data",
       "asOf": "2026-07-23",
-      "retrievedAt": "2026-07-24T02:41:28.954Z",
+      "retrievedAt": "2026-07-24T06:31:38.160Z",
       "licenseNote": "Open Data Commons Open Database License (ODbL) 1.0",
       "coverageNote": "Small public map-API bounding boxes around the published facilities; not a national inventory."
     },
@@ -26,7 +26,7 @@
       "url": "https://www.naturalearthdata.com/downloads/110m-cultural-vectors/110m-admin-0-countries/",
       "kind": "boundary",
       "asOf": "Natural Earth 5.1.2",
-      "retrievedAt": "2026-07-24T02:41:28.954Z",
+      "retrievedAt": "2026-07-24T06:31:38.160Z",
       "licenseNote": "Public domain"
     },
     {
@@ -37,7 +37,7 @@
       "url": "https://www.data.go.kr/data/15127341/fileData.do",
       "kind": "official",
       "asOf": "2024-12-31",
-      "retrievedAt": "2026-07-24T02:41:28.954Z",
+      "retrievedAt": "2026-07-24T06:31:38.160Z",
       "coverageNote": "Large energy users only; not total regional electricity demand."
     },
     {
@@ -48,7 +48,7 @@
       "url": "https://www.data.go.kr/data/15086292/fileData.do",
       "kind": "official",
       "asOf": "2024-12-31",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "jp-occto-demand-2026",
@@ -58,7 +58,7 @@
       "url": "https://www.occto.or.jp/news/010743.html",
       "kind": "official",
       "asOf": "2026-01-21",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "jp-occto-supply-2026",
@@ -68,7 +68,7 @@
       "url": "https://www.occto.or.jp/various/kyoukei/torimatome/260330_kyokyukeikaku_torimatome_1.html",
       "kind": "official",
       "asOf": "2026-03-30",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "tw-taipower-regional-2026",
@@ -78,7 +78,7 @@
       "url": "https://data.gov.tw/dataset/162596",
       "kind": "open_data",
       "asOf": "live 10-minute observation",
-      "retrievedAt": "2026-07-24T02:41:28.954Z",
+      "retrievedAt": "2026-07-24T06:31:38.160Z",
       "licenseNote": "Open Government Data License, version 1.0"
     },
     {
@@ -89,7 +89,7 @@
       "url": "https://www.eia.gov/opendata/browser/electricity/electric-power-operational-data",
       "kind": "official",
       "asOf": "2024",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "us-eia-sales-2024",
@@ -99,7 +99,7 @@
       "url": "https://www.eia.gov/opendata/browser/electricity/retail-sales",
       "kind": "official",
       "asOf": "2024",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "cn-nea-market-2024",
@@ -109,7 +109,7 @@
       "url": "https://www.nea.gov.cn/20250717/54ae0fdb11f04b39a5b670999c04ef81/2025071754ae0fdb11f04b39a5b670999c04ef81_19fe782a11f3aa40209907a80e3e692150.pdf",
       "kind": "official",
       "asOf": "2024",
-      "retrievedAt": "2026-07-24T02:41:28.954Z",
+      "retrievedAt": "2026-07-24T06:31:38.160Z",
       "coverageNote": "National generation and total electricity consumption; provincial balance rows are not inferred."
     },
     {
@@ -119,7 +119,7 @@
       "title": "KINX data center infrastructure",
       "url": "https://www.kinx.net/infrastructure/dc/",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "kinx-ix",
@@ -128,7 +128,7 @@
       "title": "KINX Internet Exchange service",
       "url": "https://www.kinx.net/service/ix/",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "krx-kinx",
@@ -138,7 +138,7 @@
       "url": "https://kind.krx.co.kr/external/2026/04/30/000236/20260430000564/00637.htm",
       "kind": "exchange",
       "asOf": "2026-04-30",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "equinix-sl1",
@@ -147,7 +147,7 @@
       "url": "https://www.equinix.com/data-centers/asia-pacific-colocation/korea-colocation/seoul-data-center/sl1",
       "kind": "operator",
       "country": "KR",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "equinix-ty11",
@@ -156,7 +156,7 @@
       "url": "https://sustainability.equinix.com/wp-content/uploads/2022/04/GU_IBX-Sustainability-Quick-Reference_EN-LTR-1.pdf",
       "kind": "operator",
       "country": "JP",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "equinix-dc4",
@@ -165,7 +165,7 @@
       "url": "https://www.equinix.com/data-centers/americas-colocation/united-states-colocation/washington-dc-data-centers/dc4",
       "kind": "operator",
       "country": "US",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "equinix-ix",
@@ -174,7 +174,7 @@
       "url": "https://www.equinix.com/services/interconnection-services/internet-exchange",
       "kind": "operator",
       "country": "US",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "equinix-ticker",
@@ -183,7 +183,7 @@
       "title": "Equinix FAQ — Nasdaq ticker EQIX",
       "url": "https://investor.equinix.com/about-equinix/faq",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "ewp-ulsan",
@@ -193,7 +193,7 @@
       "url": "https://www.ewp.co.kr/kor/subpage/content.html?pc=75UKJ6W8JNAST1Q0TC5U7VV8MXS7N74",
       "kind": "operator",
       "asOf": "2026",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "jera-kashima",
@@ -202,7 +202,7 @@
       "title": "Kashima Thermal Power Station",
       "url": "https://www.jera.co.jp/en/corporate/business/thermal-power/list/kashima",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "jera-ownership",
@@ -211,7 +211,7 @@
       "title": "Corporate profile and ownership",
       "url": "https://www.jera.co.jp/en/corporate/about/com_outline",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "jpix-otemachi",
@@ -220,7 +220,7 @@
       "title": "JPIX Otemachi service site",
       "url": "https://www.jpix.ad.jp/service/?p=3504",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "kddi-stock",
@@ -229,7 +229,7 @@
       "title": "Guide for Shareholders — securities code 9433",
       "url": "https://www.kddi.com/english/corporate/ir/stock-rating/guide/",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "chubu-stock",
@@ -238,7 +238,7 @@
       "title": "Listed company search — Chubu Electric Power 9502",
       "url": "https://www2.jpx.co.jp/tseHpFront/StockSearch.do?callJorEFlg=1&method=topsearch&topSearchStr=9502",
       "kind": "exchange",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "taipower-plants",
@@ -247,7 +247,7 @@
       "title": "Power plant map and list",
       "url": "https://hc2.taipower.com.tw/2289/59899/59902/",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "chief-locations",
@@ -256,7 +256,7 @@
       "title": "Chief Telecom locations and LY2 data center",
       "url": "https://www.chief.com.tw/locations/",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "chief-company",
@@ -265,7 +265,7 @@
       "title": "Company introduction — stock code 6561 and TPIX",
       "url": "https://www.chief.com.tw/introduction/",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "pge-diablo",
@@ -274,7 +274,7 @@
       "title": "Diablo Canyon Power Plant",
       "url": "https://www.pge.com/en/about/pge-systems/nuclear-power.html",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     },
     {
       "id": "pge-ticker",
@@ -283,7 +283,7 @@
       "title": "Diablo Canyon public meeting notice — PG&E Corp. NYSE: PCG",
       "url": "https://www.pge.com/assets/pge/docs/about/pge-systems/dcdep-public-meeting-notice-03022023.pdf",
       "kind": "operator",
-      "retrievedAt": "2026-07-24T02:41:28.954Z"
+      "retrievedAt": "2026-07-24T06:31:38.160Z"
     }
   ],
   "entities": [

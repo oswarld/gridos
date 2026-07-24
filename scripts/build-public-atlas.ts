@@ -11,6 +11,7 @@ import type {
   RegionalBalance,
 } from "../lib/atlas-types";
 import { COUNTRY_CODES } from "../lib/atlas-types";
+import { PUBLIC_RELEASE_VERSION } from "../lib/release";
 
 const ROOT = path.resolve(__dirname, "..");
 const RAW_OSM_DIR = path.join(ROOT, "data", "raw", "osm-atlas");
@@ -1251,7 +1252,7 @@ async function main(): Promise<void> {
           ),
   }));
   const atlas: PublicAtlas = {
-    version: "0.3.0",
+    version: PUBLIC_RELEASE_VERSION,
     generatedAt: RETRIEVED_AT,
     coverageNote: localized(
       "전체 개요는 대표 레코드, 국가 상세 지도는 원천 공개 레이어를 사용합니다. 국가 시설 완전목록이 아닙니다.",
