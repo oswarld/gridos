@@ -5,7 +5,11 @@
  */
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { COUNTRY_CODES } from "../lib/atlas-types";
+import {
+  COUNTRY_CODES,
+  type BoundaryGeometry,
+  type CountryCode,
+} from "../lib/atlas-types";
 
 const ROOT = path.resolve(__dirname, "..");
 let failed = false;
@@ -16,6 +20,36 @@ function fail(msg: string) {
 }
 function ok(msg: string) {
   console.log(`  ✓ ${msg}`);
+}
+
+function pointInRing([x, y]: [number, number], ring: number[][]): boolean {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i];
+    const [xj, yj] = ring[j];
+    const intersects =
+      yi > y !== yj > y &&
+      x < ((xj - xi) * (y - yi)) / (yj - yi || Number.EPSILON) + xi;
+    if (intersects) inside = !inside;
+  }
+  return inside;
+}
+
+function pointInPolygon(point: [number, number], polygon: number[][][]): boolean {
+  if (!polygon[0] || !pointInRing(point, polygon[0])) return false;
+  return !polygon.slice(1).some((hole) => pointInRing(point, hole));
+}
+
+function pointInBoundary(
+  point: [number, number],
+  boundary: BoundaryGeometry,
+): boolean {
+  if (boundary.type === "Polygon") {
+    return pointInPolygon(point, boundary.coordinates as number[][][]);
+  }
+  return (boundary.coordinates as number[][][][]).some((polygon) =>
+    pointInPolygon(point, polygon),
+  );
 }
 
 // ─── 1. 데이터 무결성 ───
@@ -235,6 +269,14 @@ const detailMinimums: Record<string, { points: number; lines: number }> = {
   US: { points: 10000, lines: 3000 },
   CN: { points: 10000, lines: 10000 },
 };
+const boundaryDataset = fs.existsSync(boundariesPath)
+  ? (JSON.parse(fs.readFileSync(boundariesPath, "utf8")) as {
+      features?: BoundaryGeometry[];
+    })
+  : undefined;
+const detailBoundaries = new Map(
+  (boundaryDataset?.features ?? []).map((boundary) => [boundary.country, boundary]),
+);
 for (const [country, minimum] of Object.entries(detailMinimums)) {
   const detailPath = path.join(
     ROOT,
@@ -251,6 +293,12 @@ for (const [country, minimum] of Object.entries(detailMinimums)) {
   const points: any[] = detail.points ?? [];
   const lines: any[] = detail.lines ?? [];
   if (detail.country !== country) fail(`${country} 상세 지도 국가 코드 불일치`);
+  const rowCountryMismatch = [...points, ...lines].filter(
+    (row) => row.country !== country,
+  );
+  if (rowCountryMismatch.length) {
+    fail(`${country} 상세 행 국가 코드 불일치 ${rowCountryMismatch.length}개`);
+  }
   if (points.length < minimum.points || lines.length < minimum.lines) {
     fail(
       `${country} 상세 범위 부족: points=${points.length}, lines=${lines.length}`,
@@ -275,6 +323,8 @@ for (const [country, minimum] of Object.entries(detailMinimums)) {
   }
 
   let invalidDetailCoordinates = 0;
+  let misplacedOsmPoints = 0;
+  const detailBoundary = detailBoundaries.get(country as CountryCode);
   const finiteCoordinates = (value: unknown): boolean => {
     if (typeof value === "number") return Number.isFinite(value);
     if (!Array.isArray(value) || value.length === 0) return false;
@@ -287,6 +337,13 @@ for (const [country, minimum] of Object.entries(detailMinimums)) {
       !finiteCoordinates(point.coordinates)
     ) {
       invalidDetailCoordinates++;
+    } else if (
+      country !== "US" &&
+      String(point.sourceLabel ?? "").startsWith("OpenStreetMap") &&
+      (!detailBoundary ||
+        !pointInBoundary(point.coordinates as [number, number], detailBoundary))
+    ) {
+      misplacedOsmPoints++;
     }
     if (!point.sourceLabel || !String(point.sourceUrl ?? "").startsWith("https://")) {
       fail(`${country} 상세 포인트 출처 누락: ${point.id}`);
@@ -307,6 +364,11 @@ for (const [country, minimum] of Object.entries(detailMinimums)) {
     fail(`${country} 상세 레이어 유효하지 않은 좌표 ${invalidDetailCoordinates}개`);
   } else {
     ok(`${country} 상세 좌표 및 공개 출처 정상`);
+  }
+  if (misplacedOsmPoints) {
+    fail(`${country} 경계 밖 OSM 시설 ${misplacedOsmPoints}개`);
+  } else if (country !== "US") {
+    ok(`${country} OSM 시설 국가경계 귀속 정상`);
   }
 }
 

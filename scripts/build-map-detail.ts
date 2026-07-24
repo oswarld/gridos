@@ -94,6 +94,14 @@ if (fs.existsSync(BOUNDARIES_PATH)) {
     countryBoundaries.set(boundary.country, boundary);
   }
 }
+const missingEastAsiaBoundaries = (["KR", "JP", "TW", "CN"] as const).filter(
+  (country) => !countryBoundaries.has(country),
+);
+if (missingEastAsiaBoundaries.length) {
+  throw new Error(
+    `Country boundary required before detail build: ${missingEastAsiaBoundaries.join(", ")}`,
+  );
+}
 
 function pointInRing([x, y]: [number, number], ring: number[][]): boolean {
   let inside = false;
@@ -115,7 +123,7 @@ function pointInPolygon(point: [number, number], polygon: number[][][]): boolean
 
 function pointInCountry(country: CountryCode, point: [number, number]): boolean {
   const boundary = countryBoundaries.get(country);
-  if (!boundary) return true;
+  if (!boundary) throw new Error(`Country boundary missing: ${country}`);
   if (boundary.type === "Polygon") {
     return pointInPolygon(point, boundary.coordinates as number[][][]);
   }

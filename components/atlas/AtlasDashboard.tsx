@@ -410,9 +410,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
     const controller = new AbortController();
     setDetailLoading(country);
     setDetailError(null);
-    fetch(`${basePath}/data/detail/${country.toLowerCase()}.json`, {
+    const detailRevision = encodeURIComponent(`${atlas.version}-${atlas.generatedAt}`);
+    fetch(`${basePath}/data/detail/${country.toLowerCase()}.json?v=${detailRevision}`, {
       signal: controller.signal,
-      cache: "force-cache",
+      cache: "no-store",
     })
       .then((response) => {
         if (!response.ok) throw new Error(`detail ${response.status}`);
