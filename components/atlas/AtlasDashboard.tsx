@@ -22,6 +22,11 @@ import type {
   DetailMapFilters,
   GenerationFuel,
 } from "@/lib/map-detail-types";
+import {
+  saveVisitorCountry,
+  saveVisitorLocale,
+  type CountrySelection,
+} from "@/lib/visitor-region";
 import InfrastructureMap from "./InfrastructureMap";
 
 const atlas = atlasJson as PublicAtlas;
@@ -337,19 +342,37 @@ function externalTickerUrl(security: ListedSecurity): string {
   return atlas.sources.find((source) => source.id === security.sourceId)?.url ?? "#";
 }
 
-export default function AtlasDashboard({ locale }: { locale: Locale }) {
+export default function AtlasDashboard({
+  locale,
+  initialCountry = "ALL",
+}: {
+  locale: Locale;
+  initialCountry?: CountrySelection;
+}) {
   const dictionary = DICTIONARIES[locale];
   const copy = ATLAS_UI[locale];
   const detailCopy = DETAIL_COPY[locale];
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-  const [countryFilter, setCountryFilter] = useState<CountryCode | "ALL">("ALL");
-  const [balanceCountry, setBalanceCountry] = useState<CountryCode>("KR");
+  const [countryFilter, setCountryFilter] =
+    useState<CountrySelection>(initialCountry);
+  const [balanceCountry, setBalanceCountry] = useState<CountryCode>(
+    initialCountry === "ALL" ? "KR" : initialCountry,
+  );
   const [activeLayers, setActiveLayers] = useState<Set<InfrastructureLayer>>(
     new Set(INFRASTRUCTURE_LAYERS),
   );
-  const [selectedId, setSelectedId] = useState<string | null>(
-    atlas.facilities[0]?.id ?? null,
-  );
+  const [selectedId, setSelectedId] = useState<string | null>(() => {
+    if (initialCountry === "ALL") return atlas.facilities[0]?.id ?? null;
+    return (
+      atlas.facilities.find(
+        (facility) => facility.country === initialCountry,
+      )?.id ??
+      atlas.linearFeatures.find(
+        (feature) => feature.country === initialCountry,
+      )?.id ??
+      null
+    );
+  });
   const [detailByCountry, setDetailByCountry] = useState<
     Partial<Record<CountryCode, CountryInfrastructureDetail>>
   >({});
@@ -555,7 +578,8 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
     });
   };
 
-  const selectCountry = (country: CountryCode | "ALL") => {
+  const selectCountry = (country: CountrySelection) => {
+    saveVisitorCountry(country);
     setCountryFilter(country);
     if (country !== "ALL") {
       setBalanceCountry(country);
@@ -622,6 +646,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                 href={`${basePath}/${code}/`}
                 hrefLang={code}
                 lang={code}
+                onClick={() => saveVisitorLocale(code)}
                 aria-current={code === locale ? "page" : undefined}
                 className={`rounded-full px-2.5 py-1.5 text-[11px] font-semibold transition ${
                   code === locale

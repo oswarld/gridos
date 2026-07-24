@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AtlasDashboard from "@/components/atlas/AtlasDashboard";
+import VisitorAtlasDashboard from "@/components/atlas/VisitorAtlasDashboard";
 
 export const metadata: Metadata = {
   title: "GridOS · 공공 인프라 아틀라스",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <AtlasDashboard locale="ko" />;
+  return <VisitorAtlasDashboard />;
 }

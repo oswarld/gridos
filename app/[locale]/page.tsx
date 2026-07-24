@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import AtlasDashboard from "@/components/atlas/AtlasDashboard";
+import VisitorAtlasDashboard from "@/components/atlas/VisitorAtlasDashboard";
 import { isLocale, LOCALES } from "@/lib/i18n";
 
 export const dynamicParams = false;
@@ -48,5 +48,5 @@ export default async function LocalePage({
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  return <AtlasDashboard locale={locale} />;
+  return <VisitorAtlasDashboard locale={locale} />;
 }

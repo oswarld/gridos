@@ -1,5 +1,8 @@
 # local reference material
-/docs
+/docs/*
+!/docs/introductions/
+/docs/introductions/*
+!/docs/introductions/geeknews-ko.md
 /resources
 
 # operating system / editor metadata
