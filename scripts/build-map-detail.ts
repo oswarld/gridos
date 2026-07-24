@@ -19,6 +19,7 @@ import {
   type BoundaryGeometry,
   type CountryCode,
 } from "../lib/atlas-types";
+import { pointBelongsToBoundary } from "../lib/geo-boundary";
 import type {
   CountryInfrastructureDetail,
   DetailedInfrastructureLine,
@@ -103,33 +104,10 @@ if (missingEastAsiaBoundaries.length) {
   );
 }
 
-function pointInRing([x, y]: [number, number], ring: number[][]): boolean {
-  let inside = false;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const [xi, yi] = ring[i];
-    const [xj, yj] = ring[j];
-    const intersects =
-      yi > y !== yj > y &&
-      x < ((xj - xi) * (y - yi)) / (yj - yi || Number.EPSILON) + xi;
-    if (intersects) inside = !inside;
-  }
-  return inside;
-}
-
-function pointInPolygon(point: [number, number], polygon: number[][][]): boolean {
-  if (!polygon[0] || !pointInRing(point, polygon[0])) return false;
-  return !polygon.slice(1).some((hole) => pointInRing(point, hole));
-}
-
 function pointInCountry(country: CountryCode, point: [number, number]): boolean {
   const boundary = countryBoundaries.get(country);
   if (!boundary) throw new Error(`Country boundary missing: ${country}`);
-  if (boundary.type === "Polygon") {
-    return pointInPolygon(point, boundary.coordinates as number[][][]);
-  }
-  return (boundary.coordinates as number[][][][]).some((polygon) =>
-    pointInPolygon(point, polygon),
-  );
+  return pointBelongsToBoundary(point, boundary);
 }
 
 async function download(url: string, destination: string): Promise<void> {

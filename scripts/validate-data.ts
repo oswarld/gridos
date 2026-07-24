@@ -10,6 +10,7 @@ import {
   type BoundaryGeometry,
   type CountryCode,
 } from "../lib/atlas-types";
+import { pointBelongsToBoundary } from "../lib/geo-boundary";
 
 const ROOT = path.resolve(__dirname, "..");
 let failed = false;
@@ -20,36 +21,6 @@ function fail(msg: string) {
 }
 function ok(msg: string) {
   console.log(`  ✓ ${msg}`);
-}
-
-function pointInRing([x, y]: [number, number], ring: number[][]): boolean {
-  let inside = false;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const [xi, yi] = ring[i];
-    const [xj, yj] = ring[j];
-    const intersects =
-      yi > y !== yj > y &&
-      x < ((xj - xi) * (y - yi)) / (yj - yi || Number.EPSILON) + xi;
-    if (intersects) inside = !inside;
-  }
-  return inside;
-}
-
-function pointInPolygon(point: [number, number], polygon: number[][][]): boolean {
-  if (!polygon[0] || !pointInRing(point, polygon[0])) return false;
-  return !polygon.slice(1).some((hole) => pointInRing(point, hole));
-}
-
-function pointInBoundary(
-  point: [number, number],
-  boundary: BoundaryGeometry,
-): boolean {
-  if (boundary.type === "Polygon") {
-    return pointInPolygon(point, boundary.coordinates as number[][][]);
-  }
-  return (boundary.coordinates as number[][][][]).some((polygon) =>
-    pointInPolygon(point, polygon),
-  );
 }
 
 // ─── 1. 데이터 무결성 ───
@@ -341,7 +312,10 @@ for (const [country, minimum] of Object.entries(detailMinimums)) {
       country !== "US" &&
       String(point.sourceLabel ?? "").startsWith("OpenStreetMap") &&
       (!detailBoundary ||
-        !pointInBoundary(point.coordinates as [number, number], detailBoundary))
+        !pointBelongsToBoundary(
+          point.coordinates as [number, number],
+          detailBoundary,
+        ))
     ) {
       misplacedOsmPoints++;
     }
