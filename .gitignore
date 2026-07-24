@@ -2,6 +2,14 @@
 /docs
 /resources
 
+# operating system / editor metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
 # env files (secrets)
 .env
 .env.local
@@ -11,6 +19,18 @@
 node_modules/
 .next/
 out/
+.cache/
+.turbo/
+.swc/
+.pnpm-store/
+coverage/
+playwright-report/
+test-results/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
@@ -19,4 +39,4 @@ next-env.d.ts
 /data/raw/osm-atlas/
 /data/raw/atlas-public/
 /data/raw/country-detail/
-/data/normalized/kr-official-atlas-staging.json
+/data/normalized/*-staging.json

@@ -30,11 +30,11 @@ const LAYER_STYLES: Record<
   InfrastructureLayer,
   { color: string; marker: "circle" | "square" | "diamond" | "line" | "dash" }
 > = {
-  power_plant: { color: "#f3b72f", marker: "circle" },
-  data_center: { color: "#24a7a0", marker: "square" },
-  network_hub: { color: "#c0589c", marker: "diamond" },
-  transmission: { color: "#3b75b8", marker: "line" },
-  pipeline: { color: "#d66a43", marker: "dash" },
+  power_plant: { color: "#a855f7", marker: "circle" },
+  data_center: { color: "#22b863", marker: "square" },
+  network_hub: { color: "#8b8df8", marker: "diamond" },
+  transmission: { color: "#d92c71", marker: "line" },
+  pipeline: { color: "#f59e0b", marker: "dash" },
 };
 
 const GENERATION_FUELS: GenerationFuel[] = [
@@ -199,6 +199,13 @@ const DETAIL_COPY: Record<
   },
 };
 
+const CONFIDENTIAL_LABEL: Record<Locale, string> = {
+  ko: "기밀",
+  en: "Confidential",
+  "zh-CN": "机密",
+  ja: "機密",
+};
+
 type SelectedRecord =
   | { type: "facility"; record: AtlasFacility }
   | { type: "linear"; record: AtlasLinearFeature }
@@ -255,6 +262,24 @@ function LayerMarker({ layer }: { layer: InfrastructureLayer }) {
       }`}
       style={{ background: style.color }}
     />
+  );
+}
+
+function ConfidentialBadge({
+  locale,
+  description,
+}: {
+  locale: Locale;
+  description: string;
+}) {
+  return (
+    <span
+      title={description}
+      aria-label={`${CONFIDENTIAL_LABEL[locale]} — ${description}`}
+      className="inline-flex rounded-full bg-[#fff4c4] px-2.5 py-1 text-[10px] font-semibold text-[#746019]"
+    >
+      [{CONFIDENTIAL_LABEL[locale]}]
+    </span>
   );
 }
 
@@ -511,33 +536,39 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
         : copy.shareholderListing;
 
   return (
-    <main className="min-h-screen bg-[#f2f0ea] text-[#102231]">
-      <header className="sticky top-0 z-50 border-b border-[#102231]/10 bg-[#f7f5ef]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-[1640px] flex-wrap items-center gap-4 px-5 py-3 lg:px-8">
-          <a href="#top" className="flex items-center gap-3" aria-label={dictionary.siteName}>
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-[#102231] text-sm font-bold text-[#f4b942]">
-              G
+    <main className="min-h-screen bg-white text-[#1c1c1e]">
+      <header className="sticky top-0 z-50 border-b border-[#e0e2e8] bg-white/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-4 px-5 py-3 lg:px-8">
+          <a href="#top" className="flex items-center gap-2.5" aria-label={dictionary.siteName}>
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#ffd02f]">
+              <img
+                src={`${basePath}/high-voltage.webp`}
+                alt=""
+                width={30}
+                height={30}
+                className="h-7 w-7 object-contain"
+              />
             </span>
-            <span className="text-lg font-semibold tracking-[-0.03em]">{dictionary.siteName}</span>
+            <span className="text-xl font-semibold tracking-[-0.04em]">{dictionary.siteName}</span>
           </a>
-          <span className="rounded-full border border-[#1f756b]/25 bg-[#dcece5] px-3 py-1 text-[11px] font-semibold text-[#205e57]">
+          <span className="rounded-full bg-[#fff4c4] px-3 py-1 text-[11px] font-semibold text-[#746019]">
             {dictionary.publicBadge}
           </span>
-          <nav className="order-3 flex w-full gap-5 overflow-x-auto text-sm text-[#425361] lg:order-none lg:ml-auto lg:w-auto">
-            <a className="whitespace-nowrap hover:text-[#102231]" href="#map">
+          <nav className="order-3 flex w-full gap-6 overflow-x-auto text-sm font-medium text-[#555a6a] lg:order-none lg:ml-auto lg:w-auto">
+            <a className="whitespace-nowrap hover:text-[#1c1c1e]" href="#map">
               {dictionary.nav.map}
             </a>
-            <a className="whitespace-nowrap hover:text-[#102231]" href="#balance">
+            <a className="whitespace-nowrap hover:text-[#1c1c1e]" href="#balance">
               {dictionary.nav.balance}
             </a>
-            <a className="whitespace-nowrap hover:text-[#102231]" href="#sources">
+            <a className="whitespace-nowrap hover:text-[#1c1c1e]" href="#sources">
               {dictionary.nav.sources}
             </a>
-            <a className="whitespace-nowrap hover:text-[#102231]" href="#governance">
+            <a className="whitespace-nowrap hover:text-[#1c1c1e]" href="#governance">
               {dictionary.nav.governance}
             </a>
           </nav>
-          <div className="ml-auto flex items-center gap-1 rounded-full border border-[#102231]/10 bg-white/70 p-1 lg:ml-3">
+          <div className="ml-auto flex items-center gap-1 rounded-full border border-[#e0e2e8] bg-[#f7f8fa] p-1 lg:ml-3">
             {LOCALES.map((code) => (
               <a
                 key={code}
@@ -547,8 +578,8 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                 aria-current={code === locale ? "page" : undefined}
                 className={`rounded-full px-2.5 py-1.5 text-[11px] font-semibold transition ${
                   code === locale
-                    ? "bg-[#102231] text-white"
-                    : "text-[#52616c] hover:bg-white hover:text-[#102231]"
+                    ? "bg-[#1c1c1e] text-white"
+                    : "text-[#6b6f7e] hover:bg-white hover:text-[#1c1c1e]"
                 }`}
               >
                 {code === "zh-CN"
@@ -564,47 +595,52 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
         </div>
       </header>
 
-      <section id="top" className="border-b border-[#102231]/10">
-        <div className="mx-auto flex max-w-[1640px] flex-col gap-3 px-5 py-5 lg:flex-row lg:items-end lg:justify-between lg:px-8">
-          <div className="max-w-5xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#277167]">
-              {dictionary.eyebrow}
-            </p>
-            <h1 className="mt-2 text-[clamp(1.75rem,3vw,2.8rem)] font-semibold leading-[1.05] tracking-[-0.045em]">
-              {dictionary.headline}
-            </h1>
-            <p className="mt-2 max-w-4xl text-xs leading-5 text-[#50606a] md:text-sm">
-              {dictionary.intro}
-            </p>
+      <section id="top" className="border-b border-[#eef0f3] bg-white">
+        <div className="mx-auto grid max-w-[1400px] gap-6 px-5 py-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-8 lg:py-10">
+          <div className="flex max-w-5xl items-start gap-5">
+            <img
+              src={`${basePath}/high-voltage.webp`}
+              alt=""
+              width={80}
+              height={80}
+              className="hidden h-20 w-20 shrink-0 object-contain sm:block"
+            />
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b6f7e]">
+                {dictionary.eyebrow}
+              </p>
+              <h1 className="mt-2 max-w-4xl text-[clamp(2rem,4vw,3.75rem)] font-medium leading-[1.06] tracking-[-0.055em] text-[#050038]">
+                {dictionary.headline}
+              </h1>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-[#555a6a] md:text-base">
+                {dictionary.intro}
+              </p>
+            </div>
           </div>
-          <div className="flex shrink-0 items-center gap-3 rounded-full border border-[#102231]/10 bg-white/70 px-4 py-2 text-[11px] text-[#5f6d76]">
-            <span className="h-2 w-2 rounded-full bg-[#25a36f]" />
-            <span className="font-semibold text-[#102231]">Release {atlas.version}</span>
-            <span>·</span>
-            <span>{copy.currentRelease}</span>
+          <div className="flex shrink-0 items-center gap-3 rounded-full bg-[#1c1c1e] px-5 py-3 text-xs text-white">
+            <span className="h-2 w-2 rounded-full bg-[#ffd02f]" />
+            <span className="font-semibold">Release {atlas.version}</span>
+            <span className="text-white/40">·</span>
+            <span className="text-white/70">{copy.currentRelease}</span>
           </div>
         </div>
       </section>
 
-      <section id="map" className="scroll-mt-16 border-b border-[#102231]/10">
-        <div className="mx-auto max-w-[1640px] px-5 py-8 lg:px-8 lg:py-10">
-          <div className="flex flex-wrap gap-2">
+      <section id="map" className="scroll-mt-16 border-b border-[#e0e2e8] bg-[#f7f8fa]">
+        <div className="mx-auto max-w-[1480px] px-4 py-7 lg:px-6 lg:py-9">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => selectCountry("ALL")}
-              className={`min-w-36 rounded-2xl border px-4 py-3 text-left transition ${
+              className={`min-h-11 rounded-full border px-5 py-2 text-left text-sm font-medium transition ${
                 countryFilter === "ALL"
-                  ? "border-[#102231] bg-[#102231] text-white"
-                  : "border-[#102231]/10 bg-white/65 hover:bg-white"
+                  ? "border-[#1c1c1e] bg-[#1c1c1e] text-white"
+                  : "border-[#c7cad5] bg-white text-[#555a6a] hover:border-[#1c1c1e]"
               }`}
             >
-              <span className="block text-sm font-semibold">{copy.allCountries}</span>
-              <span className={`mt-1 block text-[10px] ${countryFilter === "ALL" ? "text-white/55" : "text-[#75808a]"}`}>
-                {atlas.facilities.length} + {atlas.linearFeatures.length}
-              </span>
+              <span>{copy.allCountries}</span>
             </button>
             {COUNTRY_CODES.map((country) => {
-              const coverage = atlas.coverage.find((row) => row.country === country);
               const countryDetail = detailByCountry[country];
               const active = countryFilter === country;
               return (
@@ -612,27 +648,27 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                   key={country}
                   type="button"
                   onClick={() => selectCountry(country)}
-                  className={`min-w-32 rounded-2xl border px-4 py-3 text-left transition ${
+                  className={`min-h-11 rounded-full border px-5 py-2 text-left text-sm font-medium transition ${
                     active
-                      ? "border-[#102231] bg-[#102231] text-white"
-                      : "border-[#102231]/10 bg-white/65 hover:bg-white"
+                      ? "border-[#1c1c1e] bg-[#1c1c1e] text-white"
+                      : "border-[#c7cad5] bg-white text-[#555a6a] hover:border-[#1c1c1e]"
                   }`}
                 >
-                  <span className="block text-sm font-semibold">{dictionary.countries[country]}</span>
-                  <span className={`mt-1 block text-[10px] ${active ? "text-white/55" : "text-[#75808a]"}`}>
-                    {countryDetail
-                      ? `${formatter.format(countryDetail.points.length + countryDetail.lines.length)} ${detailCopy.publicRecords}`
-                      : `${coverage?.facilityCount ?? 0} facilities · ${coverage?.linearFeatureCount ?? 0} ways`}
-                  </span>
+                  <span>{dictionary.countries[country]}</span>
+                  {countryDetail && (
+                    <span className={`ml-2 text-[10px] tabular-nums ${active ? "text-white/55" : "text-[#8e91a0]"}`}>
+                      {compactFormatter.format(countryDetail.points.length + countryDetail.lines.length)}
+                    </span>
+                  )}
                 </button>
               );
             })}
           </div>
 
-          <div className="mt-4 rounded-2xl border border-[#102231]/10 bg-white/75 p-4 shadow-sm">
+          <div className="mt-4 rounded-2xl border border-[#e0e2e8] bg-white p-4 shadow-[0_1px_2px_rgba(5,0,56,.04)] md:p-5">
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-              <h2 className="text-sm font-semibold">{detailCopy.controls}</h2>
-              <p className="text-[11px] text-[#78838b]">{detailCopy.controlsHint}</p>
+              <h2 className="text-sm font-semibold text-[#1c1c1e]">{detailCopy.controls}</h2>
+              <p className="text-xs text-[#8e91a0]">{detailCopy.controlsHint}</p>
               {detailLoading === countryFilter && (
                 <span className="ml-auto flex items-center gap-2 text-[11px] font-semibold text-[#277167]">
                   <span className="h-3 w-3 animate-spin rounded-full border-2 border-[#277167]/20 border-t-[#277167]" />
@@ -641,7 +677,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
               )}
             </div>
 
-            <div className="mt-3 flex flex-wrap gap-2 border-t border-[#102231]/8 pt-3">
+            <div className="mt-4 flex flex-wrap gap-2 border-t border-[#eef0f3] pt-4">
               {INFRASTRUCTURE_LAYERS.map((layer) => {
                 const enabled = activeLayers.has(layer);
                 return (
@@ -650,15 +686,15 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                     type="button"
                     aria-pressed={enabled}
                     onClick={() => toggleLayer(layer)}
-                    className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
+                    className={`flex min-h-10 items-center gap-2 rounded-xl border px-3 py-2 text-xs font-medium transition ${
                       enabled
-                        ? "border-[#277167]/30 bg-[#e3efea] text-[#153e39]"
-                        : "border-[#102231]/10 bg-[#f6f6f3] text-[#859098]"
+                        ? "border-[#c7cad5] bg-white text-[#1c1c1e] shadow-[0_2px_6px_rgba(5,0,56,.07)]"
+                        : "border-[#eef0f3] bg-[#f7f8fa] text-[#a5a8b5]"
                     }`}
                   >
                     <LayerMarker layer={layer} />
                     <span>{copy.layers[layer]}</span>
-                    <span className="rounded-full bg-white/80 px-1.5 py-0.5 text-[9px] tabular-nums text-[#66747d]">
+                    <span className="rounded-full bg-[#f7f8fa] px-1.5 py-0.5 text-[9px] tabular-nums text-[#6b6f7e]">
                       {formatter.format(layerCount(layer))}
                     </span>
                   </button>
@@ -670,10 +706,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                 onClick={() =>
                   updateDetailFilters({ showDensity: !detailFilters.showDensity })
                 }
-                className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
+                className={`flex min-h-10 items-center gap-2 rounded-xl border px-3 py-2 text-xs font-medium transition ${
                   detailFilters.showDensity
-                    ? "border-[#1c5e8f]/30 bg-[#e1edf5] text-[#194c70]"
-                    : "border-[#102231]/10 bg-[#f6f6f3] text-[#859098]"
+                    ? "border-[#4262ff] bg-[#f5f3ff] text-[#2a41b6]"
+                    : "border-[#eef0f3] bg-[#f7f8fa] text-[#8e91a0]"
                 }`}
               >
                 <span className="h-3 w-3 rounded-full bg-[radial-gradient(circle,#ef4444_0,#f59e0b_35%,#3b82f6_70%,transparent_72%)]" />
@@ -681,11 +717,11 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
               </button>
             </div>
 
-            <div className="mt-3 space-y-2 border-t border-[#102231]/8 pt-3 text-[11px]">
+            <div className="mt-4 space-y-3 border-t border-[#eef0f3] pt-4 text-xs">
               {activeLayers.has("power_plant") && (
                 <>
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="mr-1 font-semibold text-[#607079]">
+                    <span className="mr-1 font-medium text-[#6b6f7e]">
                       {detailCopy.capacity}:
                     </span>
                     {([100, 50, 0] as const).map((capacity) => (
@@ -695,10 +731,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                         onClick={() =>
                           updateDetailFilters({ minimumCapacityMw: capacity })
                         }
-                        className={`rounded-lg border px-2.5 py-1.5 font-semibold ${
+                        className={`min-h-9 rounded-full border px-3 py-1.5 font-medium ${
                           detailFilters.minimumCapacityMw === capacity
-                            ? "border-[#1c5e8f] bg-[#1c5e8f] text-white"
-                            : "border-[#102231]/10 bg-[#f6f6f3] text-[#66747d]"
+                            ? "border-[#1c1c1e] bg-[#1c1c1e] text-white"
+                            : "border-[#e0e2e8] bg-white text-[#6b6f7e]"
                         }`}
                       >
                         {capacity === 0 ? detailCopy.all : `≥${capacity}MW`}
@@ -706,16 +742,16 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                     ))}
                   </div>
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="mr-1 font-semibold text-[#607079]">
+                    <span className="mr-1 font-medium text-[#6b6f7e]">
                       {copy.layers.power_plant}:
                     </span>
                     <button
                       type="button"
                       onClick={() => updateDetailFilters({ generationFuel: "all" })}
-                      className={`rounded-full border px-2.5 py-1 ${
+                      className={`min-h-8 rounded-full border px-3 py-1 ${
                         detailFilters.generationFuel === "all"
-                          ? "border-[#1c5e8f] bg-[#e4eef5] font-semibold text-[#1c5e8f]"
-                          : "border-[#102231]/8 bg-[#f7f7f4] text-[#727e86]"
+                          ? "border-[#1c1c1e] bg-[#1c1c1e] font-medium text-white"
+                          : "border-[#e0e2e8] bg-white text-[#6b6f7e]"
                       }`}
                     >
                       {detailCopy.all}
@@ -725,10 +761,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                         key={fuel}
                         type="button"
                         onClick={() => updateDetailFilters({ generationFuel: fuel })}
-                        className={`rounded-full border px-2.5 py-1 ${
+                        className={`min-h-8 rounded-full border px-3 py-1 ${
                           detailFilters.generationFuel === fuel
-                            ? "border-[#1c5e8f] bg-[#e4eef5] font-semibold text-[#1c5e8f]"
-                            : "border-[#102231]/8 bg-[#f7f7f4] text-[#727e86]"
+                            ? "border-[#1c1c1e] bg-[#1c1c1e] font-medium text-white"
+                            : "border-[#e0e2e8] bg-white text-[#6b6f7e]"
                         }`}
                       >
                         {detailCopy.fuels[fuel]}
@@ -740,7 +776,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
 
               {(activeLayers.has("data_center") || activeLayers.has("network_hub")) && (
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="mr-1 font-semibold text-[#607079]">
+                  <span className="mr-1 font-medium text-[#6b6f7e]">
                     {detailCopy.network}:
                   </span>
                   {(
@@ -755,10 +791,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                       key={mode}
                       type="button"
                       onClick={() => updateDetailFilters({ networkMode: mode })}
-                      className={`rounded-full border px-2.5 py-1 ${
+                      className={`min-h-8 rounded-full border px-3 py-1 ${
                         detailFilters.networkMode === mode
-                          ? "border-[#1c5e8f] bg-[#e4eef5] font-semibold text-[#1c5e8f]"
-                          : "border-[#102231]/8 bg-[#f7f7f4] text-[#727e86]"
+                          ? "border-[#1c1c1e] bg-[#1c1c1e] font-medium text-white"
+                          : "border-[#e0e2e8] bg-white text-[#6b6f7e]"
                       }`}
                     >
                       {label}
@@ -766,14 +802,14 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                   ))}
                 </div>
               )}
-              <label className="inline-flex cursor-pointer items-center gap-2 text-[#66747d]">
+              <label className="inline-flex min-h-9 cursor-pointer items-center gap-2 text-[#6b6f7e]">
                 <input
                   type="checkbox"
                   checked={detailFilters.includePlanned}
                   onChange={(event) =>
                     updateDetailFilters({ includePlanned: event.target.checked })
                   }
-                  className="h-3.5 w-3.5 rounded border-[#102231]/20 accent-[#1c5e8f]"
+                  className="h-4 w-4 rounded border-[#c7cad5] accent-[#1c1c1e]"
                 />
                 <span className="font-semibold">{detailCopy.includePlanned}</span>
               </label>
@@ -786,82 +822,19 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
             )}
           </div>
 
-          <div className="mt-4 grid overflow-hidden rounded-[24px] border border-[#102231]/10 bg-[#f9f8f4] shadow-[0_24px_60px_rgba(16,34,49,.08)] xl:grid-cols-[minmax(0,1fr)_360px]">
-            <aside className="hidden">
-              <h2 className="text-lg font-semibold">{dictionary.layerTitle}</h2>
-              <p className="mt-1 text-xs leading-5 text-[#6d7880]">{copy.publicSnapshot}</p>
-              <div className="mt-5 space-y-2">
-                {INFRASTRUCTURE_LAYERS.map((layer) => {
-                  const enabled = activeLayers.has(layer);
-                  const facilityCount = atlas.facilities.filter(
-                    (facility) =>
-                      facility.kind === layer &&
-                      (countryFilter === "ALL" || facility.country === countryFilter),
-                  ).length;
-                  const wayCount = atlas.linearFeatures.filter(
-                    (feature) =>
-                      feature.kind === layer &&
-                      (countryFilter === "ALL" || feature.country === countryFilter),
-                  ).length;
-                  return (
-                    <button
-                      key={layer}
-                      type="button"
-                      aria-pressed={enabled}
-                      onClick={() => toggleLayer(layer)}
-                      className={`flex w-full items-center gap-3 rounded-2xl border p-3.5 text-left transition ${
-                        enabled
-                          ? "border-[#277167]/30 bg-[#e4efea]"
-                          : "border-[#102231]/8 bg-white/55 text-[#66747d]"
-                      }`}
-                    >
-                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white">
-                        <LayerMarker layer={layer} />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block text-sm font-semibold">{copy.layers[layer]}</span>
-                        <span className="mt-0.5 block text-[10px] text-[#75808a]">
-                          {facilityCount + wayCount} {copy.layerScope.toLowerCase()}
-                        </span>
-                      </span>
-                      <span
-                        className={`ml-auto h-5 w-9 rounded-full p-0.5 transition ${
-                          enabled ? "bg-[#277167]" : "bg-[#c8ccc9]"
-                        }`}
-                        aria-hidden
-                      >
-                        <span
-                          className={`block h-4 w-4 rounded-full bg-white transition ${
-                            enabled ? "translate-x-4" : ""
-                          }`}
-                        />
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="mt-5 rounded-2xl border border-[#102231]/10 bg-white/65 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#7b858c]">
-                  {copy.coverage}
-                </p>
-                <p className="mt-2 text-[11px] leading-5 text-[#66747d]">
-                  {atlas.coverageNote[locale]}
-                </p>
-              </div>
-            </aside>
-
-            <div className="min-h-[650px] border-b border-[#102231]/10 p-3 md:p-5 xl:border-b-0 xl:border-r">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#277167]">
+          <div className="mt-4 grid overflow-hidden rounded-2xl border border-[#e0e2e8] bg-white shadow-[0_12px_32px_-4px_rgba(5,0,56,.08)] xl:grid-cols-[minmax(0,1fr)_360px]">
+            <div className="min-h-[650px] border-b border-[#e0e2e8] p-3 md:p-5 xl:border-b-0 xl:border-r">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b6f7e]">
                 {countryFilter === "ALL"
                   ? copy.allCountries
                   : dictionary.countries[countryFilter]}
               </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em]">
+              <h2 className="mt-2 text-2xl font-medium tracking-[-0.035em] text-[#050038]">
                 {countryFilter === "ALL"
                   ? copy.mapTitle
                   : `${dictionary.countries[countryFilter]} · ${copy.countryDetail}`}
               </h2>
-              <p className="mt-2 max-w-3xl text-xs leading-5 text-[#6d7880]">
+              <p className="mt-2 max-w-3xl text-xs leading-5 text-[#6b6f7e]">
                 {detailData
                   ? `${formatter.format(detailData.points.length + detailData.lines.length)} ${detailCopy.publicRecords} · ${detailData.generatedAt.slice(0, 10)}`
                   : copy.mapIntro}
@@ -896,7 +869,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
               </div>
               <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
                 {INFRASTRUCTURE_LAYERS.map((layer) => (
-                  <span key={layer} className="flex items-center gap-2 text-[11px] text-[#607079]">
+                  <span key={layer} className="flex items-center gap-2 text-[11px] text-[#6b6f7e]">
                     <LayerMarker layer={layer} />
                     {copy.layers[layer]}
                   </span>
@@ -904,21 +877,21 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
               </div>
             </div>
 
-            <aside className="p-5 md:p-6">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#78838b]">
+            <aside className="bg-[#fafbfc] p-5 md:p-6">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8e91a0]">
                 {copy.selectedFacility}
               </p>
               {selected ? (
                 <>
                   <div className="mt-3 flex items-start gap-3">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#e7ecea]">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white shadow-[0_1px_2px_rgba(5,0,56,.06)]">
                       <LayerMarker layer={selected.record.kind} />
                     </span>
                     <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#277167]">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#6b6f7e]">
                         {dictionary.countries[selected.record.country]} · {copy.layers[selected.record.kind]}
                       </p>
-                      <h2 className="mt-1 text-2xl font-semibold leading-7 tracking-[-0.035em]">
+                      <h2 className="mt-1 text-2xl font-medium leading-7 tracking-[-0.035em] text-[#050038]">
                         {selected.record.name}
                       </h2>
                     </div>
@@ -926,9 +899,9 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
 
                   {selected.type === "facility" || selected.type === "detail-point" ? (
                     <>
-                      <dl className="mt-6 space-y-3 rounded-2xl border border-[#102231]/10 bg-white p-4 text-xs">
+                      <dl className="mt-6 space-y-3 rounded-xl border border-[#e0e2e8] bg-white p-4 text-xs">
                         <div className="flex items-start justify-between gap-4">
-                          <dt className="text-[#75808a]">{copy.operator}</dt>
+                          <dt className="text-[#8e91a0]">{copy.operator}</dt>
                           <dd className="text-right font-semibold">
                             {selected.type === "facility"
                               ? selected.record.operatorEntityId
@@ -938,26 +911,36 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                           </dd>
                         </div>
                         <div className="flex items-start justify-between gap-4">
-                          <dt className="text-[#75808a]">{copy.owner}</dt>
+                          <dt className="text-[#8e91a0]">{copy.owner}</dt>
                           <dd className="text-right font-semibold">
                             {selected.type === "facility"
                               ? (selected.record.ownerEntityIds ?? [])
                                   .map((id) => entityById.get(id)?.name)
                                   .filter(Boolean)
-                                  .join(", ") || copy.noPublicRecord
-                              : selected.record.owner ?? copy.noPublicRecord}
+                                  .join(", ") || (
+                                  <ConfidentialBadge
+                                    locale={locale}
+                                    description={copy.noPublicRecord}
+                                  />
+                                )
+                              : selected.record.owner || (
+                                  <ConfidentialBadge
+                                    locale={locale}
+                                    description={copy.noPublicRecord}
+                                  />
+                                )}
                           </dd>
                         </div>
                         {selected.record.capacityMw !== undefined && (
                           <div className="flex items-start justify-between gap-4">
-                            <dt className="text-[#75808a]">{copy.capacity}</dt>
+                            <dt className="text-[#8e91a0]">{copy.capacity}</dt>
                             <dd className="text-right font-semibold">
                               {formatter.format(selected.record.capacityMw)} MW
                             </dd>
                           </div>
                         )}
                         <div className="flex items-start justify-between gap-4">
-                          <dt className="text-[#75808a]">{copy.locationPrecision}</dt>
+                          <dt className="text-[#8e91a0]">{copy.locationPrecision}</dt>
                           <dd className="max-w-[190px] text-right font-semibold">
                             {selected.type === "facility"
                               ? selected.record.disclosureLevel === "exact_public"
@@ -970,13 +953,13 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                           selected.record.kind !== "power_plant" && (
                             <>
                               <div className="flex items-start justify-between gap-4">
-                                <dt className="text-[#75808a]">{detailCopy.networks}</dt>
+                                <dt className="text-[#8e91a0]">{detailCopy.networks}</dt>
                                 <dd className="text-right font-semibold">
                                   {formatter.format(selected.record.networkCount ?? 0)}
                                 </dd>
                               </div>
                               <div className="flex items-start justify-between gap-4">
-                                <dt className="text-[#75808a]">{detailCopy.exchanges}</dt>
+                                <dt className="text-[#8e91a0]">{detailCopy.exchanges}</dt>
                                 <dd className="text-right font-semibold">
                                   {formatter.format(selected.record.ixCount ?? 0)}
                                 </dd>
@@ -985,7 +968,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                           )}
                       </dl>
                       {selected.type === "facility" && (
-                        <p className="mt-3 text-[11px] leading-5 text-[#75808a]">
+                        <p className="mt-3 text-[11px] leading-5 text-[#8e91a0]">
                           {selected.record.locationNote[locale]}
                         </p>
                       )}
@@ -1002,14 +985,14 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                                     key={id}
                                     type="button"
                                     onClick={() => setSelectedId(id)}
-                                    className="rounded-full border border-[#102231]/10 bg-white px-3 py-1.5 text-[11px] font-semibold hover:border-[#277167]"
+                                    className="rounded-full border border-[#c7cad5] bg-white px-3 py-1.5 text-[11px] font-medium hover:border-[#1c1c1e]"
                                   >
                                     {connected.name} →
                                   </button>
                                 ) : null;
                               })
                             ) : (
-                              <span className="text-[11px] text-[#75808a]">
+                              <span className="text-[11px] text-[#8e91a0]">
                                 {copy.noPublicRecord}
                               </span>
                             )}
@@ -1027,7 +1010,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                                 href={externalTickerUrl(security)}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="flex items-center justify-between rounded-2xl bg-[#102231] p-3.5 text-white transition hover:bg-[#1e384b]"
+                                className="flex items-center justify-between rounded-xl bg-[#1c1c1e] p-3.5 text-white transition hover:bg-[#2c2c34]"
                               >
                                 <span>
                                   <span className="block text-sm font-semibold">{entity.name}</span>
@@ -1035,13 +1018,13 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                                     {relationshipLabel(security.relationship)}
                                   </span>
                                 </span>
-                                <span className="rounded-full bg-[#f4b942] px-3 py-1 text-xs font-bold text-[#102231]">
+                                <span className="rounded-full bg-[#ffd02f] px-3 py-1 text-xs font-semibold text-[#1c1c1e]">
                                   {security.exchange} · {security.ticker}
                                 </span>
                               </a>
                             ))
                           ) : (
-                            <p className="text-[11px] text-[#75808a]">{copy.noPublicRecord}</p>
+                            <p className="text-[11px] text-[#8e91a0]">{copy.noPublicRecord}</p>
                           )}
                         </div>
                         <p className="mt-2 text-[10px] leading-4 text-[#8a9298]">
@@ -1056,24 +1039,29 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                       </div>
                     </>
                   ) : (
-                    <dl className="mt-6 space-y-3 rounded-2xl border border-[#102231]/10 bg-white p-4 text-xs">
+                    <dl className="mt-6 space-y-3 rounded-xl border border-[#e0e2e8] bg-white p-4 text-xs">
                       <div className="flex items-start justify-between gap-4">
-                        <dt className="text-[#75808a]">{copy.operator}</dt>
+                        <dt className="text-[#8e91a0]">{copy.operator}</dt>
                         <dd className="text-right font-semibold">
                           {selected.record.operator ?? copy.noPublicRecord}
                         </dd>
                       </div>
                       <div className="flex items-start justify-between gap-4">
-                        <dt className="text-[#75808a]">{copy.owner}</dt>
+                        <dt className="text-[#8e91a0]">{copy.owner}</dt>
                         <dd className="text-right font-semibold">
-                          {selected.record.owner ?? copy.noPublicRecord}
+                          {selected.record.owner || (
+                            <ConfidentialBadge
+                              locale={locale}
+                              description={copy.noPublicRecord}
+                            />
+                          )}
                         </dd>
                       </div>
                       {((selected.type === "linear" && selected.record.voltage) ||
                         (selected.type === "detail-line" &&
                           selected.record.voltageKv !== undefined)) && (
                         <div className="flex items-start justify-between gap-4">
-                          <dt className="text-[#75808a]">Voltage</dt>
+                          <dt className="text-[#8e91a0]">Voltage</dt>
                           <dd className="text-right font-semibold">
                             {selected.type === "linear"
                               ? `${selected.record.voltage} V`
@@ -1083,14 +1071,14 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                       )}
                       {selected.record.substance && (
                         <div className="flex items-start justify-between gap-4">
-                          <dt className="text-[#75808a]">Substance</dt>
+                          <dt className="text-[#8e91a0]">Substance</dt>
                           <dd className="text-right font-semibold">{selected.record.substance}</dd>
                         </div>
                       )}
                     </dl>
                   )}
 
-                  <div className="mt-6 border-t border-[#102231]/10 pt-5">
+                  <div className="mt-6 border-t border-[#e0e2e8] pt-5">
                     <h3 className="text-xs font-semibold">{copy.source}</h3>
                     <div className="mt-2 space-y-2">
                       {selectedSources.map((source) => (
@@ -1099,10 +1087,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                           href={source.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="block rounded-xl bg-[#e9ece8] p-3 text-[11px] leading-4 hover:bg-[#dde4df]"
+                          className="block rounded-xl border border-[#eef0f3] bg-white p-3 text-[11px] leading-4 hover:border-[#c7cad5]"
                         >
                           <span className="font-semibold">{source.publisher}</span>
-                          <span className="mt-0.5 block text-[#66747d]">{source.title} ↗</span>
+                          <span className="mt-0.5 block text-[#6b6f7e]">{source.title} ↗</span>
                         </a>
                       ))}
                       {(selected.type === "detail-point" ||
@@ -1111,10 +1099,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                           href={selected.record.sourceUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="block rounded-xl bg-[#e9ece8] p-3 text-[11px] leading-4 hover:bg-[#dde4df]"
+                          className="block rounded-xl border border-[#eef0f3] bg-white p-3 text-[11px] leading-4 hover:border-[#c7cad5]"
                         >
                           <span className="font-semibold">{selected.record.sourceLabel}</span>
-                          <span className="mt-0.5 block text-[#66747d]">
+                          <span className="mt-0.5 block text-[#6b6f7e]">
                             {selected.record.name} ↗
                           </span>
                         </a>
@@ -1130,14 +1118,14 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section id="balance" className="scroll-mt-16 border-b border-[#102231]/10 bg-[#e9e7e0]">
-        <div className="mx-auto max-w-[1640px] px-5 py-14 lg:px-8 lg:py-20">
+      <section id="balance" className="scroll-mt-16 border-b border-[#e0e2e8] bg-white">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">
           <div className="max-w-4xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#277167]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b6f7e]">
               01 · Balance
             </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-[-0.045em]">{copy.balanceTitle}</h2>
-            <p className="mt-3 text-sm leading-6 text-[#61707a]">{copy.balanceIntro}</p>
+            <h2 className="mt-3 text-4xl font-medium tracking-[-0.045em] text-[#050038]">{copy.balanceTitle}</h2>
+            <p className="mt-3 text-sm leading-6 text-[#555a6a]">{copy.balanceIntro}</p>
           </div>
           <div className="mt-7 flex flex-wrap gap-2">
             {COUNTRY_CODES.map((country) => (
@@ -1145,10 +1133,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                 key={country}
                 type="button"
                 onClick={() => setBalanceCountry(country)}
-                className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${
+                className={`min-h-10 rounded-full border px-4 py-2 text-xs font-medium transition ${
                   balanceCountry === country
-                    ? "border-[#102231] bg-[#102231] text-white"
-                    : "border-[#102231]/10 bg-white/60 hover:bg-white"
+                    ? "border-[#1c1c1e] bg-[#1c1c1e] text-white"
+                    : "border-[#c7cad5] bg-white text-[#6b6f7e] hover:border-[#1c1c1e]"
                 }`}
               >
                 {dictionary.countries[country]} ·{" "}
@@ -1157,9 +1145,9 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
             ))}
           </div>
 
-          <div className="mt-5 overflow-x-auto rounded-3xl border border-[#102231]/10 bg-[#f8f7f3]">
+          <div className="mt-5 overflow-x-auto rounded-2xl border border-[#e0e2e8] bg-white">
             <table className="w-full min-w-[940px] border-collapse text-left text-sm">
-              <thead className="border-b border-[#102231]/10 text-[11px] uppercase tracking-[0.08em] text-[#697680]">
+              <thead className="border-b border-[#e0e2e8] bg-[#fafbfc] text-[11px] uppercase tracking-[0.08em] text-[#6b6f7e]">
                 <tr>
                   <th className="px-5 py-4 font-semibold">{copy.region}</th>
                   <th className="px-5 py-4 text-right font-semibold">{copy.demand}</th>
@@ -1177,7 +1165,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                   return (
                     <tr
                       key={region.id}
-                      className="border-b border-[#102231]/7 last:border-0 hover:bg-white"
+                      className="border-b border-[#eef0f3] last:border-0 hover:bg-[#fafbfc]"
                     >
                       <th className="px-5 py-4">
                         <span className="font-semibold">{region.name[locale]}</span>
@@ -1194,7 +1182,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                       <td className="px-5 py-4 text-right font-semibold tabular-nums">
                         {ratio === null ? dictionary.noValue : `${formatter.format(ratio)}%`}
                       </td>
-                      <td className="px-5 py-4 text-right text-xs text-[#66747d]">
+                      <td className="px-5 py-4 text-right text-xs text-[#6b6f7e]">
                         {region.period}
                       </td>
                     </tr>
@@ -1205,26 +1193,28 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
           </div>
           {regionalRows[0] && (
             <div className="mt-4 grid gap-3 lg:grid-cols-[auto_1fr]">
-              <span className="h-fit rounded-full bg-[#d5e6df] px-3 py-1.5 text-[11px] font-semibold text-[#205e57]">
-                {copy.withinCountryOnly}
+              <span className="h-fit rounded-full bg-[#fff4c4] px-3 py-1.5 text-[11px] font-semibold text-[#746019]">
+                {regionalRows[0].comparableWithinCountry
+                  ? copy.withinCountryOnly
+                  : copy.coverage}
               </span>
               <div>
-                <p className="text-xs leading-5 text-[#5f6d76]">{regionalRows[0].methodology[locale]}</p>
-                <p className="mt-1 text-[11px] leading-5 text-[#7b858c]">{copy.countryMethodWarning}</p>
+                <p className="text-xs leading-5 text-[#555a6a]">{regionalRows[0].methodology[locale]}</p>
+                <p className="mt-1 text-[11px] leading-5 text-[#8e91a0]">{copy.countryMethodWarning}</p>
               </div>
             </div>
           )}
         </div>
       </section>
 
-      <section id="sources" className="scroll-mt-16 border-b border-[#102231]/10">
-        <div className="mx-auto max-w-[1640px] px-5 py-14 lg:px-8 lg:py-20">
+      <section id="sources" className="scroll-mt-16 border-b border-[#e0e2e8] bg-[#f7f8fa]">
+        <div className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">
           <div className="max-w-4xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#277167]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6b6f7e]">
               02 · Provenance
             </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-[-0.045em]">{copy.provenanceTitle}</h2>
-            <p className="mt-3 text-sm leading-6 text-[#61707a]">{copy.provenanceIntro}</p>
+            <h2 className="mt-3 text-4xl font-medium tracking-[-0.045em] text-[#050038]">{copy.provenanceTitle}</h2>
+            <p className="mt-3 text-sm leading-6 text-[#555a6a]">{copy.provenanceIntro}</p>
           </div>
           <div className="mt-8 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {atlas.sources.map((source) => (
@@ -1233,23 +1223,23 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
                 href={source.url}
                 target="_blank"
                 rel="noreferrer"
-                className="group rounded-2xl border border-[#102231]/10 bg-white/70 p-5 transition hover:-translate-y-0.5 hover:bg-white"
+                className="group rounded-2xl border border-[#eef0f3] bg-white p-5 transition hover:-translate-y-0.5 hover:border-[#c7cad5] hover:shadow-[0_4px_12px_rgba(5,0,56,.06)]"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-xs font-semibold text-[#277167]">{source.publisher}</p>
-                  <span className="rounded-full bg-[#e7ece8] px-2 py-1 text-[9px] font-semibold uppercase text-[#66747d]">
+                  <p className="text-xs font-semibold text-[#4262ff]">{source.publisher}</p>
+                  <span className="rounded-full bg-[#f7f8fa] px-2 py-1 text-[9px] font-semibold uppercase text-[#6b6f7e]">
                     {source.country ?? "GLOBAL"}
                   </span>
                 </div>
                 <h3 className="mt-2 text-sm font-semibold leading-5 group-hover:underline">
                   {source.title}
                 </h3>
-                <p className="mt-3 text-[10px] text-[#7b858c]">
+                <p className="mt-3 text-[10px] text-[#8e91a0]">
                   {copy.retrieved} · {source.retrievedAt.slice(0, 10)}
                   {source.asOf ? ` · ${source.asOf}` : ""}
                 </p>
                 {(source.licenseNote || source.coverageNote) && (
-                  <p className="mt-2 text-[10px] leading-4 text-[#7b858c]">
+                  <p className="mt-2 text-[10px] leading-4 text-[#8e91a0]">
                     {source.licenseNote ?? source.coverageNote}
                   </p>
                 )}
@@ -1259,13 +1249,13 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section id="governance" className="scroll-mt-16 bg-[#102231] text-white">
-        <div className="mx-auto grid max-w-[1640px] gap-12 px-5 py-16 lg:grid-cols-[.72fr_1.28fr] lg:px-8 lg:py-24">
+      <section id="governance" className="scroll-mt-16 bg-[#1c1c1e] text-white">
+        <div className="mx-auto grid max-w-[1280px] gap-12 px-5 py-16 lg:grid-cols-[.72fr_1.28fr] lg:px-8 lg:py-24">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#73b7aa]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#ffd02f]">
               03 · Governance
             </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-[-0.045em]">
+            <h2 className="mt-3 text-4xl font-medium tracking-[-0.045em]">
               {dictionary.governanceTitle}
             </h2>
             <p className="mt-4 text-sm leading-6 text-white/60">{dictionary.governanceIntro}</p>
@@ -1274,7 +1264,7 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
             <ol className="grid gap-3 md:grid-cols-2">
               {dictionary.governanceItems.map((item, index) => (
                 <li key={item} className="rounded-2xl border border-white/10 bg-white/[0.045] p-5">
-                  <span className="text-xs font-semibold text-[#f4b942]">
+                  <span className="text-xs font-semibold text-[#ffd02f]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <p className="mt-4 text-sm leading-6 text-white/80">{item}</p>

@@ -5,8 +5,8 @@
  * - US generation: EIA-860M
  * - US high-voltage transmission: HIFLD public ArcGIS service
  * - US gas trunk pipelines: EIA/HIFLD public ArcGIS service
- * - Four-country data centers / network hubs: PeeringDB public facility records
- * - KR/JP/TW generation, high-voltage lines, and energy pipelines: public OSM tags
+ * - Five-country data centers / network hubs: PeeringDB public facility records
+ * - KR/JP/TW/CN generation, high-voltage lines, and energy pipelines: public OSM tags
  *
  * Raw downloads remain in data/raw/country-detail and are not committed.
  * Browser-ready country files are written to public/data/detail.
@@ -14,7 +14,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import ExcelJS from "exceljs";
-import type { CountryCode } from "../lib/atlas-types";
+import {
+  COUNTRY_CODES,
+  type BoundaryGeometry,
+  type CountryCode,
+} from "../lib/atlas-types";
 import type {
   CountryInfrastructureDetail,
   DetailedInfrastructureLine,
@@ -25,6 +29,7 @@ import type {
 const ROOT = path.resolve(__dirname, "..");
 const RAW_DIR = path.join(ROOT, "data", "raw", "country-detail");
 const OUTPUT_DIR = path.join(ROOT, "public", "data", "detail");
+const BOUNDARIES_PATH = path.join(ROOT, "data", "processed", "atlas-boundaries.json");
 const GENERATED_AT = new Date().toISOString();
 const VERSION = GENERATED_AT.slice(0, 10);
 const USER_AGENT = "GridOS-public-infrastructure-atlas/1.0 (public-interest research)";
@@ -44,24 +49,80 @@ const OVERPASS_ENDPOINTS = [
 
 const EAST_ASIA_CONFIG: Record<
   Exclude<CountryCode, "US">,
-  { bbox: [number, number, number, number]; voltagePattern: string }
+  {
+    bboxes: [number, number, number, number][];
+    voltagePattern: string;
+    minimumVoltageKv?: number;
+  }
 > = {
   KR: {
-    bbox: [33, 124, 39, 132],
+    bboxes: [[33, 124, 39, 132]],
     voltagePattern: "^(154000|345000|765000)$",
   },
   JP: {
-    bbox: [24, 123, 46, 146],
+    bboxes: [[24, 123, 46, 146]],
     voltagePattern: "^(110000|132000|154000|187000|220000|275000|500000|1000000)$",
   },
   TW: {
-    bbox: [21.5, 119, 25.8, 123],
+    bboxes: [[21.5, 119, 25.8, 123]],
     voltagePattern: "^(69000|161000|345000)$",
+  },
+  CN: {
+    bboxes: [
+      [18, 73, 37, 105],
+      [37, 73, 54, 105],
+      [18, 105, 37, 122],
+      [37, 105, 54, 122],
+      [18, 122, 37, 135],
+      [37, 122, 54, 135],
+    ],
+    voltagePattern:
+      "^(110000|132000|220000|330000|350000|400000|500000|660000|750000|800000|1000000|1100000)$",
+    minimumVoltageKv: 500,
   },
 };
 
 fs.mkdirSync(RAW_DIR, { recursive: true });
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+
+const countryBoundaries = new Map<CountryCode, BoundaryGeometry>();
+if (fs.existsSync(BOUNDARIES_PATH)) {
+  const boundaryData = JSON.parse(fs.readFileSync(BOUNDARIES_PATH, "utf8")) as {
+    features: BoundaryGeometry[];
+  };
+  for (const boundary of boundaryData.features) {
+    countryBoundaries.set(boundary.country, boundary);
+  }
+}
+
+function pointInRing([x, y]: [number, number], ring: number[][]): boolean {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i];
+    const [xj, yj] = ring[j];
+    const intersects =
+      yi > y !== yj > y &&
+      x < ((xj - xi) * (y - yi)) / (yj - yi || Number.EPSILON) + xi;
+    if (intersects) inside = !inside;
+  }
+  return inside;
+}
+
+function pointInPolygon(point: [number, number], polygon: number[][][]): boolean {
+  if (!polygon[0] || !pointInRing(point, polygon[0])) return false;
+  return !polygon.slice(1).some((hole) => pointInRing(point, hole));
+}
+
+function pointInCountry(country: CountryCode, point: [number, number]): boolean {
+  const boundary = countryBoundaries.get(country);
+  if (!boundary) return true;
+  if (boundary.type === "Polygon") {
+    return pointInPolygon(point, boundary.coordinates as number[][][]);
+  }
+  return (boundary.coordinates as number[][][][]).some((polygon) =>
+    pointInPolygon(point, polygon),
+  );
+}
 
 async function download(url: string, destination: string): Promise<void> {
   if (fs.existsSync(destination) && fs.statSync(destination).size > 0) return;
@@ -500,30 +561,53 @@ async function buildEastAsiaOsm(
   lines: DetailedInfrastructureLine[];
 }> {
   const config = EAST_ASIA_CONFIG[country];
-  const bbox = config.bbox.join(",");
-  const lineQuery = `[out:json][timeout:220][maxsize:536870912];(
-    way["power"="line"]["voltage"~"${config.voltagePattern}"](${bbox});
-    way["man_made"="pipeline"]["substance"~"^(gas|oil|natural_gas|petroleum|lng|naphtha)$",i](${bbox});
-  );out tags geom;`;
-  const plantQuery = `[out:json][timeout:220][maxsize:268435456];
-    nwr["power"="plant"](${bbox});
-    out center tags;`;
-  const [lineResult, plantResult] = await Promise.all([
-    overpass(lineQuery, `osm-lines-${country.toLowerCase()}.json`),
-    overpass(plantQuery, `osm-plants-${country.toLowerCase()}.json`),
-  ]);
+  const lineElements = new Map<string, OverpassElement>();
+  const plantElements = new Map<string, OverpassElement>();
+  for (const [tileIndex, tile] of config.bboxes.entries()) {
+    const bbox = tile.join(",");
+    const lineQuery = `[out:json][timeout:220][maxsize:536870912];(
+      way["power"="line"]["voltage"~"${config.voltagePattern}"](${bbox});
+      way["man_made"="pipeline"]["substance"~"^(gas|oil|natural_gas|petroleum|lng|naphtha)$",i](${bbox});
+    );out tags geom;`;
+    const plantQuery = `[out:json][timeout:220][maxsize:268435456];
+      nwr["power"="plant"](${bbox});
+      out center tags;`;
+    const suffix = config.bboxes.length === 1 ? "" : `-${tileIndex + 1}`;
+    const [lineResult, plantResult] = await Promise.all([
+      overpass(lineQuery, `osm-lines-${country.toLowerCase()}${suffix}.json`),
+      overpass(plantQuery, `osm-plants-${country.toLowerCase()}${suffix}.json`),
+    ]);
+    for (const element of lineResult.elements) {
+      lineElements.set(`${element.type}-${element.id}`, element);
+    }
+    for (const element of plantResult.elements) {
+      plantElements.set(`${element.type}-${element.id}`, element);
+    }
+  }
 
   const lines: DetailedInfrastructureLine[] = [];
-  for (const element of lineResult.elements) {
+  for (const element of lineElements.values()) {
     const coordinates = (element.geometry ?? [])
       .map(({ lon, lat }) => [lon, lat] as [number, number])
       .filter(([lon, lat]) => Number.isFinite(lon) && Number.isFinite(lat));
     if (coordinates.length < 2) continue;
+    if (!coordinates.some((coordinate) => pointInCountry(country, coordinate))) continue;
     const tags = element.tags ?? {};
     const isGrid = tags.power === "line";
-    const voltageRaw = tags.voltage?.split(";")[0];
-    const voltageKv = voltageRaw ? finiteNumber(voltageRaw) : undefined;
-    const displayVoltage = voltageKv ? voltageKv / 1000 : undefined;
+    const voltage =
+      tags.voltage
+        ?.split(";")
+        .map((value) => finiteNumber(value))
+        .filter((value): value is number => value !== undefined)
+        .sort((a, b) => b - a)[0] ?? undefined;
+    const displayVoltage = voltage ? voltage / 1000 : undefined;
+    if (
+      isGrid &&
+      config.minimumVoltageKv !== undefined &&
+      (displayVoltage === undefined || displayVoltage < config.minimumVoltageKv)
+    ) {
+      continue;
+    }
     lines.push({
       id: `osm-${country.toLowerCase()}-${element.type}-${element.id}`,
       country,
@@ -547,10 +631,11 @@ async function buildEastAsiaOsm(
   }
 
   const points: DetailedInfrastructurePoint[] = [];
-  for (const element of plantResult.elements) {
+  for (const element of plantElements.values()) {
     const lon = finiteNumber(element.lon ?? element.center?.lon);
     const lat = finiteNumber(element.lat ?? element.center?.lat);
     if (lon === undefined || lat === undefined) continue;
+    if (!pointInCountry(country, [lon, lat])) continue;
     const tags = element.tags ?? {};
     points.push({
       id: `osm-plant-${country.toLowerCase()}-${element.type}-${element.id}`,
@@ -584,7 +669,7 @@ function writeCountry(dataset: CountryInfrastructureDetail): void {
 async function main(): Promise<void> {
   const peeringPoints = new Map<CountryCode, DetailedInfrastructurePoint[]>();
   await Promise.all(
-    (["KR", "JP", "TW", "US"] as CountryCode[]).map(async (country) => {
+    COUNTRY_CODES.map(async (country) => {
       peeringPoints.set(country, await buildPeeringDbPoints(country));
     }),
   );
@@ -630,14 +715,14 @@ async function main(): Promise<void> {
     lines: [...usGrid, ...usPipelines],
   });
 
-  for (const country of ["KR", "JP", "TW"] as const) {
+  for (const country of ["KR", "JP", "TW", "CN"] as const) {
     const osm = await buildEastAsiaOsm(country);
     writeCountry({
       version: VERSION,
       generatedAt: GENERATED_AT,
       country,
       scopeNote:
-        "Source-published public records only: named OSM power plants, tagged high-voltage lines and energy pipelines, plus PeeringDB public facilities.",
+        "Source-published public records only: OSM power plants, tagged high-voltage lines and energy pipelines clipped to the country boundary, plus PeeringDB public facilities.",
       sources: [
         {
           label: "OpenStreetMap public infrastructure tags",

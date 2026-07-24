@@ -1,6 +1,6 @@
 import type { Locale } from "./i18n";
 
-export const COUNTRY_CODES = ["KR", "JP", "TW", "US"] as const;
+export const COUNTRY_CODES = ["KR", "JP", "TW", "CN", "US"] as const;
 export type CountryCode = (typeof COUNTRY_CODES)[number];
 
 export const INFRASTRUCTURE_LAYERS = [

@@ -45,6 +45,10 @@ const COUNTRY_BOUNDS: Record<
     [119, 21.5],
     [123, 25.8],
   ],
+  CN: [
+    [73, 18],
+    [135, 54],
+  ],
   US: [
     [-126, 24],
     [-65, 50],
@@ -246,7 +250,14 @@ function moveToCountry(
   map.fitBounds(COUNTRY_BOUNDS[countryFilter], {
     padding: { top: 68, right: 54, bottom: 54, left: 54 },
     duration: animate ? 850 : 0,
-    maxZoom: countryFilter === "TW" ? 7 : countryFilter === "KR" ? 6.3 : 5,
+    maxZoom:
+      countryFilter === "TW"
+        ? 7
+        : countryFilter === "KR"
+          ? 6.3
+          : countryFilter === "CN"
+            ? 4.6
+            : 5,
   });
 }
 
@@ -305,9 +316,9 @@ function addAtlasLayers(map: MapLibreMap, facilities: GeoFeatureCollection, line
     source: LINE_SOURCE,
     filter: ["==", ["get", "kind"], "transmission"],
     paint: {
-      "line-color": "#3979bd",
-      "line-width": ["interpolate", ["linear"], ["zoom"], 2, 0.65, 8, 2.8],
-      "line-opacity": 0.68,
+      "line-color": "#d92c71",
+      "line-width": ["interpolate", ["linear"], ["zoom"], 2, 0.55, 8, 2.5],
+      "line-opacity": 0.64,
     },
   });
   map.addLayer({
@@ -316,7 +327,7 @@ function addAtlasLayers(map: MapLibreMap, facilities: GeoFeatureCollection, line
     source: LINE_SOURCE,
     filter: ["==", ["get", "kind"], "pipeline"],
     paint: {
-      "line-color": "#dc6b42",
+      "line-color": "#f59e0b",
       "line-width": ["interpolate", ["linear"], ["zoom"], 2, 0.8, 8, 3],
       "line-opacity": 0.78,
       "line-dasharray": [2.2, 1.5],
@@ -361,19 +372,42 @@ function addAtlasLayers(map: MapLibreMap, facilities: GeoFeatureCollection, line
         ["match", ["get", "kind"], "network_hub", 10, "data_center", 9, 11],
       ],
       "circle-color": [
-        "match",
-        ["get", "kind"],
-        "power_plant",
-        "#f1b931",
-        "data_center",
-        "#20a49c",
-        "network_hub",
-        "#bf5a9c",
-        "#102231",
+        "case",
+        ["==", ["get", "kind"], "power_plant"],
+        [
+          "match",
+          ["get", "fuel"],
+          "solar",
+          "#eab308",
+          "gas",
+          "#ef4444",
+          "hydro",
+          "#3b82f6",
+          "wind",
+          "#06b6d4",
+          "oil",
+          "#92400e",
+          "biomass",
+          "#65a30d",
+          "storage",
+          "#2dd4bf",
+          "coal",
+          "#52525b",
+          "geothermal",
+          "#f97316",
+          "nuclear",
+          "#9333ea",
+          "#9ca3af",
+        ],
+        ["==", ["get", "kind"], "data_center"],
+        "#22b863",
+        ["==", ["get", "kind"], "network_hub"],
+        "#8b8df8",
+        "#1c1c1e",
       ],
       "circle-stroke-color": "#ffffff",
-      "circle-stroke-width": 1.8,
-      "circle-opacity": 0.96,
+      "circle-stroke-width": 1.2,
+      "circle-opacity": 0.92,
     },
   });
 }
@@ -553,7 +587,7 @@ export default function InfrastructureMap({
 
   return (
     <div
-      className="relative overflow-hidden rounded-[22px] border border-[#102231]/10 bg-[#e8ebe7]"
+      className="relative overflow-hidden rounded-xl border border-[#e0e2e8] bg-[#eef0f3]"
       aria-label={ariaLabel}
     >
       <div ref={containerRef} className="h-[620px] w-full md:h-[720px]" />

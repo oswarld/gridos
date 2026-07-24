@@ -23,7 +23,7 @@ export type AtlasDictionary = {
   intro: string;
   currentRelease: string;
   nav: { map: string; balance: string; sources: string; governance: string };
-  countries: Record<"KR" | "JP" | "TW" | "US", string>;
+  countries: Record<"KR" | "JP" | "TW" | "CN" | "US", string>;
   published: string;
   preparing: string;
   notPublishedTitle: string;
@@ -94,7 +94,7 @@ export const DICTIONARIES: Record<Locale, AtlasDictionary> = {
     currentRelease:
       "현재 공개본은 대한민국 지역 집계 자료를 우선 제공합니다. 시설 단위 레이어는 공식 출처 검증 후 순차 공개합니다.",
     nav: { map: "지도", balance: "지역 수급", sources: "출처", governance: "공개 원칙" },
-    countries: { KR: "대한민국", JP: "일본", TW: "대만", US: "미국" },
+    countries: { KR: "대한민국", JP: "일본", TW: "대만", CN: "중국", US: "미국" },
     published: "공개됨",
     preparing: "준비 중",
     notPublishedTitle: "검증된 레코드를 준비하고 있습니다.",
@@ -174,7 +174,7 @@ export const DICTIONARIES: Record<Locale, AtlasDictionary> = {
     currentRelease:
       "The current release starts with regional aggregates for South Korea. Facility-level layers will be published after source verification.",
     nav: { map: "Map", balance: "Regional balance", sources: "Sources", governance: "Publication policy" },
-    countries: { KR: "South Korea", JP: "Japan", TW: "Taiwan", US: "United States" },
+    countries: { KR: "South Korea", JP: "Japan", TW: "Taiwan", CN: "China", US: "United States" },
     published: "Published",
     preparing: "In preparation",
     notPublishedTitle: "Verified records are being prepared.",
@@ -255,7 +255,7 @@ export const DICTIONARIES: Record<Locale, AtlasDictionary> = {
     currentRelease:
       "当前版本优先提供韩国区域汇总数据。设施级图层将在官方来源核验后逐步发布。",
     nav: { map: "地图", balance: "区域供需", sources: "数据来源", governance: "公开原则" },
-    countries: { KR: "韩国", JP: "日本", TW: "台湾", US: "美国" },
+    countries: { KR: "韩国", JP: "日本", TW: "台湾", CN: "中国", US: "美国" },
     published: "已发布",
     preparing: "准备中",
     notPublishedTitle: "正在准备已核验的记录。",
@@ -333,7 +333,7 @@ export const DICTIONARIES: Record<Locale, AtlasDictionary> = {
     currentRelease:
       "現在の公開版は韓国の地域集計データから開始します。施設単位のレイヤーは公式情報の検証後に順次公開します。",
     nav: { map: "地図", balance: "地域需給", sources: "出典", governance: "公開方針" },
-    countries: { KR: "韓国", JP: "日本", TW: "台湾", US: "米国" },
+    countries: { KR: "韓国", JP: "日本", TW: "台湾", CN: "中国", US: "米国" },
     published: "公開済み",
     preparing: "準備中",
     notPublishedTitle: "検証済みレコードを準備しています。",

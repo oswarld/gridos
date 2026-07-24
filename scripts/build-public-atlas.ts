@@ -10,6 +10,7 @@ import type {
   PublicAtlas,
   RegionalBalance,
 } from "../lib/atlas-types";
+import { COUNTRY_CODES } from "../lib/atlas-types";
 
 const ROOT = path.resolve(__dirname, "..");
 const RAW_OSM_DIR = path.join(ROOT, "data", "raw", "osm-atlas");
@@ -118,6 +119,18 @@ const sources: AtlasSource[] = [
     kind: "official",
     asOf: "2024",
     retrievedAt: RETRIEVED_AT,
+  },
+  {
+    id: "cn-nea-market-2024",
+    country: "CN",
+    publisher: "国家能源局",
+    title: "2024年度中国电力市场发展报告",
+    url: "https://www.nea.gov.cn/20250717/54ae0fdb11f04b39a5b670999c04ef81/2025071754ae0fdb11f04b39a5b670999c04ef81_19fe782a11f3aa40209907a80e3e692150.pdf",
+    kind: "official",
+    asOf: "2024",
+    retrievedAt: RETRIEVED_AT,
+    coverageNote:
+      "National generation and total electricity consumption; provincial balance rows are not inferred.",
   },
   {
     id: "kinx-centers",
@@ -1013,13 +1026,58 @@ async function buildAmericanBalances(): Promise<RegionalBalance[]> {
     });
 }
 
+function buildChineseBalances(): RegionalBalance[] {
+  return [
+    {
+      id: "CN-national",
+      country: "CN",
+      name: localized("전국 합계", "National total", "全国合计", "全国合計"),
+      demand: {
+        value: 9_850_000_000,
+        unit: "MWh/year",
+        label: localized(
+          "전사회 전력사용량",
+          "Total electricity consumption",
+          "全社会用电量",
+          "全社会電力消費量",
+        ),
+      },
+      supply: {
+        value: 10_090_000_000,
+        unit: "MWh/year",
+        label: localized(
+          "전국 발전량",
+          "National electricity generation",
+          "全国发电量",
+          "全国発電量",
+        ),
+      },
+      period: "2024",
+      sourceIds: ["cn-nea-market-2024"],
+      methodology: localized(
+        "국가에너지국 공개 보고서의 전국 합계입니다. 성급 수급자료가 아니며 지역값을 추론하지 않습니다.",
+        "National totals from the NEA public report. These are not provincial balances, and no regional values are inferred.",
+        "数据为国家能源局公开报告中的全国合计，并非省级供需数据；不推算地区数值。",
+        "国家能源局の公開報告による全国合計です。省別需給ではなく、地域値は推計しません。",
+      ),
+      comparableWithinCountry: false,
+    },
+  ];
+}
+
 async function buildBoundaries(): Promise<void> {
   const countryUrl =
     "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson";
   const response = await fetch(countryUrl);
   if (!response.ok) throw new Error(`Natural Earth ${response.status}`);
   const geo = await response.json();
-  const codeMap: Record<string, CountryCode> = { KOR: "KR", JPN: "JP", TWN: "TW", USA: "US" };
+  const codeMap: Record<string, CountryCode> = {
+    KOR: "KR",
+    JPN: "JP",
+    TWN: "TW",
+    CHN: "CN",
+    USA: "US",
+  };
   const features = geo.features
     .filter((feature: any) => codeMap[feature.properties.ADM0_A3])
     .map((feature: any) => ({
@@ -1036,6 +1094,7 @@ async function buildBoundaries(): Promise<void> {
     KR: [124.5, 132, 33, 39.3],
     JP: [123, 146, 24, 46],
     TW: [119, 123, 21.5, 25.8],
+    CN: [73, 135, 18, 54],
     US: [-126, -65, 24, 50],
   };
   const simplifyGeometry = (
@@ -1168,28 +1227,37 @@ async function main(): Promise<void> {
     ...buildKoreanBalances(),
     ...buildJapaneseBalances(),
     ...(await buildTaiwaneseBalances()),
+    ...buildChineseBalances(),
     ...(await buildAmericanBalances()),
   ];
-  const coverage = (["KR", "JP", "TW", "US"] as CountryCode[]).map((country) => ({
+  const coverage = COUNTRY_CODES.map((country) => ({
     country,
     facilityCount: facilities.filter((row) => row.country === country).length,
     linearFeatureCount: linearFeatures.filter((row) => row.country === country).length,
     regionCount: regions.filter((row) => row.country === country).length,
-    note: localized(
-      "시설·선형망은 대표 공개 레코드, 수급표는 해당 국가 공개지역 전체",
-      "Representative facilities/networks; all published regions available to the balance table",
-      "设施与网络为代表性公开记录；供需表涵盖该国可用公开地区",
-      "施設・線形網は代表公開レコード、需給表は取得可能な公開地域",
-    ),
+    note:
+      country === "CN"
+        ? localized(
+            "시설·선형망은 국가 상세 공개 레이어, 수급은 전국 합계",
+            "Country-detail public layers; national electricity balance total",
+            "设施与网络为国家详细公开图层；供需为全国合计",
+            "施設・線形網は国別詳細公開レイヤー、需給は全国合計",
+          )
+        : localized(
+            "시설·선형망은 대표 공개 레코드, 수급표는 해당 국가 공개지역 전체",
+            "Representative facilities/networks; all published regions available to the balance table",
+            "设施与网络为代表性公开记录；供需表涵盖该国可用公开地区",
+            "施設・線形網は代表公開レコード、需給表は取得可能な公開地域",
+          ),
   }));
   const atlas: PublicAtlas = {
     version: "0.3.0",
     generatedAt: RETRIEVED_AT,
     coverageNote: localized(
-      "검증된 대표 공개 시설과 소구역 OSM 선형망으로 시작합니다. 전국 완전목록이 아닙니다.",
-      "Starts with verified representative public facilities and bounded OSM network snapshots. It is not a nationwide complete inventory.",
-      "从经核验的代表性公开设施与小范围 OSM 网络快照开始，并非全国完整清单。",
-      "検証済みの代表公開施設と小区域OSM線形網から開始し、全国の完全台帳ではありません。",
+      "전체 개요는 대표 레코드, 국가 상세 지도는 원천 공개 레이어를 사용합니다. 국가 시설 완전목록이 아닙니다.",
+      "The overview uses representative records; country maps use source-published detail layers. This is not a complete national inventory.",
+      "总览采用代表性记录，国家详细地图采用来源公开图层；并非国家设施完整清单。",
+      "全体概要は代表レコード、国別地図は出典公開の詳細レイヤーを使用します。国の完全台帳ではありません。",
     ),
     sources,
     entities,

@@ -1,6 +1,6 @@
 # GridOS
 
-대한민국·일본·대만·미국의 에너지·산업·디지털 기반시설을 한 지도에서 탐색하는
+대한민국·일본·대만·중국·미국의 에너지·산업·디지털 기반시설을 한 지도에서 탐색하는
 공익 공개 프로젝트입니다.
 
 **공개 사이트:** [oswarld.github.io/gridos](https://oswarld.github.io/gridos/)
@@ -29,6 +29,7 @@ OSM 원본은 다른 원천과 분리해 관리하며 공개 배포본에는 필
 - [U.S. EIA 발전설비 자료](https://www.eia.gov/electricity/data/eia860/)
 - [HIFLD 공개 인프라 자료](https://hifld-geoplatform.hub.arcgis.com/)
 - [PeeringDB 공개 API](https://www.peeringdb.com/apidocs/)
+- [중국 국가에너지국 전력시장 보고서](https://www.nea.gov.cn/20250717/54ae0fdb11f04b39a5b670999c04ef81/2025071754ae0fdb11f04b39a5b670999c04ef81_19fe782a11f3aa40209907a80e3e692150.pdf)
 - 각국 전력기관·사업자·공시·거래소의 공개 자료
 
 지도는 완전한 국가 시설대장이 아닙니다. 자료의 기준일, 공개 범위, 위치 정밀도는

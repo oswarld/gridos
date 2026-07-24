@@ -5,6 +5,7 @@
  */
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { COUNTRY_CODES } from "../lib/atlas-types";
 
 const ROOT = path.resolve(__dirname, "..");
 let failed = false;
@@ -54,8 +55,8 @@ if (!fs.existsSync(dataPath)) {
   else ok("generatedAt ISO 형식");
 }
 
-// ─── 2. 4개국 공개 아틀라스 무결성 ───
-console.log("[validate] 4개국 공개 아틀라스 검사");
+// ─── 2. 5개국 공개 아틀라스 무결성 ───
+console.log("[validate] 5개국 공개 아틀라스 검사");
 const atlasPath = path.join(ROOT, "data", "processed", "atlas-public.json");
 const boundariesPath = path.join(ROOT, "data", "processed", "atlas-boundaries.json");
 if (!fs.existsSync(atlasPath) || !fs.existsSync(boundariesPath)) {
@@ -69,7 +70,7 @@ if (!fs.existsSync(atlasPath) || !fs.existsSync(boundariesPath)) {
   const atlasLinearFeatures: any[] = atlas.linearFeatures ?? [];
   const atlasRegions: any[] = atlas.regions ?? [];
   const boundaryFeatures: any[] = boundaries.features ?? [];
-  const countries = ["KR", "JP", "TW", "US"];
+  const countries = [...COUNTRY_CODES];
   const layers = ["power_plant", "data_center", "network_hub", "transmission", "pipeline"];
   const idGroups: [string, any[]][] = [
     ["source", atlasSources],
@@ -185,8 +186,12 @@ if (!fs.existsSync(atlasPath) || !fs.existsSync(boundariesPath)) {
     const regionRows = atlasRegions.filter((row) => row.country === country);
     const kinds = new Set([...facilityRows, ...lineRows].map((row) => row.kind));
     const missingLayers = layers.filter((layer) => !kinds.has(layer));
-    if (!facilityRows.length || !lineRows.length || !regionRows.length) {
+    if (!regionRows.length) {
       fail(`${country} 필수 공개 범위 누락`);
+    } else if (country === "CN") {
+      ok(`${country}: 상세 지도 중심 공개, 수급 ${regionRows.length}개`);
+    } else if (!facilityRows.length || !lineRows.length) {
+      fail(`${country} 대표 공개 시설 또는 선형망 누락`);
     } else if (missingLayers.length) {
       fail(`${country} 레이어 누락: ${missingLayers.join(", ")}`);
     } else {
@@ -199,7 +204,7 @@ if (!fs.existsSync(atlasPath) || !fs.existsSync(boundariesPath)) {
   const boundaryCountries = new Set(boundaryFeatures.map((row) => row.country));
   const missingBoundaries = countries.filter((country) => !boundaryCountries.has(country));
   if (missingBoundaries.length) fail(`국가 경계 누락: ${missingBoundaries.join(", ")}`);
-  else ok("4개국 Natural Earth 경계 존재");
+  else ok("5개국 Natural Earth 경계 존재");
   const adminBoundaries: any[] = boundaries.admin1 ?? [];
   for (const country of countries) {
     const count = adminBoundaries.filter((row) => row.country === country).length;
@@ -228,6 +233,7 @@ const detailMinimums: Record<string, { points: number; lines: number }> = {
   JP: { points: 5000, lines: 5000 },
   TW: { points: 200, lines: 500 },
   US: { points: 10000, lines: 3000 },
+  CN: { points: 10000, lines: 10000 },
 };
 for (const [country, minimum] of Object.entries(detailMinimums)) {
   const detailPath = path.join(
@@ -254,6 +260,19 @@ for (const [country, minimum] of Object.entries(detailMinimums)) {
   }
   const ids = [...points, ...lines].map((row) => row.id);
   if (new Set(ids).size !== ids.length) fail(`${country} 상세 레이어 ID 중복`);
+  const detailKinds = new Set([...points, ...lines].map((row) => row.kind));
+  const missingDetailLayers = [
+    "power_plant",
+    "data_center",
+    "network_hub",
+    "transmission",
+    "pipeline",
+  ].filter((kind) => !detailKinds.has(kind));
+  if (missingDetailLayers.length) {
+    fail(`${country} 상세 레이어 누락: ${missingDetailLayers.join(", ")}`);
+  } else {
+    ok(`${country} 상세 5개 레이어 존재`);
+  }
 
   let invalidDetailCoordinates = 0;
   const finiteCoordinates = (value: unknown): boolean => {
