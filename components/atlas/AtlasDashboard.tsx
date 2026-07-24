@@ -1425,9 +1425,19 @@ export default function AtlasDashboard({
 
           <div className="mt-8 flex flex-col gap-3 border-t border-[#e0e2e8] pt-6 text-[11px] leading-5 text-[#6b6f7e] sm:flex-row sm:items-center sm:justify-between">
             <p className="font-semibold text-[#454957]">{copy.contestEntry}</p>
-            <p>
-              © {new Date().getFullYear()} {dictionary.siteName}
-            </p>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <a
+                href="https://www.linkedin.com/in/oswarld/"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-[#454957] underline decoration-[#c7cad5] underline-offset-4 transition hover:text-[#0a66c2] hover:decoration-[#0a66c2] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0a66c2]"
+              >
+                {copy.creatorLabel} · {copy.creatorName} ↗
+              </a>
+              <p>
+                © {new Date().getFullYear()} {dictionary.siteName}
+              </p>
+            </div>
           </div>
         </div>
       </footer>

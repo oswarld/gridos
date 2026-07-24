@@ -48,6 +48,8 @@ type AtlasUiCopy = {
   newsletterDescription: string;
   newsletterLanguages: string;
   newsletterCta: string;
+  creatorLabel: string;
+  creatorName: string;
   allLayersLive: string;
   mapAttribution: string;
   close: string;
@@ -125,6 +127,8 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
       "기술·경제·사회를 따로 보지 않고, 변화의 이면과 다음 질문까지 연결하는 분석 뉴스레터입니다.",
     newsletterLanguages: "한국어 · English · 简体中文",
     newsletterCta: "다음 분석 받아보기",
+    creatorLabel: "만든 사람",
+    creatorName: "안광섭 (오스왈드)",
     allLayersLive: "5개 레이어 조합 가능",
     mapAttribution: "경계 Natural Earth · 선형망 © OpenStreetMap contributors, ODbL",
     close: "닫기",
@@ -204,6 +208,8 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
       "A newsletter connecting technology, economics, and society to explain the structures behind change—and the questions that come next.",
     newsletterLanguages: "한국어 · English · 简体中文",
     newsletterCta: "Get the next analysis",
+    creatorLabel: "Created by",
+    creatorName: "Oswarld (Kwangseob Ahn)",
     allLayersLive: "Five composable layers",
     mapAttribution: "Boundaries: Natural Earth · Networks: © OpenStreetMap contributors, ODbL",
     close: "Close",
@@ -282,6 +288,8 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
       "一份交叉解读科技、经济与社会的分析通讯，连接变化背后的结构与下一步问题。",
     newsletterLanguages: "한국어 · English · 简体中文",
     newsletterCta: "接收下一篇分析",
+    creatorLabel: "创作者",
+    creatorName: "安光涉（Oswarld）",
     allLayersLive: "五个图层可组合",
     mapAttribution: "边界 Natural Earth · 网络 © OpenStreetMap contributors, ODbL",
     close: "关闭",
@@ -361,6 +369,8 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
       "テクノロジー・経済・社会を横断し、変化の背景にある構造と次の問いをつなぐ分析ニュースレターです。",
     newsletterLanguages: "한국어 · English · 简体中文",
     newsletterCta: "次の分析を受け取る",
+    creatorLabel: "制作者",
+    creatorName: "Oswarld（Kwangseob Ahn）",
     allLayersLive: "5レイヤーを組合せ可能",
     mapAttribution: "境界 Natural Earth · ネットワーク © OpenStreetMap contributors, ODbL",
     close: "閉じる",
