@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import atlasJson from "@/data/processed/atlas-public.json";
+import { InfoTip } from "@/components/InfoTip";
 import { ATLAS_UI } from "@/lib/atlas-i18n";
 import {
   COUNTRY_CODES,
@@ -1016,7 +1017,13 @@ export default function AtlasDashboard({
                           </div>
                         )}
                         <div className="flex items-start justify-between gap-4">
-                          <dt className="text-[#8e91a0]">{copy.locationPrecision}</dt>
+                          <dt className="flex items-center gap-1 text-[#8e91a0]">
+                            {copy.locationPrecision}
+                            <InfoTip
+                              content={copy.help.locationPrecision}
+                              label={copy.locationPrecision}
+                            />
+                          </dt>
                           <dd className="max-w-[190px] text-right font-semibold">
                             {selected.type === "facility"
                               ? selected.record.disclosureLevel === "exact_public"
@@ -1226,10 +1233,30 @@ export default function AtlasDashboard({
               <thead className="border-b border-[#e0e2e8] bg-[#fafbfc] text-[11px] uppercase tracking-[0.08em] text-[#6b6f7e]">
                 <tr>
                   <th className="px-5 py-4 font-semibold">{copy.region}</th>
-                  <th className="px-5 py-4 text-right font-semibold">{copy.demand}</th>
-                  <th className="px-5 py-4 text-right font-semibold">{copy.supply}</th>
-                  <th className="px-5 py-4 text-right font-semibold">{copy.ratio}</th>
-                  <th className="px-5 py-4 text-right font-semibold">{copy.period}</th>
+                  <th className="px-5 py-4 text-right font-semibold">
+                    <span className="inline-flex items-center justify-end gap-1">
+                      {copy.demand}
+                      <InfoTip content={copy.help.demand} label={copy.demand} />
+                    </span>
+                  </th>
+                  <th className="px-5 py-4 text-right font-semibold">
+                    <span className="inline-flex items-center justify-end gap-1">
+                      {copy.supply}
+                      <InfoTip content={copy.help.supply} label={copy.supply} />
+                    </span>
+                  </th>
+                  <th className="px-5 py-4 text-right font-semibold">
+                    <span className="inline-flex items-center justify-end gap-1">
+                      {copy.ratio}
+                      <InfoTip content={copy.help.ratio} label={copy.ratio} />
+                    </span>
+                  </th>
+                  <th className="px-5 py-4 text-right font-semibold">
+                    <span className="inline-flex items-center justify-end gap-1">
+                      {copy.period}
+                      <InfoTip content={copy.help.period} label={copy.period} />
+                    </span>
+                  </th>
                 </tr>
               </thead>
               <tbody>

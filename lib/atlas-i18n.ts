@@ -51,18 +51,25 @@ type AtlasUiCopy = {
   zoomIn: string;
   zoomOut: string;
   resetView: string;
+  help: {
+    demand: string;
+    supply: string;
+    ratio: string;
+    period: string;
+    locationPrecision: string;
+  };
 };
 
 export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
   ko: {
     allCountries: "전체 5개국",
-    publicSnapshot: "대표 공개 스냅샷",
+    publicSnapshot: "공개 자료 요약",
     releaseSummary: "KR · JP · TW · CN · US",
     releaseScope:
-      "5개국을 한 화면에서 함께 엽니다. 시설·선형망은 출처가 검증된 공개 레코드이며, 국가 시설 완전목록으로 해석하면 안 됩니다.",
-    mapTitle: "산업·에너지 인프라 통합 지도",
+      "5개 나라를 한 화면에서 함께 봅니다. 여기 표시된 시설은 공개 자료로 확인된 것만 모은 목록이라서, 한 나라의 ‘전체 시설 목록’은 아닙니다.",
+    mapTitle: "산업·에너지 시설 지도",
     mapIntro:
-      "레이어를 조합하고 시설을 선택해 운영사·소유주·공개된 연결 관계와 상장사를 확인하세요.",
+      "지도에서 시설을 누르면 누가 운영하는지, 누구 소유인지, 공개된 연결 정보를 확인할 수 있어요.",
     mapAria: "대한민국, 일본, 대만, 중국, 미국의 공개 인프라 지도",
     layers: {
       power_plant: "발전소",
@@ -72,39 +79,39 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
       pipeline: "파이프라인",
     },
     layerScope: "표시 중",
-    selectedFacility: "선택한 시설",
-    selectFacility: "지도에서 시설 또는 선형 인프라를 선택하세요.",
-    operator: "운영사",
-    owner: "소유주",
-    connections: "공개 연결 관계",
+    selectedFacility: "선택한 시설 정보",
+    selectFacility: "지도에서 시설(또는 선)을 눌러 주세요.",
+    operator: "운영하는 곳",
+    owner: "소유한 곳",
+    connections: "연결 정보(공개)",
     listedCompany: "연결된 상장사",
     directListing: "직접 상장",
     parentListing: "모회사",
     shareholderListing: "주요 주주",
-    capacity: "설비용량",
-    locationPrecision: "위치 공개 수준",
-    exactPublic: "원문·OSM 공개 좌표",
-    generalizedPublic: "사업자 공개 주소의 일반화 표시",
-    source: "근거",
-    openOriginal: "원문 열기",
-    noPublicRecord: "확인된 공개 기록 없음",
+    capacity: "규모(용량)",
+    locationPrecision: "위치 표시 수준",
+    exactPublic: "정확한 위치(공개 좌표)",
+    generalizedPublic: "대략 위치(주소로 표시)",
+    source: "출처",
+    openOriginal: "출처 열기",
+    noPublicRecord: "공개 자료가 아직 없어요",
     balanceTitle: "지역별 수요·공급 비교",
     balanceIntro:
-      "각 국가의 공개 체계에 맞는 최신 지표를 제공합니다. 비율과 순위는 같은 국가·같은 방법 안에서만 비교할 수 있습니다.",
+      "나라마다 공개 방식이 달라서, 숫자는 같은 나라 안에서만 비교해 주세요.",
     region: "국가 · 지역",
-    demand: "수요",
-    supply: "공급",
-    ratio: "공급 ÷ 수요",
+    demand: "전력 사용(수요)",
+    supply: "전력 생산(공급)",
+    ratio: "비율(공급/수요)",
     period: "기간",
-    method: "정의·주의사항",
+    method: "설명",
     withinCountryOnly: "국가 내 비교",
     countryMethodWarning:
-      "한국·일본·대만·중국·미국의 지표는 시간단위와 모집단이 서로 다릅니다. 국가 간 수치를 직접 순위화하지 않습니다.",
-    provenanceTitle: "출처·범위·업데이트",
+      "나라마다 기준(기간·집계 방식)이 달라서, 나라끼리 숫자를 바로 비교하면 안 됩니다.",
+    provenanceTitle: "출처와 업데이트",
     provenanceIntro:
-      "시설과 기업 관계는 1차 공개자료, 선형 인프라는 별도 보관한 OSM 공개 스냅샷을 사용합니다.",
+      "각 숫자와 시설 정보가 ‘어디 자료’에서 왔는지, ‘언제’ 가져왔는지 함께 보여드립니다.",
     coverage: "공개 범위",
-    retrieved: "수집",
+    retrieved: "수집일",
     currentRelease: "5개국 동시 공개",
     contestEntry: "제14회 산업통상부 공공데이터 활용 아이디어 공모전 출품작",
     allLayersLive: "5개 레이어 조합 가능",
@@ -115,6 +122,17 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
     zoomIn: "확대",
     zoomOut: "축소",
     resetView: "지도 초기화",
+    help: {
+      demand:
+        "각 지역의 ‘전력 사용’을 보여주는 공개 지표입니다. 국가별로 기준이 달라서, 전체 전력 사용량과 딱 같지 않을 수 있어요.",
+      supply:
+        "각 지역의 ‘전력 생산(공급)’을 보여주는 공개 지표입니다. 국가별 공개 범위에 따라 재생에너지 발전량 등으로 표시됩니다.",
+      ratio:
+        "공급 ÷ 수요로 계산한 값입니다. ‘대략 어느 정도 공급이 따라오는지’ 보는 참고용이며, 같은 나라 안에서만 비교해 주세요.",
+      period: "데이터가 어떤 기간을 기준으로 하는지(연도/월 등) 표시합니다. 나라마다 기간이 다를 수 있어요.",
+      locationPrecision:
+        "지도가 시설 위치를 얼마나 정확하게 보여주는지 뜻해요. 공개 좌표가 있으면 ‘정확한 위치’, 주소만 공개되면 ‘대략 위치’로 표시합니다.",
+    },
   },
   en: {
     allCountries: "All five countries",
@@ -177,6 +195,18 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
     zoomIn: "Zoom in",
     zoomOut: "Zoom out",
     resetView: "Reset map",
+    help: {
+      demand:
+        "A public metric used to represent electricity use (demand) for each region. It may not equal total consumption, and methods differ by country.",
+      supply:
+        "A public metric for electricity supply (often renewable generation), based on what each country discloses.",
+      ratio:
+        "Calculated as supply ÷ demand. Use it as a rough indicator and compare only within the same country.",
+      period:
+        "The reporting period for the metric (year/month, etc.). Periods can differ across countries.",
+      locationPrecision:
+        "How precisely the map shows a facility location: exact when public coordinates exist, or generalized when only an address is public.",
+    },
   },
   "zh-CN": {
     allCountries: "五国全部",
@@ -237,6 +267,17 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
     zoomIn: "放大",
     zoomOut: "缩小",
     resetView: "重置地图",
+    help: {
+      demand:
+        "用于表示各地区“用电量（需求）”的公开指标。不同国家的统计口径不同，可能不等于总用电量。",
+      supply:
+        "用于表示各地区“供给”的公开指标，通常以可再生能源发电量等形式展示，取决于各国公开范围。",
+      ratio:
+        "按 供给 ÷ 需求 计算，仅作参考。请只在同一国家内比较。",
+      period: "数据对应的统计期间（年/月等）。不同国家的期间可能不同。",
+      locationPrecision:
+        "地图展示设施位置的精确程度：有公开坐标则显示“精确位置”，仅公开地址则显示“大致位置”。",
+    },
   },
   ja: {
     allCountries: "5か国すべて",
@@ -299,5 +340,16 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
     zoomIn: "拡大",
     zoomOut: "縮小",
     resetView: "地図をリセット",
+    help: {
+      demand:
+        "各地域の「電力使用（需要）」を示す公開指標です。国によって集計方法が異なるため、総使用量と一致しない場合があります。",
+      supply:
+        "各地域の「供給」を示す公開指標です。国の公開範囲により、再エネ発電量などで表示されます。",
+      ratio:
+        "供給 ÷ 需要で計算した参考値です。同じ国の中でのみ比較してください。",
+      period: "データの対象期間（年/月など）です。国によって期間が異なる場合があります。",
+      locationPrecision:
+        "地図が施設の位置をどれくらい正確に表示しているかです。公開座標があれば「正確」、住所のみ公開の場合は「概略」で表示します。",
+    },
   },
 };
