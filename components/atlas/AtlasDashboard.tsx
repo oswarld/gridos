@@ -28,13 +28,13 @@ const atlas = atlasJson as PublicAtlas;
 
 const LAYER_STYLES: Record<
   InfrastructureLayer,
-  { color: string; marker: "circle" | "square" | "diamond" | "line" | "dash" }
+  { color: string; background: string }
 > = {
-  power_plant: { color: "#a855f7", marker: "circle" },
-  data_center: { color: "#22b863", marker: "square" },
-  network_hub: { color: "#8b8df8", marker: "diamond" },
-  transmission: { color: "#d92c71", marker: "line" },
-  pipeline: { color: "#f59e0b", marker: "dash" },
+  power_plant: { color: "#9333ea", background: "#f3e8ff" },
+  data_center: { color: "#148a4c", background: "#dcfce7" },
+  network_hub: { color: "#6366f1", background: "#e8e9ff" },
+  transmission: { color: "#c51f62", background: "#fce7f3" },
+  pipeline: { color: "#c66a06", background: "#fff2d6" },
 };
 
 const GENERATION_FUELS: GenerationFuel[] = [
@@ -236,32 +236,76 @@ function uniqueSecurities(
   return [...unique.values()];
 }
 
-function LayerMarker({ layer }: { layer: InfrastructureLayer }) {
-  const style = LAYER_STYLES[layer];
-  if (style.marker === "line" || style.marker === "dash") {
+function LayerGlyph({ layer }: { layer: InfrastructureLayer }) {
+  const common = {
+    viewBox: "0 0 24 24",
+    width: "100%",
+    height: "100%",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  if (layer === "power_plant") {
     return (
-      <span
-        className="block h-[3px] w-7 rounded-full"
-        style={{
-          background:
-            style.marker === "dash"
-              ? `repeating-linear-gradient(90deg, ${style.color} 0 7px, transparent 7px 11px)`
-              : style.color,
-        }}
-      />
+      <svg {...common}>
+        <path d="M3.5 20.5V10l5 3V9.5l5 3V6h4l1.5 14.5" />
+        <path d="M3.5 20.5h17M7 17h1M12 17h1M17 17h1" />
+      </svg>
+    );
+  }
+  if (layer === "data_center") {
+    return (
+      <svg {...common}>
+        <rect x="4" y="3.5" width="16" height="17" rx="2" />
+        <path d="M4 9h16M4 15h16M8 6.25h.01M8 12h.01M8 17.75h.01M11 6.25h5M11 12h5M11 17.75h5" />
+      </svg>
+    );
+  }
+  if (layer === "network_hub") {
+    return (
+      <svg {...common}>
+        <path d="M12 8V5M9 10.5 6 8M15 10.5 18 8M9 14l-3 2M15 14l3 2M12 16v3" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="12" cy="3.5" r="1.5" />
+        <circle cx="4.5" cy="7" r="1.5" />
+        <circle cx="19.5" cy="7" r="1.5" />
+        <circle cx="4.5" cy="17" r="1.5" />
+        <circle cx="19.5" cy="17" r="1.5" />
+        <circle cx="12" cy="20.5" r="1.5" />
+      </svg>
+    );
+  }
+  if (layer === "transmission") {
+    return (
+      <svg {...common}>
+        <path d="m12 2-7 20M12 2l7 20M8.5 7.5h7M6.8 12.5h10.4M5.5 17.5h13M8.5 22h7" />
+      </svg>
     );
   }
   return (
+    <svg {...common}>
+      <path d="M3 12h5M16 12h5" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="m9.2 9.2 5.6 5.6M14.8 9.2l-5.6 5.6M3 9v6M21 9v6" />
+    </svg>
+  );
+}
+
+function LayerMarker({ layer }: { layer: InfrastructureLayer }) {
+  const style = LAYER_STYLES[layer];
+  return (
     <span
-      className={`block h-3.5 w-3.5 ${
-        style.marker === "circle"
-          ? "rounded-full"
-          : style.marker === "diamond"
-            ? "rotate-45 rounded-[2px]"
-            : "rounded-[3px]"
-      }`}
-      style={{ background: style.color }}
-    />
+      className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
+      style={{ color: style.color, backgroundColor: style.background }}
+    >
+      <span className="block h-[18px] w-[18px]">
+        <LayerGlyph layer={layer} />
+      </span>
+    </span>
   );
 }
 
