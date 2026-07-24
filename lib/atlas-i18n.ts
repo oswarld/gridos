@@ -42,6 +42,7 @@ type AtlasUiCopy = {
   coverage: string;
   retrieved: string;
   currentRelease: string;
+  contestEntry: string;
   allLayersLive: string;
   mapAttribution: string;
   close: string;
@@ -105,6 +106,7 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
     coverage: "공개 범위",
     retrieved: "수집",
     currentRelease: "5개국 동시 공개",
+    contestEntry: "제14회 산업통상부 공공데이터 활용 아이디어 공모전 출품작",
     allLayersLive: "5개 레이어 조합 가능",
     mapAttribution: "경계 Natural Earth · 선형망 © OpenStreetMap contributors, ODbL",
     close: "닫기",
@@ -166,6 +168,7 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
     coverage: "Coverage",
     retrieved: "Retrieved",
     currentRelease: "Five-country release",
+    contestEntry: "Entry for the 14th MOTIE Public Data Utilization Idea Contest",
     allLayersLive: "Five composable layers",
     mapAttribution: "Boundaries: Natural Earth · Networks: © OpenStreetMap contributors, ODbL",
     close: "Close",
@@ -225,6 +228,7 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
     coverage: "公开范围",
     retrieved: "采集",
     currentRelease: "五国同步开放",
+    contestEntry: "第14届韩国产业通商资源部公共数据应用创意大赛参赛作品",
     allLayersLive: "五个图层可组合",
     mapAttribution: "边界 Natural Earth · 网络 © OpenStreetMap contributors, ODbL",
     close: "关闭",
@@ -286,6 +290,7 @@ export const ATLAS_UI: Record<Locale, AtlasUiCopy> = {
     coverage: "公開範囲",
     retrieved: "取得",
     currentRelease: "5か国同時公開",
+    contestEntry: "第14回 韓国産業通商資源部 公共データ活用アイデア公募展 出品作",
     allLayersLive: "5レイヤーを組合せ可能",
     mapAttribution: "境界 Natural Earth · ネットワーク © OpenStreetMap contributors, ODbL",
     close: "閉じる",

@@ -662,6 +662,10 @@ export default function AtlasDashboard({ locale }: { locale: Locale }) {
               <p className="mt-3 max-w-3xl text-sm leading-6 text-[#555a6a] md:text-base">
                 {dictionary.intro}
               </p>
+              <p className="mt-4 inline-flex max-w-full items-center gap-2 rounded-full border border-[#ebc73b] bg-[#fff9dc] px-3.5 py-2 text-[11px] font-semibold leading-4 text-[#66530c] sm:text-xs">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#d7a900]" />
+                <span>{copy.contestEntry}</span>
+              </p>
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-3 rounded-full bg-[#1c1c1e] px-5 py-3 text-xs text-white">
